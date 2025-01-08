@@ -1549,7 +1549,7 @@ const TeamPage = () => {
       role: "Manager",
       icon: <Users className="w-12 h-12 text-cyan-400" />,
       bio: "",
-      skills: ["ML (both CV, NLP)", "App dev", "Chess"],
+      skills: ["AI/ML", "App dev", "Chess"],
 
       social: {
         github: "https://github.com/ShahuPatil07",
@@ -1568,7 +1568,7 @@ const TeamPage = () => {
       role: "Convener",
       icon: <MessageCircle className="w-12 h-12 text-cyan-400" />,
       bio: "",
-      skills: ["Machine Learning", "Web-Dev", "Data Science", "Chess"],
+      skills: ["AI/ML", "Web-Dev", "Data Science", "Chess"],
 
       social: {
         github: "https://github.com/veeradi34",
