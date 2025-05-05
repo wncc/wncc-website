@@ -37,7 +37,10 @@ import {
   Terminal,
   Database,
   Code2,
+  Link
 } from "lucide-react";
+
+import axios from 'axios';
 
 // Card component for consistent styling
 const Card = ({ children, className = "", onMouseEnter, onMouseLeave }) => (
@@ -1016,10 +1019,10 @@ const EventsPage = () => {
       title: "Hello FOSS",
       date: "2025-10-01T20:00:00Z",
       endDate: "2025-10-31T20:30:00Z",
-      description: "A month-long event to introduce FOSS to beginners.",
+      description: "A month-long event to introduce FOSS to freshers and mirror GSOC for advanced coders.",
       location: "IIT Bombay Campus",
       icon: <Calendar className="w-16 h-16 text-cyan-400" />,
-      category: "Program",
+      category: "competition",
       participants: "",
       prize: "Prize money and goodies",
     },
@@ -1519,38 +1522,6 @@ const ChessIcon = () => (
     <circle cx="12" cy="12" r="10" />
   </svg>
 );
-const Navbar = () => (
-  <nav className="bg-gray-900 px-6 py-4">
-    <div className="container mx-auto flex justify-between items-center">
-      {/* Site Logo / Home */}
-      <Link to="/" className="text-2xl font-bold text-cyan-400">
-        WnCC
-      </Link>
-      {/* Nav Links */}
-      <ul className="flex space-x-6">
-        <li>
-          <Link
-            to="/team"
-            className="text-gray-300 hover:text-white transition-colors"
-          >
-            Team
-          </Link>
-        </li>
-        <li>
-          <a
-            href="https://www.your-soc-website.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-gray-300 hover:text-white transition-colors"
-          >
-            SOC
-          </a>
-        </li>
-      </ul>
-    </div>
-  </nav>
-);
-
 const TeamPage = () => {
   const [selectedMember, setSelectedMember] = useState(null);
   const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
@@ -1578,7 +1549,7 @@ const TeamPage = () => {
       role: "Manager",
       icon: <Users className="w-12 h-12 text-cyan-400" />,
       bio: "",
-      skills: ["ML (both CV, NLP)", "App dev", "Chess"],
+      skills: ["AI/ML", "App dev", "Chess"],
 
       social: {
         github: "https://github.com/ShahuPatil07",
@@ -1597,7 +1568,7 @@ const TeamPage = () => {
       role: "Convener",
       icon: <MessageCircle className="w-12 h-12 text-cyan-400" />,
       bio: "",
-      skills: ["Machine Learning", "Web-Dev", "Data Science", "Chess"],
+      skills: ["AI/ML", "Web-Dev", "Data Science", "Chess"],
 
       social: {
         github: "https://github.com/veeradi34",
@@ -2278,134 +2249,209 @@ const ContactPage = () => {
   );
 };
 const WebsitePreview = () => {
-  const [currentPage, setCurrentPage] = useState('Home');
+  const [currentPage, setCurrentPage] = useState("Home");
+  const [isOpen, setIsOpen] = useState(false);
 
-  
-    const PageComponent = {
-      Home: HomePage,
-      Events: EventsPage,
-      Resources: ResourcesPage,
-      Team: TeamPage,
-      Contact: ContactPage,
-    }[currentPage];
-  
-    // Here we mix internal pages (page) and external links (url)
-    const navItems = [
-      { title: 'Home',   page: 'Home' },
-      { title: 'SOC',    url: 'https://wncc-soc.tech-iitb.org/' },
-      { title: 'Events', page: 'Events' },
-      { title: 'Resources', page: 'Resources' },
-      { title: 'Team',   page: 'Team' },
-      { title: 'Contact',page: 'Contact' }
-      
-    ];
-  
-    const quickLinks = [
-      { title: 'Contact Us', url: '' },
-      { title: 'Projects',   url: 'https://github.com/orgs/wncc/repositories' },
-      { title: 'Blog',       url: 'https://www.technewsworld.com/section/tech-blog' },
-    ];
-  
-    return (
-      <div className="min-h-screen bg-gray-900 text-white">
-        <nav className="bg-gray-900/50 backdrop-blur-lg border-b border-cyan-500/20 p-4 sticky top-0 z-50">
-          <div className="container mx-auto flex justify-between items-center">
-            {/* Logo */}
-            <div className="text-cyan-400">
-              <img 
-                src="/Images/logo.png" 
-                alt="WnCC IITB Logo" 
-                className="h-8 w-auto"
-              />
-            </div>
-  
-            {/* Nav Links */}
-            <div className="flex gap-6">
-              {navItems.map((item) =>
-                item.url ? (
-                  <a
-                    key={item.title}
-                    href={item.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="px-4 py-2 rounded-lg text-gray-300 hover:text-cyan-400 transition-colors duration-300"
-                  >
-                    {item.title}
-                  </a>
-                ) : (
-                  <button
-                    key={item.title}
-                    onClick={() => setCurrentPage(item.page)}
-                    className={`px-4 py-2 rounded-lg transition-colors duration-300 ${
-                      currentPage === item.page
-                        ? 'bg-cyan-500/20 text-cyan-400'
-                        : 'text-gray-300 hover:text-cyan-400'
-                    }`}
-                  >
-                    {item.title}
-                  </button>
-                )
-              )}
-            </div>
-          </div>
-        </nav>
-  
-        <main className="container mx-auto px-4 py-8">
-          <PageComponent />
-        </main>
-        
-        <footer className="bg-gray-900/50 backdrop-blur-lg border-t border-cyan-500/20 p-8 mt-16">
-          <div className="container mx-auto grid md:grid-cols-4 gap-8">
-            
-            {/* Quick Links */}
-            <div>
-              <h3 className="text-xl font-bold text-cyan-400 mb-4">Quick Links</h3>
-              <ul className="space-y-2">
-                {quickLinks.map((link, i) => (
-                  <li key={i}>
-                    <a 
-                      href={link.url}
-                      className="text-gray-400 hover:text-cyan-400 transition-colors duration-300"
-                      target={link.url ? "_blank" : "_self"}
-                      rel={link.url ? "noopener noreferrer" : undefined}
-                    >
-                      {link.title}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            
-            {/* Contact Info */}
-            <div>
-              <h3 className="text-xl font-bold text-cyan-400 mb-4">Contact</h3>
-              <ul className="space-y-2 text-gray-400">
-                <li>wncc@iitb.ac.in</li>
-                <li>Student Activity Center</li>
-                <li>IIT Bombay, Powai</li>
-                <li>Mumbai - 400076</li>
-              </ul>
-            </div>
-            
-            {/* Social Links */}
-            <div>
-              <h3 className="text-xl font-bold text-cyan-400 mb-4">Connect</h3>
-              <div className="flex gap-4">
-                <a href="https://github.com/wncc"      className="text-gray-400 hover:text-cyan-400 transition-colors duration-300"><Github   className="w-6 h-6" /></a>
-                <a href="https://x.com/wncc_iitb"      className="text-gray-400 hover:text-cyan-400 transition-colors duration-300"><Twitter  className="w-6 h-6" /></a>
-                <a href="https://www.linkedin.com/company/wncc-iitb" className="text-gray-400 hover:text-cyan-400 transition-colors duration-300"><Linkedin className="w-6 h-6" /></a>
-                <a href="https://www.instagram.com/wncc.iitb/" className="text-gray-400 hover:text-cyan-400 transition-colors duration-300"><Instagram className="w-6 h-6" /></a>
-                <a href="https://linktr.ee/wncciitb"   className="text-gray-400 hover:text-cyan-400 transition-colors duration-300"><Link     className="w-6 h-6" /></a>
-              </div>
-            </div>
-          </div>
-          
-          <div className="container mx-auto mt-8 pt-8 border-t border-cyan-500/20 text-center">
-            <p className="text-gray-400">© 2024 Web and Coding Club, IIT Bombay. All rights reserved.</p>
-          </div>
-        </footer>
-      </div>
-    );
+  // include SOC in your nav items
+  const navItems = ["Home", "Events", "Resources", "Team", "Contact", "SOC"];
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (isOpen) {
+        setIsOpen(false);
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [isOpen]);
+
+  const handleNavClick = (item) => {
+    if (item === "SOC") {
+      // open SOC site in new tab
+      window.open("https://wncc-soc.tech-iitb.org/", "_blank", "noopener");
+      setIsOpen(false);
+    } else {
+      setCurrentPage(item);
+      setIsOpen(false);
+    }
   };
-  
-  export default WebsitePreview;
+
+  const PageComponent = {
+    Home: HomePage,
+    Events: EventsPage,
+    Resources: ResourcesPage,
+    Team: TeamPage,
+    Contact: ContactPage,
+  }[currentPage];
+
+  const quickLinks = [
+    { title: "Contact Us", url: "" },
+    { title: "Projects", url: "https://github.com/orgs/wncc/repositories" },
+    { title: "Blog", url: "https://www.technewsworld.com/section/tech-blog" },
+  ];
+
+  return (
+    <div className="min-h-screen bg-gray-900 text-white">
+      <nav className="bg-gray-900/50 backdrop-blur-lg border-b border-cyan-500/20 p-4 sticky top-0 z-50">
+        <div className="container mx-auto flex justify-between items-center">
+          <div className="text-cyan-400">
+            <img
+              src="/Images/Logo.png"
+              alt="WnCC IITB Logo"
+              className="h-8 w-auto"
+            />
+          </div>
+
+          {/* Hamburger menu button */}
+          <div className="md:hidden">
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="text-cyan-400 focus:outline-none"
+            >
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d={
+                    isOpen
+                      ? "M6 18L18 6M6 6l12 12"
+                      : "M4 6h16M4 12h16m-7 6h7"
+                  }
+                />
+              </svg>
+            </button>
+          </div>
+
+          {/* Desktop Navbar */}
+          <div className="hidden md:flex gap-6">
+            {navItems.map((item) => (
+              <button
+                key={item}
+                onClick={() => handleNavClick(item)}
+                className={`px-4 py-2 rounded-lg transition-colors duration-300 ${
+                  currentPage === item
+                    ? "bg-cyan-500/20 text-cyan-400"
+                    : "text-gray-300 hover:text-cyan-400"
+                }`}
+              >
+                {item}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Mobile Navbar (Hamburger Menu) */}
+        {isOpen && (
+          <div className="absolute bg-gray-800/90 w-full left-0 top-full flex flex-col gap-4 p-4 border-t border-cyan-500/20">
+            {navItems.map((item) => (
+              <button
+                key={item}
+                onClick={() => handleNavClick(item)}
+                className={`px-4 py-2 rounded-lg transition-colors duration-300 ${
+                  currentPage === item
+                    ? "bg-cyan-500/20 text-cyan-400"
+                    : "text-gray-300 hover:text-cyan-400"
+                }`}
+              >
+                {item}
+              </button>
+            ))}
+          </div>
+        )}
+      </nav>
+
+      <main className="container mx-auto px-4 py-8">
+        <PageComponent />
+      </main>
+
+      <footer className="bg-gray-900/50 backdrop-blur-lg border-t border-cyan-500/20 p-8 mt-16">
+        <div className="container mx-auto grid md:grid-cols-4 gap-8">
+          {/* Quick Links */}
+          <div>
+            <h3 className="text-xl font-bold text-cyan-400 mb-4">
+              Quick Links
+            </h3>
+            <ul className="space-y-2">
+              {quickLinks.map((link, i) => (
+                <li key={i}>
+                  <a
+                    href={link.url}
+                    className="text-gray-400 hover:text-cyan-400 transition-colors duration-300"
+                  >
+                    {link.title}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Contact Info */}
+          <div>
+            <h3 className="text-xl font-bold text-cyan-400 mb-4">
+              Contact
+            </h3>
+            <ul className="space-y-2 text-gray-400">
+              <li>wncc@iitb.ac.in</li>
+              <li>Student Activity Center</li>
+              <li>IIT Bombay, Powai</li>
+              <li>Mumbai - 400076</li>
+            </ul>
+          </div>
+
+          {/* Social Links */}
+          <div>
+            <h3 className="text-xl font-bold text-cyan-400 mb-4">
+              Connect
+            </h3>
+            <div className="flex gap-4">
+              <a
+                href="https://github.com/wncc"
+                className="text-gray-400 hover:text-cyan-400 transition-colors duration-300"
+              >
+                <Github className="w-6 h-6" />
+              </a>
+              <a
+                href="https://x.com/i/flow/login?redirect_after_login=%2Fwncc_iitb"
+                className="text-gray-400 hover:text-cyan-400 transition-colors duration-300"
+              >
+                <Twitter className="w-6 h-6" />
+              </a>
+              <a
+                href="https://www.linkedin.com/company/wncc-iitb/posts/?feedView=all"
+                className="text-gray-400 hover:text-cyan-400 transition-colors duration-300"
+              >
+                <Linkedin className="w-6 h-6" />
+              </a>
+              <a
+                href="https://www.instagram.com/wncc.iitb/"
+                className="text-gray-400 hover:text-cyan-400 transition-colors duration-300"
+              >
+                <Instagram className="w-6 h-6" />
+              </a>
+              <a
+                href="https://linktr.ee/wncciitb"
+                className="text-gray-400 hover:text-cyan-400 transition-colors duration-300"
+              >
+                <Link className="w-6 h-6" />
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div className="container mx-auto mt-8 pt-8 border-t border-cyan-500/20 text-center">
+          <p className="text-gray-400">
+            © 2024 Web and Coding Club, IIT Bombay. All rights reserved.
+          </p>
+        </div>
+      </footer>
+    </div>
+  );
+};
+
+export default WebsitePreview;
