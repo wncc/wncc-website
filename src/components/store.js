@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 
 
@@ -400,11 +401,13 @@ const LiveCodeEditor = () => {
 
 // Activity Feed component for HomePage
 const ActivityFeed = () => {
-  const activities = [
-    { text: "Succesful Completion of Hello-FOSS 2024", time: "2 days ago" },
-    { text: "WnCC Website launch", time: "1 day ago" },
-    { text: "IIT Bombay bags Second Place in Inter-IIT Tech 2024", time: "10 days ago" }
-  ];
+    const activities = [
+        { text: "Season of Code Begins", time: " 21 May" },
+        { text: "Launch of DSA Bootcamp", time: "1st June" },
+        { text: "Kickoff of the Learners’ Space", time: "9 June" }
+
+
+    ];
 
   return (
     <div className="bg-gray-800/50 p-4 rounded-xl">
@@ -664,10 +667,10 @@ const HomePage = () => {
       </div>
 
       <div className="grid md:grid-cols-4 gap-6">
-        <StatsCounter label="SOC 2024 Participation" endValue={1200} />
+        <StatsCounter label="SOC 2025 Participation" endValue={1700} />
         <StatsCounter label="Wiki Articles" endValue={110} />
         <StatsCounter label="Github Repos" endValue={80} />
-        <StatsCounter label="Years since fomation" endValue={17} />
+        <StatsCounter label="Years since fomation" endValue={18} />
       </div>
 
       <div className="grid md:grid-cols-3 gap-8 mb-12">
@@ -778,24 +781,31 @@ const EventTimeline = () => {
   const timelineItems = [
     {
       title: "Season Kickoff",
-      date: "January 2024",
-      description: "New season begins with 101 sessions",
+      date: "April 2025",
+      description: "The new season kicks off with lots of enthusiasm",
       icon: <Star className="w-6 h-6" />,
       color: "from-green-500 to-emerald-700"
     },
     {
-      title: "GC Week",
-      date: "Jan End to Feb Mid 2024",
-      description: "2 Week-long 2 GCs-long",
+      title: "Seasons of Code",
+      date: "May end to July",
+      description: "Flagship Event,8 Week-long",
       icon: <Cpu className="w-6 h-6" />,
       color: "from-blue-500 to-indigo-700"
     },
     {
-      title: "Codewars",
-      date: "March 2024",
-      description: "10 days coding/strategy wars. Flagship event for Freshers",
+      title: "DSA Bootcamp",
+      date: "1st June",
+      description: "8-week Journey to master DSA!",
       icon: <Code className="w-6 h-6" />,
       color: "from-purple-500 to-pink-700"
+    },
+    {
+      title: "Learners' Space",
+      date: "9th June",
+      description: "4-week long | Igniting passion, elevating skills,& unlocking the future of tech!",
+      icon: <Code className="w-6 h-6" />,
+      color: "from-cyan-500 to-indigo-700" 
     }
   ];
 
@@ -842,37 +852,37 @@ const EventsPage = () => {
   
   const events = [
     {
-      title: 'Algo GC',
-      date: '2025-01-28T20:00:00Z',
-      endDate: '2025-01-10T20:30:00Z',
-      description: 'Annual Algo General Championship, part of Tech GC.',
+      title: 'AI ML Hackathon',
+      date: '2025-06-24T20:00:00Z',
+      endDate: '2025-06-30T20:30:00Z',
+      description: 'One of the biggest Hackathon in collab with  KCDH. ',
       location: 'IIT Bombay Campus',
       icon: <Calendar className="w-16 h-16 text-cyan-400" />,
-      category: 'competition',
+      category: 'Hackathon',
       participants: '',
-      prize: 'GC Points'
+    //   prize: 'GC Points'
     },
     {
-      title: 'Machine Learning GC',
-      date: '2025-02-10T20:00:00Z',
-      endDate: '2025-02-10T20:00:00Z',
-      description: 'Annual ML General Championship, part of Tech GC.',
+      title: 'Coding Circuit',
+      date: '2025-07-30T20:00:00Z',
+      endDate: '2025-08-30T20:00:00Z',
+      description: 'An electrifying, insti-wide contest testing the limits of DSA skills.',
       location: 'IIT Bombay Campus',
       icon: <Laptop className="w-16 h-16 text-cyan-400" />,
       category: 'competition',
       participants: '',
-      prize: 'GC Points'
+    //   prize: 'GC Points'
     },
     {
-      title: 'Codewars',
-      date: '2025-03-10T00:00:00Z',
-      endDate: '2025-04-20T00:00:00Z',
-      description: 'Our flagship event for freshers. A strategy and coding competition.',
+      title: 'Fresher Orientation',
+      date: '2025-09-25T00:00:00Z',
+      endDate: '2025-09-28T00:00:00Z',
+      description: "Insti's oldest tech legacy meets fresh energy — fun coding events, chill scenes, and the biggest club vibe!",
       location: 'IIT Bombay Campus',
       icon: <Lightbulb className="w-16 h-16 text-cyan-400" />,
-      category: 'competition',
+      category: 'Orientation',
       participants: '',
-      prize: 'Cash Prize'
+    //   prize: 'Cash Prize'
     }
   ];
 
@@ -1410,203 +1420,196 @@ const TeamPage = () => {
   const [typingText, setTypingText] = useState({});
 
   const teamMembers = [
-    {
-      name: 'Divyanshu Suman',
-      role: 'Manager',
-      icon: <UserCheck className="w-12 h-12 text-cyan-400" />,
-      bio: '',
-      skills: ['AI/ML', 'System Architecture', 'Team Leadership'],
-      
-      social: {
-        github: '#',
-        twitter: '#',
-        linkedin: '#'
-      },
-      
-      imageUrl: 'Images/Divyanshu.jpg'
-    },
-    {
-      name: 'Shahu Patil', 
-      role: 'Manager',
-      icon: <Users className="w-12 h-12 text-cyan-400" />,
-      bio: '',
-      skills: ['ML (both CV, NLP)', 'App dev','Chess'],
-      
-      social: {
-        github: 'https://github.com/ShahuPatil07',
-        twitter: 'https://www.instagram.com/shahupatil07/',
-        linkedin: 'https://www.linkedin.com/in/shahu-patil-033a24279/'
-      },
-      
-      imageUrl: 'Images/shahu.jpeg',
-      chess: {
-        rating: 1700,
-        lichessUsername: 'ShahuPatil07'
-      }
-    },
-    {
-      name: 'Veeraditya Karan Parakh',
-      role: 'Convener',
-      icon: <MessageCircle className="w-12 h-12 text-cyan-400" />,
-      bio: '',
-      skills: ['Machine Learning', 'Web-Dev', 'Data Science', 'Chess'],
-      
-      social: {
-        github: 'https://github.com/veeradi34',
-        twitter: 'https://www.instagram.com/veer3_1/',
-        linkedin: 'https://www.linkedin.com/in/veeraditya-karan-parakh-68a869282/'
-      },
-      
-      imageUrl: './Images/IMG-20240422-WA0031.jpg', 
-      chess: {
-        rating: 1850,
-        lichessUsername: 'veer3106'
-      }
-    },
-    {
-      name: 'Samarth Aggarwal',
-      role: 'Convener',
-      icon: <MessageCircle className="w-12 h-12 text-cyan-400" />,
-      bio: '',
-      skills: ['Machine Learning', 'Quant', 'Chess'],
-      
-      social: {
-        github: 'https://github.com/samarthagg1',
-        twitter: 'https://www.instagram.com/samarthagg1/',
-        linkedin: 'https://www.linkedin.com/in/samarth-aggarwal-1a9839284/'
-      },
-      
-      imageUrl: 'Images/samarth1.jpg',
-      chess: {
-        rating: 1050,
-        lichessUsername: 'veer3106'
-      }
-    },
-    {
-      name: 'Lopamudra Biswal',
-      role: 'Convener',
-      icon: <MessageCircle className="w-12 h-12 text-cyan-400" />,
-      bio:'',
-      skills: ['Machine learning','Computer vision','RAG',],
-      
-      social: {
-        github: 'https://github.com/LoPA607',
-        twitter: '#',
-        linkedin: 'http://linkedin.com/in/lopamudra-biswal-1a4266294'
-      },
-      
-      imageUrl: 'Images/Lopamudra.png'
-    },
-    {
-      name: 'Priyam Raj',
-      role: 'Convener',
-      icon: <MessageCircle className="w-12 h-12 text-cyan-400" />,
-      bio:'',
-      skills: ['Machine Learning ', 'Web Development', 'Django','QGIS', 'Postgresql'],
-      
-      social: {
-        github: 'https://github.com/Priyam12345-cloud',
-        twitter: 'https://www.instagram.com/priyamraj572/profilecard/?igsh=MnFpamY5M2o2eDMy',
-        linkedin: ' https://www.linkedin.com/in/priyam-raj-b4598a282?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app'
-      },
-      
-      imageUrl: 'Images/Priyam.jpg'
-    },
-    {
-      name: 'Tushar Roy',
-      role: 'Convener',
-      icon: <MessageCircle className="w-12 h-12 text-cyan-400" />,
-      bio:'',
-      skills: ['MachineLearning','ComputerVision','RAG-LLM'],
-      
-      social: {
-        github: 'https://github.com/tushroy81',
-        twitter: '#',
-        linkedin: '#'
-      },
-      
-      imageUrl: 'Images/tushar.jpg'
-    },
-    {
-      name: 'Param Pabari',
-      role: 'Convener',
-      icon: <MessageCircle className="w-12 h-12 text-cyan-400" />,
-      bio:'',
-      skills: ['Machine Learning ','Django-REST','Solidity'],
-      
-      social: {
-        github: 'http://www.linkedin.com/in/param-pabari',
-        twitter: 'https://www.instagram.com/param.svg/',
-        linkedin: 'http://www.linkedin.com/in/param-pabari'
-      },
-      
-      imageUrl: 'Images/Param.jpg'
-    },
-    {
-      name: 'Husain Batterywala',
-      role: 'Convener',
-      icon: <MessageCircle className="w-12 h-12 text-cyan-400" />,
-      bio:'',
-      skills: ['Competitive Programming','DSA','Parallel Programming','Linear Programming','Web Development','Machine Learning'],
-      
-      social: {
-        github: 'https://github.com/husain2088',
-        twitter: 'https://www.instagram.com/who_sane.9/',
-        linkedin: 'https://www.linkedin.com/in/husain-batterywala-113266282/'
-      },
-      
-      imageUrl: 'Images/Husainsz1.jpg'
-    },
-    {
-      name: 'Shresth Keshari',
-      role: 'Convener',
-      icon: <MessageCircle className="w-12 h-12 text-cyan-400" />,
-      bio:'',
-      skills: ['Applied Machine Learning', 'Embedded Systems', 'Embedded C','C++','Django', 'React Js', 'NodeJs'],
-      
-      social: {
-        github: 'https://github.com/shresth-keshari',
-        twitter: 'https://www.instagram.com/social.lonewolf/profilecard/?igsh=MWlvdTA3b3NlcmN1Ng==',
-        linkedin: 'https://www.linkedin.com/in/shresth-keshari-626b2a267?fbclid=PAY2xjawHR2WNleHRuA2FlbQIxMQABprdnb6OIlAkXWDlyB5-p7GSVTfa63JNglAyQSse4Cpt4yOp4Md7k5T-qjw_aem_tq8epkqby1COBksqbqgSjw'
-      },
-      
-      imageUrl: 'Images/shresthk.jpg'
-    },
-    {
-      name: 'Pratyaksh Bharadwaj',
-      role: 'Convener',
-      icon: <MessageCircle className="w-12 h-12 text-cyan-400" />,
-      bio:'',
-      skills: ['Machine Learning ','Web-Dev'],
-      
-      social: {
-        github: 'https://github.com/Pratyaksh2309',
-        twitter: 'https://www.instagram.com/pratyaksh._.23?igsh=MXF4emhsaGQ4cXplZw==',
-        linkedin: 'https://www.linkedin.com/in/pratyaksh-bhardwaj-b2309ar?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app'
-      },
-      
-      imageUrl: 'Images/Pratyaksh.jpg'
-    },
-    {
-      name: 'Aryan Kayanade',
-      role: 'Convener',
-      icon: <MessageCircle className="w-12 h-12 text-cyan-400" />,
-      bio:'',
-      skills: ['Machine Learning ','Deep Learning','Computer Vision'],
-      
-      social: {
-        github: 'https://github.com/TheDarKnight50',
-        twitter: '#',
-        linkedin: 'https://www.linkedin.com/in/aryan-kayande-6102a5284/'
-      },
-      
-      imageUrl: 'Images/Aryan.jpg',
-      chess: {
-        rating: 1750,
-        lichessUsername: 'TheDarkKinght_50'
-      }
-    }
-  ];
+          {
+              name: "Veeraditya Karan Parakh",
+              role: "Manager",
+              icon: <MessageCircle className="w-12 h-12 text-cyan-400" />,
+              bio: "Hello everyone! I'm Veeraditya, a third-year B.Tech student at IIT Bombay, majoring in Energy science and Engineering. I'm currently the Manager of the Web and Coding Club (WnCC), where I lead initiatives, organize coding sessions, and mentor juniors across various technical domains.\n\n I'm a passionate coder who has been exploring the AI/ML domain for quite some time, constantly learning and building along the way. Outside of tech, I enjoy playing chess, football, and table tennis, and love spending time with friends.",
+              skills: ["AI/ML", "Web-Dev", "Data Science", "Chess"],
+  
+              social: {
+                  github: "https://github.com/veeradi34",
+                  twitter: "https://www.instagram.com/veer3_1/",
+                  linkedin:
+                      "https://www.linkedin.com/in/veeraditya-karan-parakh-68a869282/",
+                  instagram: "https://www.instagram.com/veer3_1?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+              },
+  
+              imageUrl: "./Images/VEER.jpg",
+              chess: {
+                  rating: 1850,
+                  lichessUsername: "veer3106",
+              },
+          },
+          {
+              name: "Pratyaksh Bharadwaj",
+              role: "Manager",
+              icon: <MessageCircle className="w-12 h-12 text-cyan-400" />,
+              bio: "Hello everyone! I'm Pratyaksh Bhardwaj, a third-year B.Tech student at IIT Bombay, majoring in Metallurgy and Material Science with a minor in Data Science. I'm currently the Manager of the Web and Coding Club, where I lead projects, conduct sessions, and mentor my convenors across various domains.\n\nI'm an enthusiastic coder and was part of the Inter-IIT Tech Contingent in my second year. Outside of tech, I enjoy playing basketball, badminton, and spending time with friends.",
+              skills: [
+                  "Machine Learning ",
+                  "Web-Dev",
+                  "C++",
+                  "Django",
+                  "React Js",
+                  "NodeJs",
+              ],
+  
+              social: {
+                  github: "https://github.com/Pratyaksh2309",
+                  twitter:
+                      "https://www.instagram.com/pratyaksh._.23?igsh=MXF4emhsaGQ4cXplZw==",
+                  linkedin:
+                      "https://www.linkedin.com/in/pratyaksh-bhardwaj-b2309ar?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
+                  instagram: "https://www.instagram.com/pratyaksh._.23?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+  
+              },
+  
+              imageUrl: "./Images/Pratyaksh.jpg",
+          },
+          {
+              name: "Abhishek Upadhya",
+              role: "Convener",
+              icon: <MessageCircle className="w-12 h-12 text-cyan-400" />,
+              bio: "Hello everyone! I'm Abhishek, a second-year B.Tech student in the Electrical Engineering department at IIT Bombay. I currently serve as a Convener of the Web and Coding Club, where I actively contribute to projects and initiatives aimed at fostering a strong coding culture on campus.\n\nI'm passionate about solving real-world problems and understanding how things work at the most fundamental level. I’m also curious about the mechanics of financial markets and how they operate. Outside of tech, I enjoy going on long cycle rides and playing table tennis. I look forward to contributing to the community in meaningful and impactful ways.",
+              skills: ["C++", "Java", "Python", "Computer Vision", "Equity Analysis"],
+              social: {
+                  github: "https://github.com/AbhishekU05",
+                  linkedIn: "https://in.linkedin.com/in/abhishek-upadhya-647a58257",
+                  insta: "https://www.instagram.com/abhisheku05?igsh=MXgxdjcxZWF6cDBsYw=="
+              },
+              imageUrl: "./Images/ABHISHEK.png",
+          },
+          {
+              name: "Aashna Pulla",
+              role: "Convener",
+              icon: <MessageCircle className="w-12 h-12 text-cyan-400" />,
+              bio: "Hey everyone! I'm Aashna Pulla, a second-year Computer Science student at IIT Bombay. I'm also a Convener at the Web and Coding Club, where I help run workshops, plan events, and keep the coding culture on campus alive and buzzing.\n\n Outside the tech space, I’m into badminton and absolutely love escape rooms—I’ll take any chance I get to go for one! In my downtime, you’ll probably find me playing the guitar, watching anime, or catching up on sleep (the most underrated hobby ever, honestly).",
+              skills: ["Machine Learning", "Computer Vision", "DSA", "C++"],
+              social: {
+                  github: "https://github.com/aashnapulla",
+                  linkedin: "https://www.linkedin.com/me?trk=p_mwlite_feed-secondary_nav",
+                  insta: "https://www.instagram.com/aashna.p0911/"
+              },
+              imageUrl: "./Images/AASHNA.png",
+          }
+  
+          {
+              name: "Mrigank Goel",
+              role: "Convener",
+              icon: <MessageCircle className="w-12 h-12 text-cyan-400" />,
+              bio: "CSE undergrad, curious about tech and passionate about problem-solving.",
+              skills: ["Machine Learning", "Artificial Intelligence", "Competitive Programming", "C++", "Python"],
+              social: {
+                  github: "https://github.com/MrigankGoel",
+                  linkedin: "https://www.linkedin.com/in/mrigank-goel-327427336?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
+                  insta: "https://www.instagram.com/mrigank_goel.964/?utm_source=ig_web_button_share_sheet"
+              },
+              imageUrl: "./Images/ABHISHEK.png",
+          }
+          ,
+          {
+              name: "Shivansh Niranjan",
+              role: "Convener",
+              icon: <MessageCircle className="w-12 h-12 text-cyan-400" />,
+              bio: "Hey folks, I’m Shivansh Niranjan, a sophomore at IIT Bombay pursuing Energy Science and Engineering. As the Convener of the Web and Coding Club, I actively contribute to various projects, organize sessions, and conduct courses, helping learners clear their doubts.\n\nI'm enthusiastic about exploring diverse technological domains and their integration with fields like entrepreneurship and sustainability. Beyond academics, I enjoy playing cricket, badminton, and sketching. I'm also deeply passionate about sustainability and actively contribute through efforts like tree planting.",
+              skills: ["HTML", "CSS", "JavaScript", "React", "Django", "C++", "Python"],
+              social: {
+                  github: "https://github.com/Raghav789-code",
+                  linkedIn: "https://www.linkedin.com/in/shivansh-niranjan-71766a1ba",
+                  insta: "https://www.instagram.com/shivansh.niranjan.58?igsh=MTcwa2FmOGFmcThyag=="
+              },
+              imageUrl: "./Images/shivansh.jpeg",
+          },
+          {
+              name: "Riddhi Yeola",
+              role: "Convener",
+              icon: <MessageCircle className="w-12 h-12 text-cyan-400" />,
+              bio: "Hello everyone! I'm Riddhi Yeola, a second-year B.Tech student in civil engineering at IIT Bombay. I'm currently a Convener at the Web and Coding Club, where I engage in a variety of technical initiatives, assistant coordinating workshops and events and actively support the development of a vibrant coding community on campus.\n\nI am deeply driven by curiosity of problem solving and development always exploring innovative ways technology can enhance everyday life outside the digital relief I play athletics, basketball and badminton. And I love long drives, trips and trekking.",
+              skills: ["Machine Learning (CV,NLP)", "DSA", "C++"],
+              social: {
+                  github: "https://github.com/Riddhiyeola",
+                  linkedi: "https://www.linkedin.com/in/riddhi-yeola-790b03242?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
+                  insta: "https://www.instagram.com/mrigank_goel.964/?utm_source=ig_web_button_share_sheet"
+              },
+              imageUrl: "./Images/RIDDHI.png",
+          },
+          {
+              name: "Utkarsh Tanwar",
+              role: "Convener",
+              icon: <MessageCircle className="w-12 h-12 text-cyan-400" />,
+              bio: "Hello everyone! I'm Utkarsh Tanwar,a second-year B.Tech student at IIT Bombayr of the Web and Coding Club, where I contribute to club initiatives, coordinate sessions, and work on exciting tech projects with fellow enthusiasts.\n\nOutside the world of coding, I love swimming, reading, playing badminton and tennis, and trekking through nature. I'm always eager to explore new places and experience the beauty the world has to offer.\n\nLooking forward to connecting and learning together.",
+              skills: [
+                  "Python",
+                  "C++",
+                  "JavaScript",
+                  "Web Development",
+                  "Machine Learning",
+                  "Django",
+                  "Node.js",
+                  "React.js"
+              ],
+              social: {
+                  github: "https://github.com/icodeforlife24",
+                  linkedin: "https://www.linkedin.com/in/utkarsh-tanwar-400b52256?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
+                  insta: "https://www.instagram.com/utkarsh_tanwar77?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+              },
+              imageUrl: "./Images/UTKARSH.png",
+          },
+          {
+              name: "Avnish Vijay More",
+              role: "Convener",
+              icon: <MessageCircle className="w-12 h-12 text-cyan-400" />,
+              bio: "A Civil Engineering undergrad with a keen interest in data science, machine learning, finance and solving real-world challenges.",
+              skills: ["Machine Learning", "Deep Learning", "NLP", "Football"],
+              social: {
+                  github: "https://github.com/wejhdy",
+                  linkedin: "www.linkedin.com/in/avnish-more",
+                  insta: "https://www.instagram.com/avn1sh.__/"
+              },
+              imageUrl: "./Images/AVNISH.png",
+          },
+  
+  
+          {
+              name: "Mithra Bijumon",
+              role: "Convener",
+              icon: <MessageCircle className="w-12 h-12 text-cyan-400" />,
+              bio: "Hello everyone!\n\nI'm Mithra Bijumon, a second-year B.Tech student in Aerospace Engineering at IIT Bombay. I’m currently part of the Web and Coding Club, where I contribute to technical projects, event coordination, and help conduct workshops and design initiatives aimed at making the coding scene on campus more exciting and accessible.\n\nI'm passionate about problem-solving and full-stack development. I love exploring how design and technology intersect to create engaging user experiences, and I'm always up for a new challenge.\n\nOutside the world of code, I find joy in swimming, badminton, and exploring new places. I'm also someone who values independence and loves working hands-on—whether it’s through coding, brainstorming ideas, or just figuring things out solo or with help.",
+              skills: ["Machine Learning", "Web Development", "App Development", "Generative AI", "Python", "C++"],
+              social: {
+                  github: "https://github.com/MithraBijumon",
+                  linkedIn: "http://www.linkedin.com/in/mithra-bijumon-059104301",
+                  instagram: "https://www.instagram.com/mithra.bijumon/"
+              },
+              imageUrl: "./Images/MITHRA.png",
+          },
+          {
+              name: "Nishil Seth Gupta",
+              role: "Convener",
+              icon: <MessageCircle className="w-12 h-12 text-cyan-400" />,
+              bio: "Hello everyone! I'm Nishil, a second-year B.Tech student in the Civil Engineering department at IIT Bombay and currently a Convener at the Web and Coding Club. I’m involved in driving club initiatives, conducting sessions, and collaborating on projects to promote coding in our campus. My primary interest lies in problem-solving. I enjoy building things from scratch, understanding systems deeply, and sharing that process with others. Outside of tech, I’m a passionate singer, play the guitar, and often spend time painting. I'm always open to new ideas, new people, and new challenges—and I look forward to contributing to the community in meaningful ways.",
+              skills: ["C++", "Python", "DSA", "Design"],
+              social: {
+                  github: "https://github.com/Nishil-the-seth",
+                  linkedin: "https://www.linkedin.com/in/verynise/",
+                  email: "Nishil.wncc@gmail.com"
+              },
+              imageUrl: "./Images/NISHIL.png",
+          },
+          {
+              name: "Sarthak Somani",
+              role: "Convener",
+              icon: <MessageCircle className="w-12 h-12 text-cyan-400" />,
+              bio: "",
+              skills: ["Machine Learning", "Data Analytics", "C++", "Python", "R", "SQL"],
+              social: {
+                  github: "https://github.com/sarthak-somani",
+                  linkedin: "https://www.linkedin.com/in/sarthak-somani/",
+                  insta: ""
+              },
+              imageUrl: "./Images/SHARTHAK.png",
+          }];
 
   useEffect(() => {
     const handleMouseMove = (e) => {

@@ -1,7 +1,9 @@
-import React, { useState, useEffect, useRef } from "react";
 
-import {
-  Code,
+import React, { useState, useEffect, useRef } from 'react';
+
+
+import { 
+  Code, 
   Laptop,
   Cpu,
   GitBranch,
@@ -37,14 +39,14 @@ import {
   Terminal,
   Database,
   Code2,
-  Link
-} from "lucide-react";
+  
+  
+} from 'lucide-react';
 
-import axios from 'axios';
 
 // Card component for consistent styling
 const Card = ({ children, className = "", onMouseEnter, onMouseLeave }) => (
-  <div
+  <div 
     className={`bg-gray-800/50 backdrop-blur p-6 rounded-xl border border-cyan-500/20 transition-all duration-300 hover:shadow-lg hover:border-cyan-500/40 ${className}`}
     onMouseEnter={onMouseEnter}
     onMouseLeave={onMouseLeave}
@@ -56,159 +58,40 @@ const generateCalendarUrl = (event) => {
   const encodedText = encodeURIComponent(event.title);
   const encodedDetails = encodeURIComponent(event.description);
   const encodedLocation = encodeURIComponent(event.location);
-  const startDate = new Date(event.date)
-    .toISOString()
-    .replace(/-|:|\.\d\d\d/g, "");
-  const endDate = new Date(event.endDate)
-    .toISOString()
-    .replace(/-|:|\.\d\d\d/g, "");
-
+  const startDate = new Date(event.date).toISOString().replace(/-|:|\.\d\d\d/g, '');
+  const endDate = new Date(event.endDate).toISOString().replace(/-|:|\.\d\d\d/g, '');
+  
   return `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodedText}&details=${encodedDetails}&location=${encodedLocation}&dates=${startDate}/${endDate}`;
 };
 const TechNewsFeed = () => {
   const [activeIndex, setActiveIndex] = useState(0);
-  const [news, setNews] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const news = [
+    {
+      title: "V2A: Google DeepMind's New AI Model",
+      date: "Latest News",
+      category: "AI",
+      description: "Google DeepMind introduces V2A, a groundbreaking AI model capable of generating dialogue and soundtracks for videos, pushing the boundaries of audio-visual AI technology."
+    },
+    {
+      title: "ChatGPT Launches WhatsApp Hotline",
+      date: "Breaking News",
+      category: "AI Services",
+      description: "OpenAI introduces 1800-ChatGPT, a new hotline feature available on WhatsApp for chat and calls. Users can access the service free for the first 15 minutes."
+    },
+    {
+      title: "Laser Beams Cast Their Own Shadows",
+      date: "Scientific Discovery",
+      category: "Physics",
+      description: "In a fascinating scientific breakthrough, researchers have discovered that laser beams possess the capability to cast their own shadows, challenging our understanding of light behavior."
+    }
+  ];
 
   useEffect(() => {
-    const fetchAndCacheNews = async () => {
-      try {
-        // Check if we have cached news and if it's still valid (less than 24 hours old)
-        const cachedData = localStorage.getItem('techNewsCache');
-        const cachedTimestamp = localStorage.getItem('techNewsCacheTimestamp');
-        const now = new Date().getTime();
-
-        if (cachedData && cachedTimestamp) {
-          const timeDiff = now - parseInt(cachedTimestamp);
-          const hoursElapsed = timeDiff / (1000 * 60 * 60);
-
-          // If cache is less than 24 hours old, use it
-          if (hoursElapsed < 24) {
-            setNews(JSON.parse(cachedData));
-            setLoading(false);
-            return;
-          }
-        }
-
-        // If no cache or cache is old, fetch new data
-        const response = await axios.get(
-          'https://gnews.io/api/v4/search', {
-            params: {
-              q: 'technology',
-              lang: 'en',
-              country: 'us',
-              max: 10,
-              apikey: 'd506df354490ba89a3d579e4d84dd826'
-            }
-          }
-        );
-
-        const formattedNews = response.data.articles.map(article => ({
-          title: article.title,
-          date: new Date(article.publishedAt).toLocaleDateString(),
-          category: 'Tech',
-          description: article.description,
-          url: article.url
-        }));
-
-        // Cache the new data
-        localStorage.setItem('techNewsCache', JSON.stringify(formattedNews));
-        localStorage.setItem('techNewsCacheTimestamp', now.toString());
-
-        setNews(formattedNews);
-        setLoading(false);
-      } catch (err) {
-        console.error('Error fetching news:', err);
-        setError('Failed to fetch news');
-        setLoading(false);
-
-        // Try to use cached data even if it's old when API fails
-        const cachedData = localStorage.getItem('techNewsCache');
-        if (cachedData) {
-          setNews(JSON.parse(cachedData));
-        } else {
-          // Fallback to sample news if no cache and API fails
-          setNews([
-            {
-              title: "Error fetching live news",
-              date: "Now",
-              category: "System",
-              description: "Please check your API key and connection. Displaying sample news as fallback.",
-              url: "#"
-            }
-          ]);
-        }
-      }
-    };
-
-    fetchAndCacheNews();
-
-    // Set up periodic check for cache age
-    const checkCacheInterval = setInterval(() => {
-      const cachedTimestamp = localStorage.getItem('techNewsCacheTimestamp');
-      const now = new Date().getTime();
-
-      if (cachedTimestamp) {
-        const timeDiff = now - parseInt(cachedTimestamp);
-        const hoursElapsed = timeDiff / (1000 * 60 * 60);
-
-        // If cache is more than 24 hours old, fetch new data
-        if (hoursElapsed >= 24) {
-          fetchAndCacheNews();
-        }
-      }
-    }, 1000 * 60 * 60); // Check every hour
-
-    // Also check when tab becomes visible
-    const handleVisibilityChange = () => {
-      if (document.visibilityState === 'visible') {
-        const cachedTimestamp = localStorage.getItem('techNewsCacheTimestamp');
-        const now = new Date().getTime();
-
-        if (cachedTimestamp) {
-          const timeDiff = now - parseInt(cachedTimestamp);
-          const hoursElapsed = timeDiff / (1000 * 60 * 60);
-
-          if (hoursElapsed >= 24) {
-            fetchAndCacheNews();
-          }
-        }
-      }
-    };
-
-    document.addEventListener('visibilitychange', handleVisibilityChange);
-
-    // Cleanup
-    return () => {
-      clearInterval(checkCacheInterval);
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
-    };
-  }, []);
-
-  useEffect(() => {
-    if (news.length === 0) return;
-    
     const timer = setInterval(() => {
       setActiveIndex((current) => (current + 1) % news.length);
     }, 5000);
-    
     return () => clearInterval(timer);
-  }, [news.length]);
-
-  const handleReadMore = (url) => {
-    window.open(url, '_blank');
-  };
-
-  if (loading) {
-    return (
-      <Card className="p-6 bg-gray-900/50 backdrop-blur border-cyan-500/20">
-        <div className="flex items-center justify-center h-48">
-          <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-cyan-400"></div>
-        </div>
-      </Card>
-    );
-  }
+  }, []);
 
   return (
     <Card className="p-6 bg-gray-900/50 backdrop-blur border-cyan-500/20">
@@ -231,11 +114,8 @@ const TechNewsFeed = () => {
             </span>
             <h4 className="text-lg font-semibold text-white mt-2 mb-1">{item.title}</h4>
             <p className="text-gray-400 text-sm mb-2">{item.date}</p>
-            <p className="text-gray-300 line-clamp-2">{item.description}</p>
-            <button 
-              onClick={() => handleReadMore(item.url)}
-              className="mt-4 flex items-center gap-2 text-cyan-400 hover:text-cyan-300 transition-colors"
-            >
+            <p className="text-gray-300">{item.description}</p>
+            <button className="mt-4 flex items-center gap-2 text-cyan-400 hover:text-cyan-300 transition-colors">
               Read More <ArrowRight className="w-4 h-4" />
             </button>
           </div>
@@ -257,13 +137,12 @@ const TechNewsFeed = () => {
     </Card>
   );
 };
-
 const ParticleEffect = () => {
   const canvasRef = useRef(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    const ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext('2d');
     const particles = [];
 
     canvas.width = window.innerWidth;
@@ -286,7 +165,7 @@ const ParticleEffect = () => {
       }
 
       draw() {
-        ctx.fillStyle = "rgba(103, 232, 249, 0.5)";
+        ctx.fillStyle = 'rgba(103, 232, 249, 0.5)';
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
         ctx.fill();
@@ -299,7 +178,7 @@ const ParticleEffect = () => {
 
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      particles.forEach((particle) => {
+      particles.forEach(particle => {
         particle.update();
         particle.draw();
       });
@@ -349,19 +228,17 @@ const StatsCounter = ({ label, endValue, duration = 2000 }) => {
   );
 };
 const LiveCodeEditor = () => {
-  const [code, setCode] = useState("");
-  const [output, setOutput] = useState("");
-  const [language, setLanguage] = useState("javascript");
+  const [code, setCode] = useState('');
+  const [output, setOutput] = useState('');
+  const [language, setLanguage] = useState('javascript');
   const [isLoading, setIsLoading] = useState(false);
   const [pyodide, setPyodide] = useState(null);
 
   // Default starter code for each language
   const starterCode = {
-    javascript:
-      '// Try this JavaScript code:\nconsole.log("Hello World!");\n\n// Or try a function:\nfunction greet(name) {\n  return `Hello ${name}!`;\n}\n\nconsole.log(greet("Developer"));',
-    python:
-      '# Try this Python code:\nprint("Hello World!")\n\n# Or try some calculations:\ndef factorial(n):\n    if n == 0:\n        return 1\n    return n * factorial(n-1)\n\nprint(f"Factorial of 5 is {factorial(5)}")',
-    cpp: '#include <iostream>\n\nint main() {\n    std::cout << "Hello World!" << std::endl;\n    \n    // Calculate factorial\n    int n = 5;\n    int factorial = 1;\n    for(int i = 1; i <= n; i++) {\n        factorial *= i;\n    }\n    std::cout << "Factorial of 5 is " << factorial << std::endl;\n    return 0;\n}',
+    javascript: '// Try this JavaScript code:\nconsole.log("Hello World!");\n\n// Or try a function:\nfunction greet(name) {\n  return `Hello ${name}!`;\n}\n\nconsole.log(greet("Developer"));',
+    python: '# Try this Python code:\nprint("Hello World!")\n\n# Or try some calculations:\ndef factorial(n):\n    if n == 0:\n        return 1\n    return n * factorial(n-1)\n\nprint(f"Factorial of 5 is {factorial(5)}")',
+    cpp: '#include <iostream>\n\nint main() {\n    std::cout << "Hello World!" << std::endl;\n    \n    // Calculate factorial\n    int n = 5;\n    int factorial = 1;\n    for(int i = 1; i <= n; i++) {\n        factorial *= i;\n    }\n    std::cout << "Factorial of 5 is " << factorial << std::endl;\n    return 0;\n}'
   };
 
   // Initialize code with starter code
@@ -372,23 +249,22 @@ const LiveCodeEditor = () => {
   // Initialize Pyodide
   useEffect(() => {
     const loadPyodide = async () => {
-      if (language === "python" && !pyodide) {
+      if (language === 'python' && !pyodide) {
         try {
-          const script = document.createElement("script");
-          script.src =
-            "https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js";
+          const script = document.createElement('script');
+          script.src = 'https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js';
           script.async = true;
           document.body.appendChild(script);
 
           script.onload = async () => {
             const pyodideInstance = await window.loadPyodide({
-              indexURL: "https://cdn.jsdelivr.net/pyodide/v0.24.1/full/",
+              indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.24.1/full/'
             });
             setPyodide(pyodideInstance);
           };
         } catch (err) {
-          console.error("Failed to load Pyodide:", err);
-          setOutput("Error: Failed to load Python runtime");
+          console.error('Failed to load Pyodide:', err);
+          setOutput('Error: Failed to load Python runtime');
         }
       }
     };
@@ -399,17 +275,17 @@ const LiveCodeEditor = () => {
   // Execute code based on language
   const executeCode = async () => {
     setIsLoading(true);
-    setOutput("");
-
+    setOutput('');
+    
     try {
       switch (language) {
-        case "javascript":
+        case 'javascript':
           await executeJavaScript();
           break;
-        case "python":
+        case 'python':
           await executePython();
           break;
-        case "cpp":
+        case 'cpp':
           await executeCPP();
           break;
       }
@@ -427,19 +303,18 @@ const LiveCodeEditor = () => {
 
     try {
       console.log = (...args) => {
-        output.push(
-          args
-            .map((arg) =>
-              typeof arg === "object" ? JSON.stringify(arg) : String(arg)
-            )
-            .join(" ")
-        );
+        output.push(args.map(arg => 
+          typeof arg === 'object' ? JSON.stringify(arg) : String(arg)
+        ).join(' '));
       };
 
-      const sandbox = new Function("console", code);
-
+      const sandbox = new Function(
+        'console',
+        code
+      );
+      
       sandbox({ log: console.log });
-      setOutput(output.join("\n"));
+      setOutput(output.join('\n'));
     } finally {
       console.log = originalConsoleLog;
     }
@@ -448,7 +323,7 @@ const LiveCodeEditor = () => {
   // Python execution using Pyodide
   const executePython = async () => {
     if (!pyodide) {
-      setOutput("Python runtime is still loading... Please wait.");
+      setOutput('Python runtime is still loading... Please wait.');
       return;
     }
 
@@ -460,7 +335,7 @@ const LiveCodeEditor = () => {
       `);
 
       await pyodide.runPythonAsync(code);
-      const stdout = pyodide.runPython("sys.stdout.getvalue()");
+      const stdout = pyodide.runPython('sys.stdout.getvalue()');
       setOutput(stdout);
     } catch (err) {
       setOutput(`Python Error: ${err.message}`);
@@ -470,9 +345,7 @@ const LiveCodeEditor = () => {
   // C++ execution (placeholder)
   const executeCPP = async () => {
     try {
-      setOutput(
-        "C++ compilation is being implemented. This is a placeholder output."
-      );
+      setOutput('C++ compilation is being implemented. This is a placeholder output.');
     } catch (err) {
       setOutput(`C++ Error: ${err.message}`);
     }
@@ -488,7 +361,7 @@ const LiveCodeEditor = () => {
             onChange={(e) => {
               setLanguage(e.target.value);
               setCode(starterCode[e.target.value]);
-              setOutput("");
+              setOutput('');
             }}
             className="px-3 py-1 bg-gray-700 text-cyan-400 rounded text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500"
           >
@@ -496,7 +369,7 @@ const LiveCodeEditor = () => {
             <option value="python">Python</option>
             <option value="cpp">C++</option>
           </select>
-          <button
+          <button 
             onClick={() => setCode(starterCode[language])}
             className="px-3 py-1 bg-gray-700 rounded text-sm text-cyan-400 hover:bg-gray-600"
           >
@@ -510,12 +383,12 @@ const LiveCodeEditor = () => {
         className="w-full bg-gray-900 text-cyan-400 font-mono p-4 rounded mb-4 h-32 focus:outline-none focus:ring-2 focus:ring-cyan-500"
         spellCheck="false"
       />
-      <button
+      <button 
         onClick={executeCode}
-        disabled={isLoading || (language === "python" && !pyodide)}
+        disabled={isLoading || (language === 'python' && !pyodide)}
         className="bg-cyan-500 text-white px-4 py-2 rounded hover:bg-cyan-600 transition-all duration-300 transform hover:-translate-y-1 disabled:opacity-50"
       >
-        {isLoading ? "Running..." : "Run Code ▶"}
+        {isLoading ? 'Running...' : 'Run Code ▶'}
       </button>
       {output && (
         <div className="mt-4 p-4 bg-gray-900 rounded font-mono">
@@ -531,20 +404,14 @@ const ActivityFeed = () => {
   const activities = [
     { text: "Succesful Completion of Hello-FOSS 2024", time: "2 days ago" },
     { text: "WnCC Website launch", time: "1 day ago" },
-    {
-      text: "IIT Bombay bags Second Place in Inter-IIT Tech 2024",
-      time: "10 days ago",
-    },
+    { text: "IIT Bombay bags Second Place in Inter-IIT Tech 2024", time: "10 days ago" }
   ];
 
   return (
     <div className="bg-gray-800/50 p-4 rounded-xl">
       <h3 className="text-xl font-bold text-cyan-400 mb-4">Recent Activity</h3>
       {activities.map((activity, index) => (
-        <div
-          key={index}
-          className="flex items-center gap-3 mb-3 p-2 hover:bg-gray-700/30 rounded"
-        >
+        <div key={index} className="flex items-center gap-3 mb-3 p-2 hover:bg-gray-700/30 rounded">
           <Activity className="text-cyan-400 w-4 h-4" />
           <div>
             <p className="text-white">{activity.text}</p>
@@ -560,120 +427,101 @@ const ActivityFeed = () => {
 const RiddleGame = () => {
   const riddles = [
     {
-      question:
-        "In a room of 23 people, what's the probability that at least two people share the same birthday? (Answer in percentage, rounded to nearest whole number)",
-      answer: "51",
+      question: "In a room of 23 people, what's the probability that at least two people share the same birthday? (Answer in percentage, rounded to nearest whole number)",
+      answer: "51"
     },
     {
-      question:
-        "You have 8 identical balls, but 1 is slightly heavier. Using a balance scale, what's the minimum number of weighings needed to find the heavier ball?",
-      answer: "2",
+      question: "You have 8 identical balls, but 1 is slightly heavier. Using a balance scale, what's the minimum number of weighings needed to find the heavier ball?",
+      answer: "2"
     },
     {
-      question:
-        "100 people standing in a circle in an order from 1 to 100. Person 1 has a sword. He kills the next person (2) and gives the sword to the next living person (3). All people do the same until only one survives. Which number lives?",
-      answer: "73",
+      question: "100 people standing in a circle in an order from 1 to 100. Person 1 has a sword. He kills the next person (2) and gives the sword to the next living person (3). All people do the same until only one survives. Which number lives?",
+      answer: "73"
     },
     {
-      question:
-        "A snail climbs up a 10-foot wall. Each day it climbs up 3 feet, but slides down 2 feet at night. How many days will it take the snail to reach the top?",
-      answer: "8",
+      question: "A snail climbs up a 10-foot wall. Each day it climbs up 3 feet, but slides down 2 feet at night. How many days will it take the snail to reach the top?",
+      answer: "8"
     },
     {
-      question:
-        "You have a 5-liter jug and a 3-liter jug. How can you measure exactly 4 liters? Enter the number of steps required.",
-      answer: "6",
+      question: "You have a 5-liter jug and a 3-liter jug. How can you measure exactly 4 liters? Enter the number of steps required.",
+      answer: "6"
     },
     {
-      question:
-        "In binary representation, how many numbers from 1 to 20 (inclusive) have exactly two 1's in their binary form?",
-      answer: "6",
+      question: "In binary representation, how many numbers from 1 to 20 (inclusive) have exactly two 1's in their binary form?",
+      answer: "6"
     },
     {
-      question:
-        "A message is encoded by shifting each letter by its position (1st letter shifted by 1, 2nd by 2, etc). 'HAL' becomes 'IBM'. What does 'BUG' become?",
-      answer: "DIJ",
+      question: "A message is encoded by shifting each letter by its position (1st letter shifted by 1, 2nd by 2, etc). 'HAL' becomes 'IBM'. What does 'BUG' become?",
+      answer: "DIJ"
     },
     {
-      question:
-        "On a 3x3 grid, how many unique paths are there from top-left to bottom-right if you can only move right or down?",
-      answer: "6",
+      question: "On a 3x3 grid, how many unique paths are there from top-left to bottom-right if you can only move right or down?",
+      answer: "6"
     },
     {
-      question:
-        "In an array of integers from 1 to n, one number appears twice while one number is missing. If array sum is 55 and n is 10, what's the duplicate number?",
-      answer: "7",
+      question: "In an array of integers from 1 to n, one number appears twice while one number is missing. If array sum is 55 and n is 10, what's the duplicate number?",
+      answer: "7"
     },
     {
-      question:
-        "Given a fair coin, what's the expected number of flips needed to get two consecutive heads? (Round to one decimal place)",
-      answer: "6",
+      question: "Given a fair coin, what's the expected number of flips needed to get two consecutive heads? (Round to one decimal place)",
+      answer: "6"
     },
     {
       question: "How many trailing zeros are in 100 factorial (100!)?",
-      answer: "24",
+      answer: "24"
     },
     {
-      question:
-        "What's the maximum number of pieces you can get by cutting a circular pizza with 6 straight cuts?",
-      answer: "22",
+      question: "What's the maximum number of pieces you can get by cutting a circular pizza with 6 straight cuts?",
+      answer: "22"
     },
     {
-      question:
-        "If you have 9 coins and one is counterfeit (lighter), minimum number of weighings on a balance scale to find it?",
-      answer: "2",
+      question: "If you have 9 coins and one is counterfeit (lighter), minimum number of weighings on a balance scale to find it?",
+      answer: "2"
     },
     {
-      question:
-        "How many different ways can you make change for $1 using standard US coins (1,5,10,25,50 cents)?",
-      answer: "292",
+      question: "How many different ways can you make change for $1 using standard US coins (1,5,10,25,50 cents)?",
+      answer: "292"
     },
     {
-      question:
-        "In a sorted array of n distinct integers, if array[index] = index for some index, this index is called a magic index. For array [-5,-3,0,3,7], what's the magic index?",
-      answer: "3",
-    },
+      question: "In a sorted array of n distinct integers, if array[index] = index for some index, this index is called a magic index. For array [-5,-3,0,3,7], what's the magic index?",
+      answer: "3"
+    }
   ];
 
   const [currentRiddle, setCurrentRiddle] = useState(riddles[0]);
-  const [userAnswer, setUserAnswer] = useState("");
-  const [feedback, setFeedback] = useState("");
+  const [userAnswer, setUserAnswer] = useState('');
+  const [feedback, setFeedback] = useState('');
   const [streak, setStreak] = useState(0);
   const [usedRiddles, setUsedRiddles] = useState(new Set([0]));
   const [showHint, setShowHint] = useState(false);
 
   const getNextRiddle = () => {
-    let availableIndices = Array.from(
-      { length: riddles.length },
-      (_, i) => i
-    ).filter((i) => !usedRiddles.has(i));
-
+    let availableIndices = Array.from({ length: riddles.length }, (_, i) => i)
+      .filter(i => !usedRiddles.has(i));
+    
     if (availableIndices.length === 0) {
       setUsedRiddles(new Set([0]));
       availableIndices = Array.from({ length: riddles.length }, (_, i) => i);
     }
 
-    const nextIndex =
-      availableIndices[Math.floor(Math.random() * availableIndices.length)];
+    const nextIndex = availableIndices[Math.floor(Math.random() * availableIndices.length)];
     setCurrentRiddle(riddles[nextIndex]);
-    setUsedRiddles((prev) => new Set([...prev, nextIndex]));
+    setUsedRiddles(prev => new Set([...prev, nextIndex]));
     setShowHint(false);
   };
 
   const checkAnswer = () => {
-    if (
-      userAnswer.toLowerCase().trim() === currentRiddle.answer.toLowerCase()
-    ) {
-      setStreak((prev) => prev + 1);
-      setFeedback("Correct! 🎉 Get ready for the next question...");
-      setUserAnswer("");
+    if (userAnswer.toLowerCase().trim() === currentRiddle.answer.toLowerCase()) {
+      setStreak(prev => prev + 1);
+      setFeedback('Correct! 🎉 Get ready for the next question...');
+      setUserAnswer('');
       setShowHint(false);
       setTimeout(() => {
-        setFeedback("");
+        setFeedback('');
         getNextRiddle();
       }, 2000);
     } else {
-      setFeedback("Incorrect! Try again 💡");
+      setFeedback('Incorrect! Try again 💡');
       setStreak(0);
     }
   };
@@ -681,9 +529,7 @@ const RiddleGame = () => {
   return (
     <Card className="p-6">
       <div className="flex items-center justify-between mb-6">
-        <h3 className="text-xl font-bold text-cyan-400">
-          Coding Interview Practice
-        </h3>
+        <h3 className="text-xl font-bold text-cyan-400">Coding Interview Practice</h3>
         <div className="flex gap-4 items-center">
           <span className="bg-cyan-500/20 px-3 py-1 rounded-full text-cyan-400">
             Streak: {streak} 🔥
@@ -691,8 +537,8 @@ const RiddleGame = () => {
           <button
             onClick={() => {
               setStreak(0);
-              setUserAnswer("");
-              setFeedback("");
+              setUserAnswer('');
+              setFeedback('');
               setShowHint(false);
               getNextRiddle();
             }}
@@ -710,7 +556,7 @@ const RiddleGame = () => {
           type="text"
           value={userAnswer}
           onChange={(e) => setUserAnswer(e.target.value)}
-          onKeyPress={(e) => e.key === "Enter" && checkAnswer()}
+          onKeyPress={(e) => e.key === 'Enter' && checkAnswer()}
           className="flex-1 bg-gray-700 rounded px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500"
           placeholder="Your answer..."
         />
@@ -722,11 +568,7 @@ const RiddleGame = () => {
         </button>
       </div>
       {feedback && (
-        <div
-          className={`mt-4 text-center ${
-            feedback.includes("Correct") ? "text-green-400" : "text-cyan-400"
-          }`}
-        >
+        <div className={`mt-4 text-center ${feedback.includes('Correct') ? 'text-green-400' : 'text-cyan-400'}`}>
           {feedback}
         </div>
       )}
@@ -745,35 +587,24 @@ const FeatureCard = ({ icon: Icon, title, description }) => (
 const AboutUs = () => (
   <div className="mt-20 relative">
     <div className="absolute inset-0 bg-gradient-to-b from-transparent to-gray-900/50 pointer-events-none" />
-    <h2 className="text-4xl font-bold text-center text-cyan-400 mb-8">
-      About Us
-    </h2>
+    <h2 className="text-4xl font-bold text-center text-cyan-400 mb-8">About Us</h2>
     <div className="grid md:grid-cols-3 gap-8">
       <Card>
         <h3 className="text-2xl font-bold text-cyan-400 mb-4">Who are we?</h3>
         <p className="text-gray-300">
-          The Web and Coding Club, one of the biggest clubs at IIT Bombay and
-          part of the Institute Technical Council, provides a gateway for
-          students to join the coding community. We offer mentorship and a
-          platform to help students enhance their coding skills, ensuring
-          everyone has the opportunity to learn and develop a passion for
-          coding. The secret to getting ahead is getting started, and we’re here
-          to give every student the right start.
+        The Web and Coding Club, one of the biggest clubs at IIT Bombay and part of the Institute Technical Council, provides a gateway for students to join the coding community. We offer mentorship and a platform to help students enhance their coding skills, ensuring everyone has the opportunity to learn and develop a passion for coding. The secret to getting ahead is getting started, and we’re here to give every student the right start.
         </p>
       </Card>
       <Card>
         <h3 className="text-2xl font-bold text-cyan-400 mb-4">Our Mission </h3>
         <p className="text-gray-300">
-          We aim to foster a culture of learning and innovation by empowering
-          students with the skills to excel in web development, competitive
-          coding, open-source contributions, and emerging technologies.
+        We aim to foster a culture of learning and innovation by empowering students with the skills to excel in web development, competitive coding, open-source contributions, and emerging technologies.
         </p>
       </Card>
       <Card>
         <h3 className="text-2xl font-bold text-cyan-400 mb-4">Our Vision</h3>
         <p className="text-gray-300">
-          Create an inclusive environment where students collaborate, innovate,
-          and grow together as problem-solvers and developers.
+        Create an inclusive environment where students collaborate, innovate, and grow together as problem-solvers and developers.
         </p>
       </Card>
     </div>
@@ -781,9 +612,9 @@ const AboutUs = () => (
 );
 
 const HomePage = () => {
-  const [typewriterText, setTypewriterText] = useState("");
+  const [typewriterText, setTypewriterText] = useState('');
   const fullText = "Coders Together Strong";
-
+  
   useEffect(() => {
     let index = 0;
     const interval = setInterval(() => {
@@ -801,31 +632,30 @@ const HomePage = () => {
     {
       icon: Brain,
       title: "Fast Paced-Courses",
-      description:
-        "Deep dive into topics like machine learning, Web Development, and more",
+      description: "Deep dive into topics like machine learning, Web Development, and more"
     },
     {
       icon: Globe,
       title: "Hackathons",
-      description: "Compete with like minded-developers",
+      description: "Compete with like minded-developers"
     },
     {
       icon: Zap,
       title: "Expert Talk Sessions",
-      description: "Quick, intensive tech sessions",
-    },
+      description: "Quick, intensive tech sessions"
+    }
   ];
   return (
     <div className="space-y-12 relative">
       <ParticleEffect />
-
+      
       <div className="text-center relative">
         <div className="absolute -top-20 -left-20 w-64 h-64 bg-cyan-500/20 rounded-full filter blur-3xl" />
-        <div className="absolute top-0 right-0 w-32 h-32 sm:w-48 sm:h-48 md:w-64 md:h-64 bg-blue-500/20 rounded-full filter blur-3xl max-w-full max-h-full sm:max-w-[calc(100vw-2rem)] md:max-w-[calc(100vw-2rem)]" />
+        <div className="absolute -top-20 -right-20 w-64 h-64 bg-blue-500/20 rounded-full filter blur-3xl" />
         <h1 className="text-6xl font-bold mb-4 bg-gradient-to-r from-cyan-400 to-blue-500 text-transparent bg-clip-text">
           WnCC IIT Bombay
         </h1>
-
+        
         <div className="h-8">
           <span className="font-mono text-2xl text-cyan-400">
             {typewriterText}
@@ -855,6 +685,7 @@ const HomePage = () => {
         <div className="space-y-8">
           <RiddleGame />
           <TechNewsFeed />
+          
         </div>
       </div>
 
@@ -869,17 +700,17 @@ const EventCard = ({ event }) => {
     const now = new Date();
     const eventDate = new Date(event.date);
     const diff = eventDate - now;
-
-    if (diff < 0) return "Event has passed";
-
+    
+    if (diff < 0) return 'Event has passed';
+    
     const days = Math.floor(diff / (1000 * 60 * 60 * 24));
     const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-
+    
     return `${days}d ${hours}h remaining`;
   };
 
   return (
-    <Card
+    <Card 
       className="transform transition-all duration-500 hover:scale-105"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
@@ -899,29 +730,29 @@ const EventCard = ({ event }) => {
           {timeUntilEvent()}
         </div>
       </div>
-
+      
       <h3 className="text-2xl font-semibold text-white mb-2">{event.title}</h3>
       <div className="flex items-center gap-2 text-cyan-300 mb-2">
         <Calendar className="w-4 h-4" />
-        {new Date(event.date).toLocaleDateString("en-US", {
-          weekday: "long",
-          month: "long",
-          day: "numeric",
+        {new Date(event.date).toLocaleDateString('en-US', {
+          weekday: 'long',
+          month: 'long',
+          day: 'numeric'
         })}
       </div>
       <p className="text-gray-300 mb-4">{event.description}</p>
-
+      
       <div className="flex items-center gap-4 mb-4">
         <span className="text-gray-400 flex items-center gap-1">
           <Users className="w-4 h-4" />
-          {event.participants || "150+"} registered
+          {event.participants || '150+'} registered
         </span>
         <span className="text-gray-400 flex items-center gap-1">
           <Trophy className="w-4 h-4" />
-          {event.prize || "$1000"} in prizes
+          {event.prize || '$1000'} in prizes
         </span>
       </div>
-
+      
       <div className="flex gap-2">
         <a
           href={generateCalendarUrl(event)}
@@ -940,54 +771,58 @@ const EventCard = ({ event }) => {
   );
 };
 
+
 // Timeline component for EventsPage
 const EventTimeline = () => {
   const [selectedEvent, setSelectedEvent] = useState(null);
-
+  
   const timelineItems = [
     {
       title: "Season Kickoff",
-      date: "January 2024",
-      description: "New season begins with 101 sessions",
+      date: "April 2025",
+      description: "The new season kicks off with lots of enthusiasm",
       icon: <Star className="w-6 h-6" />,
-      color: "from-green-500 to-emerald-700",
+      color: "from-green-500 to-emerald-700"
     },
     {
-      title: "GC Week",
-      date: "Jan End to Feb Mid 2024",
-      description: "2 Week-long 2 GCs-long",
+      title: "Seasons of Code",
+      date: "May end to July",
+      description: "Flagship Event,8 Week-long",
       icon: <Cpu className="w-6 h-6" />,
-      color: "from-blue-500 to-indigo-700",
+      color: "from-blue-500 to-indigo-700"
     },
     {
-      title: "Codewars",
-      date: "March 2024",
-      description: "10 days coding/strategy wars. Flagship event for Freshers",
+      title: "DSA Bootcamp",
+      date: "1st June",
+      description: "8-week Journey to master DSA!",
       icon: <Code className="w-6 h-6" />,
-      color: "from-purple-500 to-pink-700",
+      color: "from-purple-500 to-pink-700"
     },
+    {
+      title: "Learners' Space",
+      date: "9th June",
+      description: "4-week long | Igniting passion, elevating skills,& unlocking the future of tech!",
+      icon: <Code className="w-6 h-6" />,
+      color: "from-cyan-500 to-indigo-700" 
+    }
   ];
 
   return (
     <div className="relative mt-20">
       <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-gradient-to-b from-cyan-500/50 to-transparent" />
       {timelineItems.map((item, index) => (
-        <div
+        <div 
           key={index}
           className={`relative flex items-center mb-12 ${
-            index % 2 === 0 ? "flex-row" : "flex-row-reverse"
+            index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'
           }`}
           onMouseEnter={() => setSelectedEvent(index)}
           onMouseLeave={() => setSelectedEvent(null)}
         >
-          <div
-            className={`w-1/2 ${index % 2 === 0 ? "pr-8 text-right" : "pl-8"}`}
-          >
-            <div
-              className={`p-6 rounded-xl bg-gradient-to-br ${
-                item.color
-              } transform transition-all duration-300 ${
-                selectedEvent === index ? "scale-105" : ""
+          <div className={`w-1/2 ${index % 2 === 0 ? 'pr-8 text-right' : 'pl-8'}`}>
+            <div 
+              className={`p-6 rounded-xl bg-gradient-to-br ${item.color} transform transition-all duration-300 ${
+                selectedEvent === index ? 'scale-105' : ''
               }`}
             >
               <div className="flex items-center gap-3 mb-2 justify-end">
@@ -999,11 +834,9 @@ const EventTimeline = () => {
             </div>
           </div>
           <div className="absolute left-1/2 transform -translate-x-1/2 flex items-center justify-center">
-            <div
-              className={`w-4 h-4 rounded-full bg-cyan-400 transition-transform duration-300 ${
-                selectedEvent === index ? "scale-150" : ""
-              }`}
-            />
+            <div className={`w-4 h-4 rounded-full bg-cyan-400 transition-transform duration-300 ${
+              selectedEvent === index ? 'scale-150' : ''
+            }`} />
           </div>
         </div>
       ))}
@@ -1011,57 +844,56 @@ const EventTimeline = () => {
   );
 };
 
-const EventsPage = () => {
-  const [selectedFilter, setSelectedFilter] = useState("all");
 
+const EventsPage = () => {
+  const [selectedFilter, setSelectedFilter] = useState('all');
+  
   const events = [
     {
-      title: "Hello FOSS",
-      date: "2025-10-01T20:00:00Z",
-      endDate: "2025-10-31T20:30:00Z",
-      description: "A month-long event to introduce FOSS to freshers and mirror GSOC for advanced coders.",
-      location: "IIT Bombay Campus",
+      title: 'AI ML Hackathon',
+      date: '2025-06-24T20:00:00Z',
+      endDate: '2025-06-30T20:30:00Z',
+      description: 'One of the biggest Hackathon in collab with  KCDH. ',
+      location: 'IIT Bombay Campus',
       icon: <Calendar className="w-16 h-16 text-cyan-400" />,
-      category: "competition",
-      participants: "",
-      prize: "Prize money and goodies",
+      category: 'Hackathon',
+      participants: '',
+    //   prize: 'GC Points'
     },
     {
-      title: "Machine Learning GC",
-      date: "2025-02-10T20:00:00Z",
-      endDate: "2025-02-10T20:00:00Z",
-      description: "Annual ML General Championship, part of Tech GC.",
-      location: "IIT Bombay Campus",
+      title: 'Coding Circuit',
+      date: '2025-07-30T20:00:00Z',
+      endDate: '2025-08-30T20:00:00Z',
+      description: 'An electrifying, insti-wide contest testing the limits of DSA skills.',
+      location: 'IIT Bombay Campus',
       icon: <Laptop className="w-16 h-16 text-cyan-400" />,
-      category: "competition",
-      participants: "",
-      prize: "GC Points",
+      category: 'competition',
+      participants: '',
+    //   prize: 'GC Points'
     },
     {
-      title: "Codewars",
-      date: "2025-03-10T00:00:00Z",
-      endDate: "2025-04-20T00:00:00Z",
-      description:
-        "Our flagship event for freshers. A strategy and coding competition.",
-      location: "IIT Bombay Campus",
+      title: 'Fresher Orientation',
+      date: '2025-09-25T00:00:00Z',
+      endDate: '2025-09-28T00:00:00Z',
+      description: "Insti's oldest tech legacy meets fresh energy — fun coding events, chill scenes, and the biggest club vibe!",
+      location: 'IIT Bombay Campus',
       icon: <Lightbulb className="w-16 h-16 text-cyan-400" />,
-      category: "competition",
-      participants: "",
-      prize: "Cash Prize",
-    },
+      category: 'Orientation',
+      participants: '',
+    //   prize: 'Cash Prize'
+    }
   ];
 
-  const filteredEvents =
-    selectedFilter === "all"
-      ? events
-      : events.filter((event) => event.category === selectedFilter);
+  const filteredEvents = selectedFilter === 'all' 
+    ? events 
+    : events.filter(event => event.category === selectedFilter);
 
   return (
     <div className="space-y-12 relative">
       {/* Background decorative elements */}
       <div className="absolute top-0 right-0 w-96 h-96 bg-cyan-500/10 rounded-full filter blur-3xl" />
       <div className="absolute bottom-0 left-0 w-96 h-96 bg-blue-500/10 rounded-full filter blur-3xl" />
-
+      
       {/* Hero section */}
       <div className="text-center relative">
         <h2 className="text-5xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 text-transparent bg-clip-text mb-6">
@@ -1074,14 +906,14 @@ const EventsPage = () => {
 
       {/* Filters */}
       <div className="flex justify-center gap-4">
-        {["all", "competition", "workshop", "seminar"].map((filter) => (
+        {['all', 'competition', 'workshop', 'seminar'].map(filter => (
           <button
             key={filter}
             onClick={() => setSelectedFilter(filter)}
             className={`px-6 py-2 rounded-full transition-all duration-300 ${
               selectedFilter === filter
-                ? "bg-cyan-500 text-white"
-                : "bg-gray-800 text-gray-300 hover:bg-gray-700"
+                ? 'bg-cyan-500 text-white'
+                : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
             }`}
           >
             {filter.charAt(0).toUpperCase() + filter.slice(1)}
@@ -1095,7 +927,7 @@ const EventsPage = () => {
           <EventCard key={index} event={event} />
         ))}
       </div>
-
+      
       {/* Timeline section */}
       <div className="mt-20">
         <h3 className="text-3xl font-bold text-center text-cyan-400 mb-12">
@@ -1129,7 +961,10 @@ const ResourcesPage = () => {
       color: 'from-purple-500 to-pink-500',
       description: '> Frontend Development\n> React Architecture\n> UI/UX Engineering',
       tags: ['react', 'javascript', 'frontend'],
-      
+      metrics: {
+        views: 1200,
+        likes: 345
+      },
       link: 'https://github.com/wncc/Web-Development-LS-24'
     },
     {
@@ -1142,7 +977,10 @@ const ResourcesPage = () => {
       color: 'from-cyan-500 to-blue-500',
       description: '> Algorithm Design\n> Data Structures\n> Problem Solving',
       tags: ['algorithms', 'complexity', 'optimization'],
-      
+      metrics: {
+        views: 800,
+        likes: 230
+      },
       link: 'https://github.com/wncc/DSA-LS-24'
     },
     {
@@ -1155,7 +993,10 @@ const ResourcesPage = () => {
       color: 'from-green-500 to-emerald-500',
       description: '> Neural Networks\n> Deep Learning\n> Data Science',
       tags: ['ml', 'python', 'data-science'],
-      
+      metrics: {
+        views: 1500,
+        likes: 420
+      },
       link: 'https://github.com/wncc/Machine-Learning-LS-24'
     },
     {
@@ -1168,7 +1009,10 @@ const ResourcesPage = () => {
       color: 'from-orange-500 to-red-500',
       description: '> Generative AI\n> Deep Learning\n> Computer Vision',
       tags: ['ml', 'python', 'data-science'],
-      
+      metrics: {
+        views: 1500,
+        likes: 420
+      },
       link: 'https://github.com/wncc/Hello-FOSS-ML-Diffusivity'
     },
     {
@@ -1181,7 +1025,10 @@ const ResourcesPage = () => {
       color: 'from-blue-500 to-violet-500',
       description: '> Multi-threading\n> Parallel Algorithms\n> Performance Optimization',
       tags: ['ml', 'python', 'data-science'],
-      
+      metrics: {
+        views: 1500,
+        likes: 420
+      },
       link: 'https://github.com/wncc/Hello-Foss-PyThread.cpp'
     },
     {
@@ -1194,7 +1041,10 @@ const ResourcesPage = () => {
       color: 'from-blue-500 to-indigo-500',
       description: '> Basic Syntax\n> Object Oriented Programming\n> STL Library',
       tags: ['cpp', 'programming', 'basics'],
-      
+      metrics: {
+        views: 1500,
+        likes: 420
+      },
       link: 'https://www.learncpp.com/'
     },
     {
@@ -1207,7 +1057,10 @@ const ResourcesPage = () => {
       color: 'from-yellow-500 to-green-500',
       description: '> Python Basics\n> Data Structures\n> Object-Oriented Python',
       tags: ['python', 'programming', 'basics'],
-      
+      metrics: {
+        views: 1800,
+        likes: 520
+      },
       link: 'https://docs.python.org/3/tutorial/'
     },
 
@@ -1222,7 +1075,10 @@ const ResourcesPage = () => {
       color: 'from-cyan-500 to-blue-500',
       description: '> HTML/CSS\n> JavaScript\n> React Framework',
       tags: ['web', 'frontend', 'development'],
-      
+      metrics: {
+        views: 1200,
+        likes: 380
+      },
       link: 'https://www.freecodecamp.org/'
     },
     {
@@ -1235,7 +1091,10 @@ const ResourcesPage = () => {
       color: 'from-green-500 to-emerald-500',
       description: '> Android Development\n> iOS Development\n> Cross-Platform',
       tags: ['mobile', 'android', 'ios'],
-      
+      metrics: {
+        views: 900,
+        likes: 280
+      },
       link: 'https://developer.android.com/courses'
     },
 
@@ -1250,7 +1109,10 @@ const ResourcesPage = () => {
       color: 'from-purple-500 to-pink-500',
       description: '> Arrays & Linked Lists\n> Trees & Graphs\n> Hash Tables',
       tags: ['dsa', 'algorithms', 'data-structures'],
-      
+      metrics: {
+        views: 2000,
+        likes: 600
+      },
       link: 'https://www.geeksforgeeks.org/data-structures/'
     },
     {
@@ -1263,7 +1125,10 @@ const ResourcesPage = () => {
       color: 'from-red-500 to-orange-500',
       description: '> Sorting & Searching\n> Dynamic Programming\n> Graph Algorithms',
       tags: ['dsa', 'algorithms', 'problem-solving'],
-      
+      metrics: {
+        views: 1700,
+        likes: 480
+      },
       link: 'https://cp-algorithms.com/'
     },
 
@@ -1278,7 +1143,10 @@ const ResourcesPage = () => {
       color: 'from-orange-500 to-red-500',
       description: '> Version Control\n> Collaboration\n> Open Source',
       tags: ['git', 'github', 'version-control'],
-      
+      metrics: {
+        views: 2500,
+        likes: 750
+      },
       link: 'https://git-scm.com/book/en/v2'
     },
     {
@@ -1291,7 +1159,10 @@ const ResourcesPage = () => {
       color: 'from-gray-500 to-gray-700',
       description: '> Command Line\n> Shell Scripting\n> System Administration',
       tags: ['linux', 'shell', 'bash'],
-      
+      metrics: {
+        views: 1400,
+        likes: 390
+      },
       link: 'https://linuxjourney.com/'
     },
 
@@ -1306,7 +1177,10 @@ const ResourcesPage = () => {
       color: 'from-blue-400 to-blue-600',
       description: '> Containerization\n> Docker Compose\n> Deployment',
       tags: ['docker', 'devops', 'containers'],
-      
+      metrics: {
+        views: 800,
+        likes: 240
+      },
       link: 'https://docs.docker.com/get-started/'
     },
     {
@@ -1319,7 +1193,10 @@ const ResourcesPage = () => {
       color: 'from-green-400 to-emerald-600',
       description: '> SQL Basics\n> Database Design\n> Query Optimization',
       tags: ['sql', 'database', 'backend'],
-      
+      metrics: {
+        views: 1100,
+        likes: 320
+      },
       link: 'https://www.postgresqltutorial.com/'
     }
   ];
@@ -1399,7 +1276,20 @@ const ResourcesPage = () => {
           </div>
 
           {/* Metrics */}
-          
+          <div className="grid grid-cols-2 gap-4 font-mono text-sm">
+            <div className="text-center">
+              <div className="text-gray-500">VIEWS</div>
+              <div className={`text-lg font-bold bg-gradient-to-r ${resource.color} text-transparent bg-clip-text`}>
+                {resource.metrics.views}
+              </div>
+            </div>
+            <div className="text-center">
+              <div className="text-gray-500">LIKES</div>
+              <div className={`text-lg font-bold bg-gradient-to-r ${resource.color} text-transparent bg-clip-text`}>
+                {resource.metrics.likes}
+              </div>
+            </div>
+          </div>
 
           {/* Action button */}
           <button
@@ -1506,15 +1396,14 @@ const ResourcesPage = () => {
   );
 };
 
-
 const ChessIcon = () => (
-  <svg
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
+  <svg 
+    viewBox="0 0 24 24" 
+    fill="none" 
+    stroke="currentColor" 
+    strokeWidth="2" 
+    strokeLinecap="round" 
+    strokeLinejoin="round" 
     className="w-5 h-5"
   >
     <path d="M8 16L10.293 13.707C10.683 13.317 10.183 12.683 9.293 12.293L7 10C6.61 9.61 6.61 8.39 7 8L9.293 5.707C9.683 5.317 10.317 5.317 10.707 5.707L13 8C13.39 8.39 13.39 9.61 13 10L10.707 12.293C10.317 12.683 10.317 13.317 10.707 13.707L13 16" />
@@ -1530,236 +1419,201 @@ const TeamPage = () => {
 
   const teamMembers = [
     {
-      name: "Divyanshu Suman",
-      role: "Manager",
+      name: 'Divyanshu Suman',
+      role: 'Manager',
       icon: <UserCheck className="w-12 h-12 text-cyan-400" />,
-      bio: "",
-      skills: ["AI/ML", "System Architecture", "Team Leadership"],
-
+      bio: '',
+      skills: ['AI/ML', 'System Architecture', 'Team Leadership'],
+      
       social: {
-        github: "#",
-        twitter: "#",
-        linkedin: "#",
+        github: '#',
+        twitter: '#',
+        linkedin: '#'
       },
-
-      imageUrl: "Images/Divyanshu1.jpg",
+      
+      imageUrl: 'Images/Divyanshu.jpg'
     },
     {
-      name: "Shahu Patil",
-      role: "Manager",
+      name: 'Shahu Patil', 
+      role: 'Manager',
       icon: <Users className="w-12 h-12 text-cyan-400" />,
-      bio: "",
-      skills: ["AI/ML", "App dev", "Chess"],
-
+      bio: '',
+      skills: ['ML (both CV, NLP)', 'App dev','Chess'],
+      
       social: {
-        github: "https://github.com/ShahuPatil07",
-        twitter: "https://www.instagram.com/shahupatil07/",
-        linkedin: "https://www.linkedin.com/in/shahu-patil-033a24279/",
+        github: 'https://github.com/ShahuPatil07',
+        twitter: 'https://www.instagram.com/shahupatil07/',
+        linkedin: 'https://www.linkedin.com/in/shahu-patil-033a24279/'
       },
-
-      imageUrl: "Images/shahu.jpeg",
+      
+      imageUrl: 'Images/shahu.jpeg',
       chess: {
         rating: 1700,
-        lichessUsername: "ShahuPatil07",
-      },
+        lichessUsername: 'ShahuPatil07'
+      }
     },
     {
-      name: "Veeraditya Karan Parakh",
-      role: "Convener",
+      name: 'Veeraditya Karan Parakh',
+      role: 'Convener',
       icon: <MessageCircle className="w-12 h-12 text-cyan-400" />,
-      bio: "",
-      skills: ["AI/ML", "Web-Dev", "Data Science", "Chess"],
-
+      bio: '',
+      skills: ['Machine Learning', 'Web-Dev', 'Data Science', 'Chess'],
+      
       social: {
-        github: "https://github.com/veeradi34",
-        twitter: "https://www.instagram.com/veer3_1/",
-        linkedin:
-          "https://www.linkedin.com/in/veeraditya-karan-parakh-68a869282/",
+        github: 'https://github.com/veeradi34',
+        twitter: 'https://www.instagram.com/veer3_1/',
+        linkedin: 'https://www.linkedin.com/in/veeraditya-karan-parakh-68a869282/'
       },
-
-      imageUrl: "./Images/IMG-20240422-WA0031.jpg",
+      
+      imageUrl: './Images/IMG-20240422-WA0031.jpg', 
       chess: {
         rating: 1850,
-        lichessUsername: "veer3106",
-      },
+        lichessUsername: 'veer3106'
+      }
     },
     {
-      name: "Samarth Aggarwal",
-      role: "Convener",
+      name: 'Samarth Aggarwal',
+      role: 'Convener',
       icon: <MessageCircle className="w-12 h-12 text-cyan-400" />,
-      bio: "",
-      skills: ["Machine Learning", "Quant", "Chess"],
-
+      bio: '',
+      skills: ['Machine Learning', 'Quant', 'Chess'],
+      
       social: {
-        github: "https://github.com/samarthagg1",
-        twitter: "https://www.instagram.com/samarthagg1/",
-        linkedin: "https://www.linkedin.com/in/samarth-aggarwal-1a9839284/",
+        github: 'https://github.com/samarthagg1',
+        twitter: 'https://www.instagram.com/samarthagg1/',
+        linkedin: 'https://www.linkedin.com/in/samarth-aggarwal-1a9839284/'
       },
-
-      imageUrl: "Images/samarth1.jpg",
+      
+      imageUrl: 'Images/samarth1.jpg',
       chess: {
         rating: 1050,
-        lichessUsername: "veer3106",
-      },
+        lichessUsername: 'veer3106'
+      }
     },
     {
-      name: "Lopamudra Biswal",
-      role: "Convener",
+      name: 'Lopamudra Biswal',
+      role: 'Convener',
       icon: <MessageCircle className="w-12 h-12 text-cyan-400" />,
-      bio: "",
-      skills: ["Machine learning", "Computer vision", "RAG"],
-
+      bio:'',
+      skills: ['Machine learning','Computer vision','RAG',],
+      
       social: {
-        github: "https://github.com/LoPA607",
-        twitter: "#",
-        linkedin: "http://linkedin.com/in/lopamudra-biswal-1a4266294",
+        github: 'https://github.com/LoPA607',
+        twitter: '#',
+        linkedin: 'http://linkedin.com/in/lopamudra-biswal-1a4266294'
       },
-
-      imageUrl: "Images/Lopamudra.png",
+      
+      imageUrl: 'Images/Lopamudra.png'
     },
     {
-      name: "Priyam Raj",
-      role: "Convener",
+      name: 'Priyam Raj',
+      role: 'Convener',
       icon: <MessageCircle className="w-12 h-12 text-cyan-400" />,
-      bio: "",
-      skills: [
-        "Machine Learning ",
-        "Web Development",
-        "Django",
-        "QGIS",
-        "Postgresql",
-      ],
-
+      bio:'',
+      skills: ['Machine Learning ', 'Web Development', 'Django','QGIS', 'Postgresql'],
+      
       social: {
-        github: "https://github.com/Priyam12345-cloud",
-        twitter:
-          "https://www.instagram.com/priyamraj572/profilecard/?igsh=MnFpamY5M2o2eDMy",
-        linkedin:
-          " https://www.linkedin.com/in/priyam-raj-b4598a282?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
+        github: 'https://github.com/Priyam12345-cloud',
+        twitter: 'https://www.instagram.com/priyamraj572/profilecard/?igsh=MnFpamY5M2o2eDMy',
+        linkedin: ' https://www.linkedin.com/in/priyam-raj-b4598a282?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app'
       },
-
-      imageUrl: "Images/Priyam.jpg",
+      
+      imageUrl: 'Images/Priyam.jpg'
     },
     {
-      name: "Tushar Roy",
-      role: "Convener",
+      name: 'Tushar Roy',
+      role: 'Convener',
       icon: <MessageCircle className="w-12 h-12 text-cyan-400" />,
-      bio: "",
-      skills: ["MachineLearning", "ComputerVision", "RAG-LLM"],
-
+      bio:'',
+      skills: ['MachineLearning','ComputerVision','RAG-LLM'],
+      
       social: {
-        github: "https://github.com/tushroy81",
-        twitter: "#",
-        linkedin: "#",
+        github: 'https://github.com/tushroy81',
+        twitter: '#',
+        linkedin: '#'
       },
-
-      imageUrl: "Images/tushar.jpg",
+      
+      imageUrl: 'Images/tushar.jpg'
     },
     {
-      name: "Param Pabari",
-      role: "Convener",
+      name: 'Param Pabari',
+      role: 'Convener',
       icon: <MessageCircle className="w-12 h-12 text-cyan-400" />,
-      bio: "",
-      skills: ["Machine Learning ", "Django-REST", "Solidity"],
-
+      bio:'',
+      skills: ['Machine Learning ','Django-REST','Solidity'],
+      
       social: {
-        github: "http://www.linkedin.com/in/param-pabari",
-        twitter: "https://www.instagram.com/param.svg/",
-        linkedin: "http://www.linkedin.com/in/param-pabari",
+        github: 'http://www.linkedin.com/in/param-pabari',
+        twitter: 'https://www.instagram.com/param.svg/',
+        linkedin: 'http://www.linkedin.com/in/param-pabari'
       },
-
-      imageUrl: "Images/Param.jpg",
+      
+      imageUrl: 'Images/Param.jpg'
     },
     {
-      name: "Husain Batterywala",
-      role: "Convener",
+      name: 'Husain Batterywala',
+      role: 'Convener',
       icon: <MessageCircle className="w-12 h-12 text-cyan-400" />,
-      bio: "",
-      skills: [
-        "Competitive Programming",
-        "DSA",
-        "Parallel Programming",
-        "Linear Programming",
-        "Web Development",
-        "Machine Learning",
-      ],
-
+      bio:'',
+      skills: ['Competitive Programming','DSA','Parallel Programming','Linear Programming','Web Development','Machine Learning'],
+      
       social: {
-        github: "https://github.com/husain2088",
-        twitter: "https://www.instagram.com/who_sane.9/",
-        linkedin: "https://www.linkedin.com/in/husain-batterywala-113266282/",
+        github: 'https://github.com/husain2088',
+        twitter: 'https://www.instagram.com/who_sane.9/',
+        linkedin: 'https://www.linkedin.com/in/husain-batterywala-113266282/'
       },
-
-      imageUrl: "Images/Husainsz1.jpg",
+      
+      imageUrl: 'Images/Husainsz1.jpg'
     },
     {
-      name: "Shresth Keshari",
-      role: "Convener",
+      name: 'Shresth Keshari',
+      role: 'Convener',
       icon: <MessageCircle className="w-12 h-12 text-cyan-400" />,
-      bio: "",
-      skills: [
-        "Applied Machine Learning",
-        "Embedded Systems",
-        "Embedded C",
-        "C++",
-        "Django",
-        "React Js",
-        "NodeJs",
-      ],
-
+      bio:'',
+      skills: ['Applied Machine Learning', 'Embedded Systems', 'Embedded C','C++','Django', 'React Js', 'NodeJs'],
+      
       social: {
-        github: "https://github.com/shresth-keshari",
-        twitter:
-          "https://www.instagram.com/social.lonewolf/profilecard/?igsh=MWlvdTA3b3NlcmN1Ng==",
-        linkedin:
-          "https://www.linkedin.com/in/shresth-keshari-626b2a267?fbclid=PAY2xjawHR2WNleHRuA2FlbQIxMQABprdnb6OIlAkXWDlyB5-p7GSVTfa63JNglAyQSse4Cpt4yOp4Md7k5T-qjw_aem_tq8epkqby1COBksqbqgSjw",
+        github: 'https://github.com/shresth-keshari',
+        twitter: 'https://www.instagram.com/social.lonewolf/profilecard/?igsh=MWlvdTA3b3NlcmN1Ng==',
+        linkedin: 'https://www.linkedin.com/in/shresth-keshari-626b2a267?fbclid=PAY2xjawHR2WNleHRuA2FlbQIxMQABprdnb6OIlAkXWDlyB5-p7GSVTfa63JNglAyQSse4Cpt4yOp4Md7k5T-qjw_aem_tq8epkqby1COBksqbqgSjw'
       },
-
-      imageUrl: "Images/shresthk1.jpg",
+      
+      imageUrl: 'Images/shresthk.jpg'
     },
     {
-      name: "Pratyaksh Bharadwaj",
-      role: "Convener",
+      name: 'Pratyaksh Bharadwaj',
+      role: 'Convener',
       icon: <MessageCircle className="w-12 h-12 text-cyan-400" />,
-      bio: "",
-      skills: [
-        "Machine Learning ",
-        "Web-Dev",
-        "C++",
-        "Django",
-        "React Js",
-        "NodeJs",
-      ],
-
+      bio:'',
+      skills: ['Machine Learning ','Web-Dev'],
+      
       social: {
-        github: "https://github.com/Pratyaksh2309",
-        twitter:
-          "https://www.instagram.com/pratyaksh._.23?igsh=MXF4emhsaGQ4cXplZw==",
-        linkedin:
-          "https://www.linkedin.com/in/pratyaksh-bhardwaj-b2309ar?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
+        github: 'https://github.com/Pratyaksh2309',
+        twitter: 'https://www.instagram.com/pratyaksh._.23?igsh=MXF4emhsaGQ4cXplZw==',
+        linkedin: 'https://www.linkedin.com/in/pratyaksh-bhardwaj-b2309ar?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app'
       },
-
-      imageUrl: "Images/Pratyaksh.jpg",
+      
+      imageUrl: 'Images/Pratyaksh.jpg'
     },
     {
-      name: "Aryan Kayanade",
-      role: "Convener",
+      name: 'Aryan Kayanade',
+      role: 'Convener',
       icon: <MessageCircle className="w-12 h-12 text-cyan-400" />,
-      bio: "",
-      skills: ["Machine Learning ", "Deep Learning", "Computer Vision"],
-
+      bio:'',
+      skills: ['Machine Learning ','Deep Learning','Computer Vision'],
+      
       social: {
-        github: "https://github.com/TheDarKnight50",
-        twitter: "#",
-        linkedin: "https://www.linkedin.com/in/aryan-kayande-6102a5284/",
+        github: 'https://github.com/TheDarKnight50',
+        twitter: '#',
+        linkedin: 'https://www.linkedin.com/in/aryan-kayande-6102a5284/'
       },
-
-      imageUrl: "Images/Aryan1.jpg",
+      
+      imageUrl: 'Images/Aryan.jpg',
       chess: {
         rating: 1750,
-        lichessUsername: "TheDarkKinght_50",
-      },
-    },
+        lichessUsername: 'TheDarkKinght_50'
+      }
+    }
   ];
 
   useEffect(() => {
@@ -1767,43 +1621,35 @@ const TeamPage = () => {
       setCursorPos({ x: e.clientX, y: e.clientY });
     };
 
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
   const simulateTyping = (memberId, text) => {
-    let currentText = "";
-    const words = [
-      "> Loading profile...",
-      "> Accessing database...",
-      "> Decrypting data...",
-      "> Display: OK",
-    ];
+    let currentText = '';
+    const words = ['> Loading profile...', '> Accessing database...', '> Decrypting data...', '> Display: OK'];
     let wordIndex = 0;
     let charIndex = 0;
 
     const typeInterval = setInterval(() => {
       if (wordIndex === words.length) {
         clearInterval(typeInterval);
-        setExpandedCards((prev) => ({ ...prev, [memberId]: true }));
-        setTypingText((prev) => ({ ...prev, [memberId]: "" }));
+        setExpandedCards(prev => ({ ...prev, [memberId]: true }));
+        setTypingText(prev => ({ ...prev, [memberId]: '' }));
         return;
       }
 
       const currentWord = words[wordIndex];
       if (charIndex === currentWord.length + 1) {
-        currentText += "\n";
+        currentText += '\n';
         wordIndex++;
         charIndex = 0;
       } else {
-        currentText =
-          words.slice(0, wordIndex).join("\n") +
-          "\n" +
-          currentWord.slice(0, charIndex);
+        currentText = words.slice(0, wordIndex).join('\n') + '\n' + currentWord.slice(0, charIndex);
         charIndex++;
       }
 
-      setTypingText((prev) => ({ ...prev, [memberId]: currentText }));
+      setTypingText(prev => ({ ...prev, [memberId]: currentText }));
     }, 1);
   };
 
@@ -1827,7 +1673,7 @@ const TeamPage = () => {
 
   const MemberCard = ({ member, index }) => {
     const isExpanded = expandedCards[index];
-
+    
     return (
       <Card className="relative overflow-hidden bg-gray-900/50 backdrop-blur-sm transition-all duration-300 hover:shadow-xl hover:shadow-cyan-500/20">
         {/* Profile Section */}
@@ -1835,8 +1681,8 @@ const TeamPage = () => {
           {/* Image and Basic Info */}
           <div className="flex items-center gap-4">
             <div className="relative w-16 h-16 rounded-full overflow-hidden ring-2 ring-cyan-500/50">
-              <img
-                src={member.imageUrl}
+              <img 
+                src={member.imageUrl} 
                 alt={member.name}
                 className="w-full h-full object-cover"
               />
@@ -1853,8 +1699,8 @@ const TeamPage = () => {
           {/* Social Links */}
           <div className="flex gap-4">
             {member.social.github && (
-              <a
-                href={member.social.github}
+              <a 
+                href={member.social.github} 
                 className="text-gray-400 hover:text-cyan-400 transition-colors"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -1863,8 +1709,8 @@ const TeamPage = () => {
               </a>
             )}
             {member.social.twitter && (
-              <a
-                href={member.social.twitter}
+              <a 
+                href={member.social.twitter} 
                 className="text-gray-400 hover:text-cyan-400 transition-colors"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -1873,8 +1719,8 @@ const TeamPage = () => {
               </a>
             )}
             {member.social.linkedin && (
-              <a
-                href={member.social.linkedin}
+              <a 
+                href={member.social.linkedin} 
                 className="text-gray-400 hover:text-cyan-400 transition-colors"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -1885,13 +1731,13 @@ const TeamPage = () => {
           </div>
 
           {!isExpanded && (
-            <button
+            <button 
               onClick={() => {
                 simulateTyping(index, member.name);
               }}
               className="w-full bg-gray-800 text-cyan-400 px-4 py-2 rounded-md font-mono text-sm hover:bg-gray-700 transition-colors"
             >
-              $ ./view-profile {member.name.toLowerCase().replace(" ", "-")}
+              $ ./view-profile {member.name.toLowerCase().replace(' ', '-')}
             </button>
           )}
         </div>
@@ -1906,28 +1752,22 @@ const TeamPage = () => {
         )}
 
         {/* Details Section */}
-        <div
-          className={`border-t border-cyan-500/20 transition-all duration-500 ${
-            isExpanded ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
-          } overflow-hidden`}
-        >
+        <div className={`border-t border-cyan-500/20 transition-all duration-500 ${
+          isExpanded ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+        } overflow-hidden`}>
           <div className="p-6 space-y-6">
             {/* Bio */}
             <div>
-              <h4 className="text-sm font-semibold text-cyan-400 mb-3">
-                About
-              </h4>
+              <h4 className="text-sm font-semibold text-cyan-400 mb-3">About</h4>
               <p className="text-gray-300 text-sm">{member.bio}</p>
             </div>
 
             {/* Skills */}
             <div>
-              <h4 className="text-sm font-semibold text-cyan-400 mb-3">
-                Skills
-              </h4>
+              <h4 className="text-sm font-semibold text-cyan-400 mb-3">Skills</h4>
               <div className="flex flex-wrap gap-2">
                 {member.skills.map((skill, index) => (
-                  <span
+                  <span 
                     key={index}
                     className="bg-cyan-500/10 text-cyan-400 px-2 py-1 rounded-md text-xs"
                   >
@@ -1938,7 +1778,7 @@ const TeamPage = () => {
             </div>
 
             {/* View Profile Button */}
-            <button
+            <button 
               onClick={() => setSelectedMember(member)}
               className="w-full bg-gradient-to-r from-cyan-500 to-blue-500 text-white px-4 py-2 rounded-md hover:opacity-90 transition-opacity"
             >
@@ -1953,13 +1793,13 @@ const TeamPage = () => {
   return (
     <div className="space-y-12 relative">
       {/* Cursor gradient follow effect */}
-      <div
+      <div 
         className="fixed inset-0 pointer-events-none z-0"
         style={{
-          background: `radial-gradient(600px at ${cursorPos.x}px ${cursorPos.y}px, rgba(103, 232, 249, 0.15), transparent 80%)`,
+          background: `radial-gradient(600px at ${cursorPos.x}px ${cursorPos.y}px, rgba(103, 232, 249, 0.15), transparent 80%)`
         }}
       />
-
+      
       <div className="text-center relative">
         <h2 className="text-5xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 text-transparent bg-clip-text mb-6">
           Meet Our Team
@@ -1979,44 +1819,40 @@ const TeamPage = () => {
       {selectedMember && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50">
           <div className="bg-gray-900 p-8 rounded-2xl max-w-2xl w-full mx-4 relative">
-            <button
+            <button 
               onClick={() => setSelectedMember(null)}
               className="absolute top-4 right-4 text-gray-400 hover:text-white"
             >
               <X className="w-6 h-6" />
             </button>
-
+            
             <div className="flex flex-col md:flex-row gap-8">
               <div className="flex-shrink-0">
                 <div className="w-48 h-48 rounded-xl overflow-hidden">
-                  <img
-                    src={selectedMember.imageUrl}
+                  <img 
+                    src={selectedMember.imageUrl} 
                     alt={selectedMember.name}
                     className="w-full h-full object-cover"
                   />
                 </div>
               </div>
-
+              
               <div className="flex-grow">
                 <div className="flex items-center gap-4 mb-4">
                   {selectedMember.icon}
                   <div>
-                    <h3 className="text-2xl font-bold text-white">
-                      {selectedMember.name}
-                    </h3>
+                    <h3 className="text-2xl font-bold text-white">{selectedMember.name}</h3>
                     <p className="text-cyan-400">{selectedMember.role}</p>
                   </div>
                 </div>
-
+                
                 <p className="text-gray-300 mb-6">{selectedMember.bio}</p>
-
+                
                 <div>
-                  <h4 className="text-lg font-semibold text-white mb-3">
-                    Skills
-                  </h4>
+                  <h4 className="text-lg font-semibold text-white mb-3">Skills</h4>
                   <div className="flex flex-wrap gap-2">
                     {selectedMember.skills.map((skill, index) => (
-                      <span
+                      <span 
                         key={index}
                         className="bg-cyan-500/20 text-cyan-400 px-3 py-1 rounded-full text-sm"
                       >
@@ -2028,8 +1864,8 @@ const TeamPage = () => {
 
                 {selectedMember.chess && (
                   <div className="mt-6">
-                    <ChessChallenge
-                      username={selectedMember.chess.lichessUsername}
+                    <ChessChallenge 
+                      username={selectedMember.chess.lichessUsername} 
                       rating={selectedMember.chess.rating}
                     />
                   </div>
@@ -2044,17 +1880,17 @@ const TeamPage = () => {
 };
 const ContactPage = () => {
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    subject: "",
-    message: "",
+    name: '',
+    email: '',
+    subject: '',
+    message: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [codeString, setCodeString] = useState("");
+  const [codeString, setCodeString] = useState('');
   const [currentField, setCurrentField] = useState(null);
 
   useEffect(() => {
-    const code = "> const contact = await WnCC.connect(you);";
+    const code = '> const contact = await WnCC.connect(you);';
     let index = 0;
     const interval = setInterval(() => {
       setCodeString(code.slice(0, index));
@@ -2069,16 +1905,16 @@ const ContactPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-
+    
     setTimeout(() => {
       setIsSubmitting(false);
-      setFormData({ name: "", email: "", subject: "", message: "" });
-      alert("Message sent successfully!");
+      setFormData({ name: '', email: '', subject: '', message: '' });
+      alert('Message sent successfully!');
     }, 1000);
   };
 
   const renderFieldValue = (field, value) => {
-    if (!value) return "";
+    if (!value) return '';
     if (currentField === field) {
       return `"${value}█"`;
     }
@@ -2120,14 +1956,12 @@ const ContactPage = () => {
                   <input
                     type="text"
                     value={formData.name}
-                    onChange={(e) =>
-                      setFormData({ ...formData, name: e.target.value })
-                    }
-                    onFocus={() => setCurrentField("name")}
+                    onChange={(e) => setFormData({...formData, name: e.target.value})}
+                    onFocus={() => setCurrentField('name')}
                     onBlur={() => setCurrentField(null)}
                     className="bg-transparent border-none outline-none text-green-400 ml-2 w-64"
                     required
-                    placeholder="type your name..."
+                    placeholder='type your name...'
                   />
                   <span className="text-gray-500">,</span>
                 </div>
@@ -2136,14 +1970,12 @@ const ContactPage = () => {
                   <input
                     type="email"
                     value={formData.email}
-                    onChange={(e) =>
-                      setFormData({ ...formData, email: e.target.value })
-                    }
-                    onFocus={() => setCurrentField("email")}
+                    onChange={(e) => setFormData({...formData, email: e.target.value})}
+                    onFocus={() => setCurrentField('email')}
                     onBlur={() => setCurrentField(null)}
                     className="bg-transparent border-none outline-none text-green-400 ml-2 w-64"
                     required
-                    placeholder="enter your email..."
+                    placeholder='enter your email...'
                   />
                   <span className="text-gray-500">,</span>
                 </div>
@@ -2152,14 +1984,12 @@ const ContactPage = () => {
                   <input
                     type="text"
                     value={formData.subject}
-                    onChange={(e) =>
-                      setFormData({ ...formData, subject: e.target.value })
-                    }
-                    onFocus={() => setCurrentField("subject")}
+                    onChange={(e) => setFormData({...formData, subject: e.target.value})}
+                    onFocus={() => setCurrentField('subject')}
                     onBlur={() => setCurrentField(null)}
                     className="bg-transparent border-none outline-none text-green-400 ml-2 w-64"
                     required
-                    placeholder="message subject..."
+                    placeholder='message subject...'
                   />
                   <span className="text-gray-500">,</span>
                 </div>
@@ -2167,14 +1997,12 @@ const ContactPage = () => {
                   <label className="text-blue-400">message:</label>
                   <textarea
                     value={formData.message}
-                    onChange={(e) =>
-                      setFormData({ ...formData, message: e.target.value })
-                    }
-                    onFocus={() => setCurrentField("message")}
+                    onChange={(e) => setFormData({...formData, message: e.target.value})}
+                    onFocus={() => setCurrentField('message')}
                     onBlur={() => setCurrentField(null)}
                     className="bg-transparent border-none outline-none text-green-400 ml-2 w-full h-24 resize-none"
                     required
-                    placeholder="type your message..."
+                    placeholder='type your message...'
                   />
                 </div>
               </div>
@@ -2185,9 +2013,7 @@ const ContactPage = () => {
               disabled={isSubmitting}
               className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 text-white py-3 rounded hover:from-cyan-600 hover:to-blue-700 transition-all duration-300 disabled:opacity-50"
             >
-              {isSubmitting
-                ? "> executing..."
-                : "> WnCC.sendMessage(userDetails)"}
+              {isSubmitting ? '> executing...' : '> WnCC.sendMessage(userDetails)'}
             </button>
           </form>
         </Card>
@@ -2198,12 +2024,9 @@ const ContactPage = () => {
               <Globe className="w-5 h-5" /> Base Location
             </h3>
             <p className="text-gray-300 font-mono">
-              Web and Coding Club
-              <br />
-              Student Activity Center
-              <br />
-              IIT Bombay, Powai
-              <br />
+              Web and Coding Club<br />
+              Student Activity Center<br />
+              IIT Bombay, Powai<br />
               Mumbai - 400076
             </p>
           </Card>
@@ -2223,22 +2046,13 @@ const ContactPage = () => {
               <Code2 className="w-5 h-5" /> Social Network
             </h3>
             <div className="flex gap-4">
-              <a
-                href="https://github.com/wncc"
-                className="text-gray-300 hover:text-cyan-400 transition-colors"
-              >
+              <a href="https://github.com/wncc" className="text-gray-300 hover:text-cyan-400 transition-colors">
                 <Github className="w-6 h-6" />
               </a>
-              <a
-                href="https://www.instagram.com/wncc.iitb/"
-                className="text-gray-300 hover:text-cyan-400 transition-colors"
-              >
+              <a href="https://www.instagram.com/wncc.iitb/" className="text-gray-300 hover:text-cyan-400 transition-colors">
                 <Instagram className="w-6 h-6" />
               </a>
-              <a
-                href="https://www.linkedin.com/company/wncc-iitb/posts/?feedView=all"
-                className="text-gray-300 hover:text-cyan-400 transition-colors"
-              >
+              <a href="https://www.linkedin.com/company/wncc-iitb/posts/?feedView=all" className="text-gray-300 hover:text-cyan-400 transition-colors">
                 <Linkedin className="w-6 h-6" />
               </a>
             </div>
@@ -2249,138 +2063,61 @@ const ContactPage = () => {
   );
 };
 const WebsitePreview = () => {
-  const [currentPage, setCurrentPage] = useState("Home");
-  const [isOpen, setIsOpen] = useState(false);
-
-  // include SOC in your nav items
-  const navItems = ["Home", "Events", "Resources", "Team", "Contact", "SOC"];
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (isOpen) {
-        setIsOpen(false);
-      }
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [isOpen]);
-
-  const handleNavClick = (item) => {
-    if (item === "SOC") {
-      // open SOC site in new tab
-      window.open("https://wncc-soc.tech-iitb.org/", "_blank", "noopener");
-      setIsOpen(false);
-    } else {
-      setCurrentPage(item);
-      setIsOpen(false);
-    }
-  };
+  const [currentPage, setCurrentPage] = useState('Home');
 
   const PageComponent = {
     Home: HomePage,
     Events: EventsPage,
     Resources: ResourcesPage,
     Team: TeamPage,
-    Contact: ContactPage,
+    Contact: ContactPage
   }[currentPage];
 
   const quickLinks = [
-    { title: "Contact Us", url: "" },
-    { title: "Projects", url: "https://github.com/orgs/wncc/repositories" },
-    { title: "Blog", url: "https://www.technewsworld.com/section/tech-blog" },
+    { title: 'Documentation', url: '#' },
+    { title: 'Tutorials', url: '#' },
+    { title: 'Projects', url: '#' },
+    { title: 'Blog', url: '#' }
   ];
 
   return (
     <div className="min-h-screen bg-gray-900 text-white">
       <nav className="bg-gray-900/50 backdrop-blur-lg border-b border-cyan-500/20 p-4 sticky top-0 z-50">
         <div className="container mx-auto flex justify-between items-center">
-          <div className="text-cyan-400">
-            <img
-              src="/Images/Logo.png"
-              alt="WnCC IITB Logo"
-              className="h-8 w-auto"
-            />
-          </div>
-
-          {/* Hamburger menu button */}
-          <div className="md:hidden">
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="text-cyan-400 focus:outline-none"
-            >
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d={
-                    isOpen
-                      ? "M6 18L18 6M6 6l12 12"
-                      : "M4 6h16M4 12h16m-7 6h7"
-                  }
-                />
-              </svg>
-            </button>
-          </div>
-
-          {/* Desktop Navbar */}
-          <div className="hidden md:flex gap-6">
-            {navItems.map((item) => (
+          <div className="text-cyan-400 font-bold text-xl">WnCC IITB</div>
+          <div className="flex gap-6">
+            {['Home', 'Events', 'Resources', 'Team', 'Contact'].map((page) => (
               <button
-                key={item}
-                onClick={() => handleNavClick(item)}
+                key={page}
+                onClick={() => setCurrentPage(page)}
                 className={`px-4 py-2 rounded-lg transition-colors duration-300 ${
-                  currentPage === item
-                    ? "bg-cyan-500/20 text-cyan-400"
-                    : "text-gray-300 hover:text-cyan-400"
+                  currentPage === page
+                    ? 'bg-cyan-500/20 text-cyan-400'
+                    : 'text-gray-300 hover:text-cyan-400'
                 }`}
               >
-                {item}
+                {page}
               </button>
             ))}
           </div>
         </div>
-
-        {/* Mobile Navbar (Hamburger Menu) */}
-        {isOpen && (
-          <div className="absolute bg-gray-800/90 w-full left-0 top-full flex flex-col gap-4 p-4 border-t border-cyan-500/20">
-            {navItems.map((item) => (
-              <button
-                key={item}
-                onClick={() => handleNavClick(item)}
-                className={`px-4 py-2 rounded-lg transition-colors duration-300 ${
-                  currentPage === item
-                    ? "bg-cyan-500/20 text-cyan-400"
-                    : "text-gray-300 hover:text-cyan-400"
-                }`}
-              >
-                {item}
-              </button>
-            ))}
-          </div>
-        )}
       </nav>
 
       <main className="container mx-auto px-4 py-8">
         <PageComponent />
       </main>
-
+      
       <footer className="bg-gray-900/50 backdrop-blur-lg border-t border-cyan-500/20 p-8 mt-16">
         <div className="container mx-auto grid md:grid-cols-4 gap-8">
-          {/* Quick Links */}
+         
+          
+          {/* Quick Links Section */}
           <div>
-            <h3 className="text-xl font-bold text-cyan-400 mb-4">
-              Quick Links
-            </h3>
+            <h3 className="text-xl font-bold text-cyan-400 mb-4">Quick Links</h3>
             <ul className="space-y-2">
-              {quickLinks.map((link, i) => (
-                <li key={i}>
-                  <a
+              {quickLinks.map((link, index) => (
+                <li key={index}>
+                  <a 
                     href={link.url}
                     className="text-gray-400 hover:text-cyan-400 transition-colors duration-300"
                   >
@@ -2390,12 +2127,10 @@ const WebsitePreview = () => {
               ))}
             </ul>
           </div>
-
+          
           {/* Contact Info */}
           <div>
-            <h3 className="text-xl font-bold text-cyan-400 mb-4">
-              Contact
-            </h3>
+            <h3 className="text-xl font-bold text-cyan-400 mb-4">Contact</h3>
             <ul className="space-y-2 text-gray-400">
               <li>wncc@iitb.ac.in</li>
               <li>Student Activity Center</li>
@@ -2403,51 +2138,30 @@ const WebsitePreview = () => {
               <li>Mumbai - 400076</li>
             </ul>
           </div>
-
+          
           {/* Social Links */}
           <div>
-            <h3 className="text-xl font-bold text-cyan-400 mb-4">
-              Connect
-            </h3>
+            <h3 className="text-xl font-bold text-cyan-400 mb-4">Connect</h3>
             <div className="flex gap-4">
-              <a
-                href="https://github.com/wncc"
-                className="text-gray-400 hover:text-cyan-400 transition-colors duration-300"
-              >
+              <a href="https://github.com/wncc" className="text-gray-400 hover:text-cyan-400 transition-colors duration-300">
                 <Github className="w-6 h-6" />
               </a>
-              <a
-                href="https://x.com/i/flow/login?redirect_after_login=%2Fwncc_iitb"
-                className="text-gray-400 hover:text-cyan-400 transition-colors duration-300"
-              >
+              <a href="https://x.com/i/flow/login?redirect_after_login=%2Fwncc_iitb" className="text-gray-400 hover:text-cyan-400 transition-colors duration-300">
                 <Twitter className="w-6 h-6" />
               </a>
-              <a
-                href="https://www.linkedin.com/company/wncc-iitb/posts/?feedView=all"
-                className="text-gray-400 hover:text-cyan-400 transition-colors duration-300"
-              >
+              <a href="https://www.linkedin.com/company/wncc-iitb/posts/?feedView=all" className="text-gray-400 hover:text-cyan-400 transition-colors duration-300">
                 <Linkedin className="w-6 h-6" />
               </a>
-              <a
-                href="https://www.instagram.com/wncc.iitb/"
-                className="text-gray-400 hover:text-cyan-400 transition-colors duration-300"
-              >
+              <a href="https://www.instagram.com/wncc.iitb/" className="text-gray-400 hover:text-cyan-400 transition-colors duration-300">
                 <Instagram className="w-6 h-6" />
               </a>
-              <a
-                href="https://linktr.ee/wncciitb"
-                className="text-gray-400 hover:text-cyan-400 transition-colors duration-300"
-              >
-                <Link className="w-6 h-6" />
-              </a>
             </div>
+            
           </div>
         </div>
-
+        
         <div className="container mx-auto mt-8 pt-8 border-t border-cyan-500/20 text-center">
-          <p className="text-gray-400">
-            © 2024 Web and Coding Club, IIT Bombay. All rights reserved.
-          </p>
+          <p className="text-gray-400">© 2024 Web and Coding Club, IIT Bombay. All rights reserved.</p>
         </div>
       </footer>
     </div>
