@@ -1536,7 +1536,7 @@ const TeamPage = () => {
                 instagram: "https://www.instagram.com/veer3_1?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
             },
 
-            imageUrl: "./Images/IMG-20240422-WA0031.jpg",
+            imageUrl: "./Images/VEER.jpg",
             chess: {
                 rating: 1850,
                 lichessUsername: "veer3106",
@@ -1566,7 +1566,7 @@ const TeamPage = () => {
 
             },
 
-            imageUrl: "Images/Pratyaksh.jpg",
+            imageUrl: "./Images/Pratyaksh.jpg",
         },
         {
             name: "Abhishek Upadhya",
@@ -1578,20 +1578,23 @@ const TeamPage = () => {
                 github: "https://github.com/AbhishekU05",
                 linkedIn: "https://in.linkedin.com/in/abhishek-upadhya-647a58257",
                 insta: "https://www.instagram.com/abhisheku05?igsh=MXgxdjcxZWF6cDBsYw=="
-            }
+            },
+            imageUrl: "./Images/ABHISHEK.png",
         },
         {
             name: "Aashna Pulla",
             role: "Convener",
             icon: <MessageCircle className="w-12 h-12 text-cyan-400" />,
-            bio: "",
+            bio: "Hey everyone! I'm Aashna Pulla, a second-year Computer Science student at IIT Bombay. I'm also a Convener at the Web and Coding Club, where I help run workshops, plan events, and keep the coding culture on campus alive and buzzing.\n\n Outside the tech space, I’m into badminton and absolutely love escape rooms—I’ll take any chance I get to go for one! In my downtime, you’ll probably find me playing the guitar, watching anime, or catching up on sleep (the most underrated hobby ever, honestly).",
             skills: ["Machine Learning", "Computer Vision", "DSA", "C++"],
             social: {
                 github: "https://github.com/aashnapulla",
                 linkedin: "https://www.linkedin.com/me?trk=p_mwlite_feed-secondary_nav",
                 insta: "https://www.instagram.com/aashna.p0911/"
-            }
-        },
+            },
+             imageUrl: "./Images/AASHNA.png",
+        }
+
         {
             name: "Mrigank Goel",
             role: "Convener",
@@ -1603,6 +1606,7 @@ const TeamPage = () => {
                 linkedin: "https://www.linkedin.com/in/mrigank-goel-327427336?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
                 insta: "https://www.instagram.com/mrigank_goel.964/?utm_source=ig_web_button_share_sheet"
             },
+             imageUrl: "./Images/ABHISHEK.png",
         }
         ,
         {
@@ -1615,7 +1619,8 @@ const TeamPage = () => {
                 github: "https://github.com/Raghav789-code",
                 linkedIn: "https://www.linkedin.com/in/shivansh-niranjan-71766a1ba",
                 insta: "https://www.instagram.com/shivansh.niranjan.58?igsh=MTcwa2FmOGFmcThyag=="
-            }
+            },
+             imageUrl: "./Images/shivansh.jpeg",
         },
         {
             name: "Riddhi Yeola",
@@ -1627,7 +1632,8 @@ const TeamPage = () => {
                 github: "https://github.com/Riddhiyeola",
                 linkedi: "https://www.linkedin.com/in/riddhi-yeola-790b03242?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
                 insta: "https://www.instagram.com/mrigank_goel.964/?utm_source=ig_web_button_share_sheet"
-            }
+            },
+             imageUrl: "./Images/RIDDHI.png",
         },
         {
             name: "Utkarsh Tanwar",
@@ -1648,7 +1654,8 @@ const TeamPage = () => {
                 github: "https://github.com/icodeforlife24",
                 linkedin: "https://www.linkedin.com/in/utkarsh-tanwar-400b52256?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
                 insta: "https://www.instagram.com/utkarsh_tanwar77?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
-            }
+            },
+             imageUrl: "./Images/UTKARSH.png",
         },
         {
             name: "Avnish Vijay More",
@@ -1660,7 +1667,8 @@ const TeamPage = () => {
                 github: "https://github.com/wejhdy",
                 linkedin: "www.linkedin.com/in/avnish-more",
                 insta: "https://www.instagram.com/avn1sh.__/"
-            }
+            },
+             imageUrl: "./Images/AVNISH.png",
         },
 
 
@@ -1674,7 +1682,8 @@ const TeamPage = () => {
                 github: "https://github.com/MithraBijumon",
                 linkedIn: "http://www.linkedin.com/in/mithra-bijumon-059104301",
                 instagram: "https://www.instagram.com/mithra.bijumon/"
-            }
+            }, 
+            imageUrl: "./Images/MITHRA.png",
         },
         {
             name: "Nishil Seth Gupta",
@@ -1686,7 +1695,8 @@ const TeamPage = () => {
                 github: "https://github.com/Nishil-the-seth",
                 linkedin: "https://www.linkedin.com/in/verynise/",
                 email: "Nishil.wncc@gmail.com"
-            }
+            },
+             imageUrl: "./Images/NISHIL.png",
         },
         {
             name: "Sarthak Somani",
@@ -1698,7 +1708,8 @@ const TeamPage = () => {
                 github: "https://github.com/sarthak-somani",
                 linkedin: "https://www.linkedin.com/in/sarthak-somani/",
                 insta: ""
-            }
+            },
+             imageUrl: "./Images/SHARTHAK.png",
         }];
 
     useEffect(() => {
