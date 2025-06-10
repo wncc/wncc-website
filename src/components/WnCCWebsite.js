@@ -937,6 +937,9 @@ const EventCard = ({ event }) => {
 };
 
 // Timeline component for EventsPage
+const EventTimeline = () => {
+  const [selectedEvent, setSelectedEvent] = useState(null);
+
  const timelineItems = [
     {
       title: "Season Kickoff",
@@ -1005,7 +1008,7 @@ const EventCard = ({ event }) => {
             ))}
         </div>
     );
-};
+    };
 
 const EventsPage = () => {
     const [selectedFilter, setSelectedFilter] = useState("all");
@@ -1596,7 +1599,7 @@ const TeamPage = () => {
                 insta: "https://www.instagram.com/aashna.p0911/"
             },
             imageUrl: "./Images/AASHNA.png",
-        }
+        },
 
         {
             name: "Mrigank Goel",
