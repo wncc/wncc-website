@@ -1023,7 +1023,7 @@ const EventsPage = () => {
             icon: <Calendar className="w-16 h-16 text-cyan-400" />,
             category: 'Hackathon',
             participants: '',
-            //   prize: 'GC Points'
+            prize: ' '
         },
         {
             title: 'Coding Circuit',
@@ -1034,7 +1034,7 @@ const EventsPage = () => {
             icon: <Laptop className="w-16 h-16 text-cyan-400" />,
             category: 'competition',
             participants: '',
-            //   prize: 'GC Points'
+            prize: ' '
         },
         {
             title: 'Fresher Orientation',
@@ -1045,7 +1045,7 @@ const EventsPage = () => {
             icon: <Lightbulb className="w-16 h-16 text-cyan-400" />,
             category: 'Orientation',
             participants: '',
-            //   prize: 'Cash Prize'
+            prize: ' '
         }
     ];
 
@@ -1605,7 +1605,7 @@ const TeamPage = () => {
             name: "Mrigank Goel",
             role: "Convener",
             icon: <MessageCircle className="w-12 h-12 text-cyan-400" />,
-            bio: "Hello everyone! I'm Mrigank Goel, a second-year B.Tech student in Computer Science and Engineering at IIT Bombay. I'm currently a Convener at the Web and Coding Club, where I collaborate on diverse technical projects, help organize sessions, and contribute towards building a strong coding culture in our campus.\n\nI have a deep interest in problem-solving and development, and I'm always curious about how tech can make life more efficient and exciting. Beyond the screen, you'll often find me jogging, playing table tennis, listening to music or chilling out with friends. There’s always something new to try, and I’m all in for the ride.",
+            bio: "CSE undergrad, curious about tech and passionate about problem-solving.",
             skills: ["Machine Learning", "Artificial Intelligence", "Competitive Programming", "C++", "Python"],
             social: {
                 github: "https://github.com/MrigankGoel",
