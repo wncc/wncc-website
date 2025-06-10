@@ -747,7 +747,7 @@ const EventCard = ({ event }) => {
       <div className="flex items-center gap-4 mb-4">
         <span className="text-gray-400 flex items-center gap-1">
           <Users className="w-4 h-4" />
-          {event.participants || '150+'} registered
+          {event.participants || ' '} //registered
         </span>
         <span className="text-gray-400 flex items-center gap-1">
           <Trophy className="w-4 h-4" />
@@ -860,7 +860,7 @@ const EventsPage = () => {
       icon: <Calendar className="w-16 h-16 text-cyan-400" />,
       category: 'Hackathon',
       participants: '',
-    //   prize: 'GC Points'
+      prize: 'To be announced'
     },
     {
       title: 'Coding Circuit',
@@ -871,7 +871,7 @@ const EventsPage = () => {
       icon: <Laptop className="w-16 h-16 text-cyan-400" />,
       category: 'competition',
       participants: '',
-    //   prize: 'GC Points'
+      prize: 'To be announced'
     },
     {
       title: 'Fresher Orientation',
@@ -882,7 +882,7 @@ const EventsPage = () => {
       icon: <Lightbulb className="w-16 h-16 text-cyan-400" />,
       category: 'Orientation',
       participants: '',
-    //   prize: 'Cash Prize'
+      prize: 'To be announced'
     }
   ];
 
@@ -1498,14 +1498,14 @@ const TeamPage = () => {
               name: "Mrigank Goel",
               role: "Convener",
               icon: <MessageCircle className="w-12 h-12 text-cyan-400" />,
-              bio: "Hello everyone! I'm Mrigank Goel, a second-year B.Tech student in Computer Science and Engineering at IIT Bombay. I'm currently a Convener at the Web and Coding Club, where I collaborate on diverse technical projects, help organize sessions, and contribute towards building a strong coding culture in our campus.\n\nI have a deep interest in problem-solving and development, and I'm always curious about how tech can make life more efficient and exciting. Beyond the screen, you'll often find me jogging, playing table tennis, listening to music or chilling out with friends. There’s always something new to try, and I’m all in for the ride.",
+              bio: "CSE undergrad, curious about tech and passionate about problem-solving.",
               skills: ["Machine Learning", "Artificial Intelligence", "Competitive Programming", "C++", "Python"],
               social: {
                   github: "https://github.com/MrigankGoel",
                   linkedin: "https://www.linkedin.com/in/mrigank-goel-327427336?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
                   insta: "https://www.instagram.com/mrigank_goel.964/?utm_source=ig_web_button_share_sheet"
               },
-              imageUrl: "./Images/MRIGANK.jpeg",
+              imageUrl: "./Images/ABHISHEK.png",
           }
           ,
           {
@@ -1601,7 +1601,7 @@ const TeamPage = () => {
               name: "Sarthak Somani",
               role: "Convener",
               icon: <MessageCircle className="w-12 h-12 text-cyan-400" />,
-              bio: "Hello, Sarthak Somani here! I'm from Bangalore and am currently pursuing my Undergrad in the Department of Economics, IIT Bombay.\n\nI consider myself a highly motivated and results driven individual, who thrives at the intersection of Technology and Finance.\n\nAs a Convener of the Web and Coding Club, I work towards the enrichment of the coding culture on campus by driving club initiatives, organising sessions and engaging in projects.\n\nLooking forward to connect and collaborate!",
+              bio: "",
               skills: ["Machine Learning", "Data Analytics", "C++", "Python", "R", "SQL"],
               social: {
                   github: "https://github.com/sarthak-somani",
