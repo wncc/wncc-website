@@ -1505,7 +1505,7 @@ const TeamPage = () => {
                   linkedin: "https://www.linkedin.com/in/mrigank-goel-327427336?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
                   insta: "https://www.instagram.com/mrigank_goel.964/?utm_source=ig_web_button_share_sheet"
               },
-              imageUrl: "./Images/ABHISHEK.png",
+              imageUrl: "./Images/MRIGANK.jpeg",
           }
           ,
           {
@@ -1601,7 +1601,7 @@ const TeamPage = () => {
               name: "Sarthak Somani",
               role: "Convener",
               icon: <MessageCircle className="w-12 h-12 text-cyan-400" />,
-              bio: "",
+              bio: "Hello, Sarthak Somani here! I'm from Bangalore and am currently pursuing my Undergrad in the Department of Economics, IIT Bombay.\n\nI consider myself a highly motivated and results driven individual, who thrives at the intersection of Technology and Finance.\n\nAs a Convener of the Web and Coding Club, I work towards the enrichment of the coding culture on campus by driving club initiatives, organising sessions and engaging in projects.\n\nLooking forward to connect and collaborate!",
               skills: ["Machine Learning", "Data Analytics", "C++", "Python", "R", "SQL"],
               social: {
                   github: "https://github.com/sarthak-somani",
