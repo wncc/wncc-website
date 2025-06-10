@@ -1472,7 +1472,7 @@ const TeamPage = () => {
               role: "Convener",
               icon: <MessageCircle className="w-12 h-12 text-cyan-400" />,
               bio: "Hello everyone! I'm Abhishek, a second-year B.Tech student in the Electrical Engineering department at IIT Bombay. I currently serve as a Convener of the Web and Coding Club, where I actively contribute to projects and initiatives aimed at fostering a strong coding culture on campus.\n\nI'm passionate about solving real-world problems and understanding how things work at the most fundamental level. I’m also curious about the mechanics of financial markets and how they operate. Outside of tech, I enjoy going on long cycle rides and playing table tennis. I look forward to contributing to the community in meaningful and impactful ways.",
-              skills: ["C++", "Java", "Python", "Computer Vision", "Equity Analysis"],
+              skills: ["C++", "Java", "Python", "Computer Vision", "Computer Architecture", "Equity Analysis"],
               social: {
                   github: "https://github.com/AbhishekU05",
                   linkedIn: "https://in.linkedin.com/in/abhishek-upadhya-647a58257",
@@ -1498,14 +1498,14 @@ const TeamPage = () => {
               name: "Mrigank Goel",
               role: "Convener",
               icon: <MessageCircle className="w-12 h-12 text-cyan-400" />,
-              bio: "CSE undergrad, curious about tech and passionate about problem-solving.",
+              bio: "Hello everyone! I'm Mrigank Goel, a second-year B.Tech student in Computer Science and Engineering at IIT Bombay. I'm currently a Convener at the Web and Coding Club, where I collaborate on diverse technical projects, help organize sessions, and contribute towards building a strong coding culture in our campus.\n\nI have a deep interest in problem-solving and development, and I'm always curious about how tech can make life more efficient and exciting. Beyond the screen, you'll often find me jogging, playing table tennis, listening to music or chilling out with friends. There’s always something new to try, and I’m all in for the ride.",
               skills: ["Machine Learning", "Artificial Intelligence", "Competitive Programming", "C++", "Python"],
               social: {
                   github: "https://github.com/MrigankGoel",
                   linkedin: "https://www.linkedin.com/in/mrigank-goel-327427336?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
                   insta: "https://www.instagram.com/mrigank_goel.964/?utm_source=ig_web_button_share_sheet"
               },
-              imageUrl: "./Images/ABHISHEK.png",
+              imageUrl: "./Images/MRIGANK.jpeg",
           }
           ,
           {
@@ -1560,7 +1560,7 @@ const TeamPage = () => {
               name: "Avnish Vijay More",
               role: "Convener",
               icon: <MessageCircle className="w-12 h-12 text-cyan-400" />,
-              bio: "A Civil Engineering undergrad with a keen interest in data science, machine learning, finance and solving real-world challenges.",
+              bio: "Hello everyone! I’m Avnish Vijay More, a Civil Engineering undergrad at IIT Bombay and currently serving as a Convener at the Web and Coding Club. I’m passionate about data science, machine learning, and finance, and I thrive on solving real-world challenges through technology and innovation. At the club, I focus on organizing exciting events, collaborating on impactful projects, and nurturing a strong and inclusive coding community on campus.\n\nBeyond the screen, you’ll find me on the football field, vibing to music, or diving into the world of gaming.",
               skills: ["Machine Learning", "Deep Learning", "NLP", "Football"],
               social: {
                   github: "https://github.com/wejhdy",
@@ -1601,7 +1601,7 @@ const TeamPage = () => {
               name: "Sarthak Somani",
               role: "Convener",
               icon: <MessageCircle className="w-12 h-12 text-cyan-400" />,
-              bio: "",
+              bio: "Hello, Sarthak Somani here! I'm from Bangalore and am currently pursuing my Undergrad in the Department of Economics, IIT Bombay.\n\nI consider myself a highly motivated and results driven individual, who thrives at the intersection of Technology and Finance.\n\nAs a Convener of the Web and Coding Club, I work towards the enrichment of the coding culture on campus by driving club initiatives, organising sessions and engaging in projects.\n\nLooking forward to connect and collaborate!",
               skills: ["Machine Learning", "Data Analytics", "C++", "Python", "R", "SQL"],
               social: {
                   github: "https://github.com/sarthak-somani",
