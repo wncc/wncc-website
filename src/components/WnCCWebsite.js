@@ -910,7 +910,7 @@ const EventCard = ({ event }) => {
             <div className="flex items-center gap-4 mb-4">
                 <span className="text-gray-400 flex items-center gap-1">
                     <Users className="w-4 h-4" />
-                    {event.participants || "150+"} registered
+                    {event.participants || " "} //registered
                 </span>
                 <span className="text-gray-400 flex items-center gap-1">
                     <Trophy className="w-4 h-4" />
@@ -1023,7 +1023,7 @@ const EventsPage = () => {
             icon: <Calendar className="w-16 h-16 text-cyan-400" />,
             category: 'Hackathon',
             participants: '',
-            prize: ' '
+            prize: ' To be announced'
         },
         {
             title: 'Coding Circuit',
@@ -1034,7 +1034,7 @@ const EventsPage = () => {
             icon: <Laptop className="w-16 h-16 text-cyan-400" />,
             category: 'competition',
             participants: '',
-            prize: ' '
+            prize: 'To be announced '
         },
         {
             title: 'Fresher Orientation',
@@ -1044,7 +1044,7 @@ const EventsPage = () => {
             location: 'IIT Bombay Campus',
             icon: <Lightbulb className="w-16 h-16 text-cyan-400" />,
             category: 'Orientation',
-            participants: '',
+            participants: 'To be announced',
             prize: ' '
         }
     ];
