@@ -1492,7 +1492,7 @@ const TeamPage = () => {
                   insta: "https://www.instagram.com/aashna.p0911/"
               },
               imageUrl: "./Images/AASHNA.png",
-          }
+          },
   
           {
               name: "Mrigank Goel",
@@ -2164,4 +2164,3 @@ const WebsitePreview = () => {
 };
 
 export default WebsitePreview;
-//
