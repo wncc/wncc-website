@@ -1612,7 +1612,7 @@ const TeamPage = () => {
                 linkedin: "https://www.linkedin.com/in/mrigank-goel-327427336?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
                 insta: "https://www.instagram.com/mrigank_goel.964/?utm_source=ig_web_button_share_sheet"
             },
-            imageUrl: "./Images/ABHISHEK.png",
+            imageUrl: "./Images/MRIGANK.jpeg",
         }
         ,
         {
