@@ -2,8 +2,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 
 
-import { 
-  Code, 
+import {
+  Code,
   Laptop,
   Cpu,
   GitBranch,
@@ -39,14 +39,14 @@ import {
   Terminal,
   Database,
   Code2,
-  
-  
+
+
 } from 'lucide-react';
 
 
 // Card component for consistent styling
 const Card = ({ children, className = "", onMouseEnter, onMouseLeave }) => (
-  <div 
+  <div
     className={`bg-gray-800/50 backdrop-blur p-6 rounded-xl border border-cyan-500/20 transition-all duration-300 hover:shadow-lg hover:border-cyan-500/40 ${className}`}
     onMouseEnter={onMouseEnter}
     onMouseLeave={onMouseLeave}
@@ -60,7 +60,7 @@ const generateCalendarUrl = (event) => {
   const encodedLocation = encodeURIComponent(event.location);
   const startDate = new Date(event.date).toISOString().replace(/-|:|\.\d\d\d/g, '');
   const endDate = new Date(event.endDate).toISOString().replace(/-|:|\.\d\d\d/g, '');
-  
+
   return `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodedText}&details=${encodedDetails}&location=${encodedLocation}&dates=${startDate}/${endDate}`;
 };
 const TechNewsFeed = () => {
@@ -103,11 +103,10 @@ const TechNewsFeed = () => {
         {news.map((item, index) => (
           <div
             key={index}
-            className={`absolute inset-0 transform transition-all duration-500 ${
-              index === activeIndex 
-                ? 'translate-x-0 opacity-100' 
-                : 'translate-x-full opacity-0'
-            }`}
+            className={`absolute inset-0 transform transition-all duration-500 ${index === activeIndex
+              ? 'translate-x-0 opacity-100'
+              : 'translate-x-full opacity-0'
+              }`}
           >
             <span className="bg-cyan-500/20 text-cyan-400 px-2 py-1 rounded text-sm">
               {item.category}
@@ -126,11 +125,10 @@ const TechNewsFeed = () => {
           <button
             key={index}
             onClick={() => setActiveIndex(index)}
-            className={`w-2 h-2 rounded-full transition-all duration-300 ${
-              index === activeIndex 
-                ? 'bg-cyan-400 w-4' 
-                : 'bg-gray-600 hover:bg-gray-500'
-            }`}
+            className={`w-2 h-2 rounded-full transition-all duration-300 ${index === activeIndex
+              ? 'bg-cyan-400 w-4'
+              : 'bg-gray-600 hover:bg-gray-500'
+              }`}
           />
         ))}
       </div>
@@ -276,7 +274,7 @@ const LiveCodeEditor = () => {
   const executeCode = async () => {
     setIsLoading(true);
     setOutput('');
-    
+
     try {
       switch (language) {
         case 'javascript':
@@ -303,7 +301,7 @@ const LiveCodeEditor = () => {
 
     try {
       console.log = (...args) => {
-        output.push(args.map(arg => 
+        output.push(args.map(arg =>
           typeof arg === 'object' ? JSON.stringify(arg) : String(arg)
         ).join(' '));
       };
@@ -312,7 +310,7 @@ const LiveCodeEditor = () => {
         'console',
         code
       );
-      
+
       sandbox({ log: console.log });
       setOutput(output.join('\n'));
     } finally {
@@ -369,7 +367,7 @@ const LiveCodeEditor = () => {
             <option value="python">Python</option>
             <option value="cpp">C++</option>
           </select>
-          <button 
+          <button
             onClick={() => setCode(starterCode[language])}
             className="px-3 py-1 bg-gray-700 rounded text-sm text-cyan-400 hover:bg-gray-600"
           >
@@ -383,7 +381,7 @@ const LiveCodeEditor = () => {
         className="w-full bg-gray-900 text-cyan-400 font-mono p-4 rounded mb-4 h-32 focus:outline-none focus:ring-2 focus:ring-cyan-500"
         spellCheck="false"
       />
-      <button 
+      <button
         onClick={executeCode}
         disabled={isLoading || (language === 'python' && !pyodide)}
         className="bg-cyan-500 text-white px-4 py-2 rounded hover:bg-cyan-600 transition-all duration-300 transform hover:-translate-y-1 disabled:opacity-50"
@@ -401,13 +399,13 @@ const LiveCodeEditor = () => {
 
 // Activity Feed component for HomePage
 const ActivityFeed = () => {
-    const activities = [
-        { text: "Season of Code Begins", time: " 21 May" },
-        { text: "Launch of DSA Bootcamp", time: "1st June" },
-        { text: "Kickoff of the Learners’ Space", time: "9 June" }
+  const activities = [
+    { text: "Season of Code Begins", time: " 21 May" },
+    { text: "Launch of DSA Bootcamp", time: "1st June" },
+    { text: "Kickoff of the Learners’ Space", time: "9 June" }
 
 
-    ];
+  ];
 
   return (
     <div className="bg-gray-800/50 p-4 rounded-xl">
@@ -500,7 +498,7 @@ const RiddleGame = () => {
   const getNextRiddle = () => {
     let availableIndices = Array.from({ length: riddles.length }, (_, i) => i)
       .filter(i => !usedRiddles.has(i));
-    
+
     if (availableIndices.length === 0) {
       setUsedRiddles(new Set([0]));
       availableIndices = Array.from({ length: riddles.length }, (_, i) => i);
@@ -594,19 +592,19 @@ const AboutUs = () => (
       <Card>
         <h3 className="text-2xl font-bold text-cyan-400 mb-4">Who are we?</h3>
         <p className="text-gray-300">
-        The Web and Coding Club, one of the biggest clubs at IIT Bombay and part of the Institute Technical Council, provides a gateway for students to join the coding community. We offer mentorship and a platform to help students enhance their coding skills, ensuring everyone has the opportunity to learn and develop a passion for coding. The secret to getting ahead is getting started, and we’re here to give every student the right start.
+          The Web and Coding Club, one of the biggest clubs at IIT Bombay and part of the Institute Technical Council, provides a gateway for students to join the coding community. We offer mentorship and a platform to help students enhance their coding skills, ensuring everyone has the opportunity to learn and develop a passion for coding. The secret to getting ahead is getting started, and we’re here to give every student the right start.
         </p>
       </Card>
       <Card>
         <h3 className="text-2xl font-bold text-cyan-400 mb-4">Our Mission </h3>
         <p className="text-gray-300">
-        We aim to foster a culture of learning and innovation by empowering students with the skills to excel in web development, competitive coding, open-source contributions, and emerging technologies.
+          We aim to foster a culture of learning and innovation by empowering students with the skills to excel in web development, competitive coding, open-source contributions, and emerging technologies.
         </p>
       </Card>
       <Card>
         <h3 className="text-2xl font-bold text-cyan-400 mb-4">Our Vision</h3>
         <p className="text-gray-300">
-        Create an inclusive environment where students collaborate, innovate, and grow together as problem-solvers and developers.
+          Create an inclusive environment where students collaborate, innovate, and grow together as problem-solvers and developers.
         </p>
       </Card>
     </div>
@@ -616,7 +614,7 @@ const AboutUs = () => (
 const HomePage = () => {
   const [typewriterText, setTypewriterText] = useState('');
   const fullText = "Coders Together Strong";
-  
+
   useEffect(() => {
     let index = 0;
     const interval = setInterval(() => {
@@ -650,14 +648,14 @@ const HomePage = () => {
   return (
     <div className="space-y-12 relative">
       <ParticleEffect />
-      
+
       <div className="text-center relative">
         <div className="absolute -top-20 -left-20 w-64 h-64 bg-cyan-500/20 rounded-full filter blur-3xl" />
         <div className="absolute -top-20 -right-20 w-64 h-64 bg-blue-500/20 rounded-full filter blur-3xl" />
         <h1 className="text-6xl font-bold mb-4 bg-gradient-to-r from-cyan-400 to-blue-500 text-transparent bg-clip-text">
           WnCC IIT Bombay
         </h1>
-        
+
         <div className="h-8">
           <span className="font-mono text-2xl text-cyan-400">
             {typewriterText}
@@ -687,7 +685,7 @@ const HomePage = () => {
         <div className="space-y-8">
           <RiddleGame />
           <TechNewsFeed />
-          
+
         </div>
       </div>
 
@@ -702,17 +700,17 @@ const EventCard = ({ event }) => {
     const now = new Date();
     const eventDate = new Date(event.date);
     const diff = eventDate - now;
-    
+
     if (diff < 0) return 'Event has passed';
-    
+
     const days = Math.floor(diff / (1000 * 60 * 60 * 24));
     const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    
+
     return `${days}d ${hours}h remaining`;
   };
 
   return (
-    <Card 
+    <Card
       className="transform transition-all duration-500 hover:scale-105"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
@@ -732,7 +730,7 @@ const EventCard = ({ event }) => {
           {timeUntilEvent()}
         </div>
       </div>
-      
+
       <h3 className="text-2xl font-semibold text-white mb-2">{event.title}</h3>
       <div className="flex items-center gap-2 text-cyan-300 mb-2">
         <Calendar className="w-4 h-4" />
@@ -743,7 +741,7 @@ const EventCard = ({ event }) => {
         })}
       </div>
       <p className="text-gray-300 mb-4">{event.description}</p>
-      
+
       <div className="flex items-center gap-4 mb-4">
         <span className="text-gray-400 flex items-center gap-1">
           <Users className="w-4 h-4" />
@@ -754,7 +752,7 @@ const EventCard = ({ event }) => {
           {event.prize || '$1000'} in prizes
         </span>
       </div>
-      
+
       <div className="flex gap-2">
         <a
           href={generateCalendarUrl(event)}
@@ -777,7 +775,7 @@ const EventCard = ({ event }) => {
 // Timeline component for EventsPage
 const EventTimeline = () => {
   const [selectedEvent, setSelectedEvent] = useState(null);
-  
+
   const timelineItems = [
     {
       title: "Season Kickoff",
@@ -805,7 +803,7 @@ const EventTimeline = () => {
       date: "9th June",
       description: "4-week long | Igniting passion, elevating skills,& unlocking the future of tech!",
       icon: <Code className="w-6 h-6" />,
-      color: "from-cyan-500 to-indigo-700" 
+      color: "from-cyan-500 to-indigo-700"
     }
   ];
 
@@ -813,19 +811,17 @@ const EventTimeline = () => {
     <div className="relative mt-20">
       <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-gradient-to-b from-cyan-500/50 to-transparent" />
       {timelineItems.map((item, index) => (
-        <div 
+        <div
           key={index}
-          className={`relative flex items-center mb-12 ${
-            index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'
-          }`}
+          className={`relative flex items-center mb-12 ${index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'
+            }`}
           onMouseEnter={() => setSelectedEvent(index)}
           onMouseLeave={() => setSelectedEvent(null)}
         >
           <div className={`w-1/2 ${index % 2 === 0 ? 'pr-8 text-right' : 'pl-8'}`}>
-            <div 
-              className={`p-6 rounded-xl bg-gradient-to-br ${item.color} transform transition-all duration-300 ${
-                selectedEvent === index ? 'scale-105' : ''
-              }`}
+            <div
+              className={`p-6 rounded-xl bg-gradient-to-br ${item.color} transform transition-all duration-300 ${selectedEvent === index ? 'scale-105' : ''
+                }`}
             >
               <div className="flex items-center gap-3 mb-2 justify-end">
                 {item.icon}
@@ -836,9 +832,8 @@ const EventTimeline = () => {
             </div>
           </div>
           <div className="absolute left-1/2 transform -translate-x-1/2 flex items-center justify-center">
-            <div className={`w-4 h-4 rounded-full bg-cyan-400 transition-transform duration-300 ${
-              selectedEvent === index ? 'scale-150' : ''
-            }`} />
+            <div className={`w-4 h-4 rounded-full bg-cyan-400 transition-transform duration-300 ${selectedEvent === index ? 'scale-150' : ''
+              }`} />
           </div>
         </div>
       ))}
@@ -849,7 +844,7 @@ const EventTimeline = () => {
 
 const EventsPage = () => {
   const [selectedFilter, setSelectedFilter] = useState('all');
-  
+
   const events = [
     {
       title: 'AI ML Hackathon',
@@ -886,8 +881,8 @@ const EventsPage = () => {
     }
   ];
 
-  const filteredEvents = selectedFilter === 'all' 
-    ? events 
+  const filteredEvents = selectedFilter === 'all'
+    ? events
     : events.filter(event => event.category === selectedFilter);
 
   return (
@@ -895,7 +890,7 @@ const EventsPage = () => {
       {/* Background decorative elements */}
       <div className="absolute top-0 right-0 w-96 h-96 bg-cyan-500/10 rounded-full filter blur-3xl" />
       <div className="absolute bottom-0 left-0 w-96 h-96 bg-blue-500/10 rounded-full filter blur-3xl" />
-      
+
       {/* Hero section */}
       <div className="text-center relative">
         <h2 className="text-5xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 text-transparent bg-clip-text mb-6">
@@ -912,11 +907,10 @@ const EventsPage = () => {
           <button
             key={filter}
             onClick={() => setSelectedFilter(filter)}
-            className={`px-6 py-2 rounded-full transition-all duration-300 ${
-              selectedFilter === filter
-                ? 'bg-cyan-500 text-white'
-                : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
-            }`}
+            className={`px-6 py-2 rounded-full transition-all duration-300 ${selectedFilter === filter
+              ? 'bg-cyan-500 text-white'
+              : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
+              }`}
           >
             {filter.charAt(0).toUpperCase() + filter.slice(1)}
           </button>
@@ -929,7 +923,7 @@ const EventsPage = () => {
           <EventCard key={index} event={event} />
         ))}
       </div>
-      
+
       {/* Timeline section */}
       <div className="mt-20">
         <h3 className="text-3xl font-bold text-center text-cyan-400 mb-12">
@@ -950,7 +944,7 @@ const ResourcesPage = () => {
     return () => clearInterval(timer);
   }, []);
 
-  
+
 
   const resources = [
     {
@@ -1202,19 +1196,19 @@ const ResourcesPage = () => {
       link: 'https://www.postgresqltutorial.com/'
     }
   ];
-  
+
 
   const ResourceCard = ({ resource }) => {
     const [isHovered, setIsHovered] = useState(false);
 
     return (
-      <Card 
+      <Card
         className="group relative bg-gray-900/50 backdrop-blur-xl border border-gray-800 overflow-hidden"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
         <div className={`absolute inset-0 bg-gradient-to-r ${resource.color} opacity-5 group-hover:opacity-10 transition-opacity duration-300`} />
-        
+
         {/* Cyberpunk-style corner decorations */}
         <div className="absolute top-0 right-0 w-16 h-16 overflow-hidden">
           <div className={`absolute top-0 right-0 w-24 h-1 bg-gradient-to-r ${resource.color}`} />
@@ -1373,7 +1367,7 @@ const ResourcesPage = () => {
 
             {/* Category Buttons */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-              
+
             </div>
           </div>
         </div>
@@ -1383,11 +1377,11 @@ const ResourcesPage = () => {
       <div className="container mx-auto px-4 pb-12">
         <div className="grid md:grid-cols-2 gap-6">
           {resources
-            .filter(resource => 
+            .filter(resource =>
               (activeCategory === 'all' || resource.category === activeCategory) &&
-              (searchQuery === '' || 
-               resource.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-               resource.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase())))
+              (searchQuery === '' ||
+                resource.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                resource.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase())))
             )
             .map((resource, index) => (
               <ResourceCard key={index} resource={resource} />
@@ -1399,13 +1393,13 @@ const ResourcesPage = () => {
 };
 
 const ChessIcon = () => (
-  <svg 
-    viewBox="0 0 24 24" 
-    fill="none" 
-    stroke="currentColor" 
-    strokeWidth="2" 
-    strokeLinecap="round" 
-    strokeLinejoin="round" 
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
     className="w-5 h-5"
   >
     <path d="M8 16L10.293 13.707C10.683 13.317 10.183 12.683 9.293 12.293L7 10C6.61 9.61 6.61 8.39 7 8L9.293 5.707C9.683 5.317 10.317 5.317 10.707 5.707L13 8C13.39 8.39 13.39 9.61 13 10L10.707 12.293C10.317 12.683 10.317 13.317 10.707 13.707L13 16" />
@@ -1420,196 +1414,204 @@ const TeamPage = () => {
   const [typingText, setTypingText] = useState({});
 
   const teamMembers = [
-          {
-              name: "Veeraditya Karan Parakh",
-              role: "Manager",
-              icon: <MessageCircle className="w-12 h-12 text-cyan-400" />,
-              bio: "Hello everyone! I'm Veeraditya, a third-year B.Tech student at IIT Bombay, majoring in Energy science and Engineering. I'm currently the Manager of the Web and Coding Club (WnCC), where I lead initiatives, organize coding sessions, and mentor juniors across various technical domains.\n\n I'm a passionate coder who has been exploring the AI/ML domain for quite some time, constantly learning and building along the way. Outside of tech, I enjoy playing chess, football, and table tennis, and love spending time with friends.",
-              skills: ["AI/ML", "Web-Dev", "Data Science", "Chess"],
-  
-              social: {
-                  github: "https://github.com/veeradi34",
-                  twitter: "https://www.instagram.com/veer3_1/",
-                  linkedin:
-                      "https://www.linkedin.com/in/veeraditya-karan-parakh-68a869282/",
-                  instagram: "https://www.instagram.com/veer3_1?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
-              },
-  
-              imageUrl: "./Images/VEER.jpg",
-              chess: {
-                  rating: 1850,
-                  lichessUsername: "veer3106",
-              },
-          },
-          {
-              name: "Pratyaksh Bharadwaj",
-              role: "Manager",
-              icon: <MessageCircle className="w-12 h-12 text-cyan-400" />,
-              bio: "Hello everyone! I'm Pratyaksh Bhardwaj, a third-year B.Tech student at IIT Bombay, majoring in Metallurgy and Material Science with a minor in Data Science. I'm currently the Manager of the Web and Coding Club, where I lead projects, conduct sessions, and mentor my convenors across various domains.\n\nI'm an enthusiastic coder and was part of the Inter-IIT Tech Contingent in my second year. Outside of tech, I enjoy playing basketball, badminton, and spending time with friends.",
-              skills: [
-                  "Machine Learning ",
-                  "Web-Dev",
-                  "C++",
-                  "Django",
-                  "React Js",
-                  "NodeJs",
-              ],
-  
-              social: {
-                  github: "https://github.com/Pratyaksh2309",
-                  twitter:
-                      "https://www.instagram.com/pratyaksh._.23?igsh=MXF4emhsaGQ4cXplZw==",
-                  linkedin:
-                      "https://www.linkedin.com/in/pratyaksh-bhardwaj-b2309ar?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
-                  instagram: "https://www.instagram.com/pratyaksh._.23?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
-  
-              },
-  
-              imageUrl: "./Images/Pratyaksh.jpg",
-          },
-          {
-              name: "Abhishek Upadhya",
-              role: "Convener",
-              icon: <MessageCircle className="w-12 h-12 text-cyan-400" />,
-              bio: "Hello everyone! I'm Abhishek, a second-year B.Tech student in the Electrical Engineering department at IIT Bombay. I currently serve as a Convener of the Web and Coding Club, where I actively contribute to projects and initiatives aimed at fostering a strong coding culture on campus.\n\nI'm passionate about solving real-world problems and understanding how things work at the most fundamental level. I’m also curious about the mechanics of financial markets and how they operate. Outside of tech, I enjoy going on long cycle rides and playing table tennis. I look forward to contributing to the community in meaningful and impactful ways.",
-              skills: ["C++", "Java", "Python", "Computer Vision", "Computer Architecture", "Equity Analysis"],
-              social: {
-                  github: "https://github.com/AbhishekU05",
-                  linkedIn: "https://in.linkedin.com/in/abhishek-upadhya-647a58257",
-                  insta: "https://www.instagram.com/abhisheku05?igsh=MXgxdjcxZWF6cDBsYw=="
-              },
-              imageUrl: "./Images/ABHISHEK.png",
-          },
-          {
-              name: "Aashna Pulla",
-              role: "Convener",
-              icon: <MessageCircle className="w-12 h-12 text-cyan-400" />,
-              bio: "Hey everyone! I'm Aashna Pulla, a second-year Computer Science student at IIT Bombay. I'm also a Convener at the Web and Coding Club, where I help run workshops, plan events, and keep the coding culture on campus alive and buzzing.\n\n Outside the tech space, I’m into badminton and absolutely love escape rooms—I’ll take any chance I get to go for one! In my downtime, you’ll probably find me playing the guitar, watching anime, or catching up on sleep (the most underrated hobby ever, honestly).",
-              skills: ["Machine Learning", "Computer Vision", "DSA", "C++"],
-              social: {
-                  github: "https://github.com/aashnapulla",
-                  linkedin: "https://www.linkedin.com/me?trk=p_mwlite_feed-secondary_nav",
-                  insta: "https://www.instagram.com/aashna.p0911/"
-              },
-              imageUrl: "./Images/AASHNA.png",
-          },
-  
-          {
-              name: "Mrigank Goel",
-              role: "Convener",
-              icon: <MessageCircle className="w-12 h-12 text-cyan-400" />,
-              bio: "Hello everyone! I'm Mrigank Goel, a second-year B.Tech student in Computer Science and Engineering at IIT Bombay. I'm currently a Convener at the Web and Coding Club, where I collaborate on diverse technical projects, help organize sessions, and contribute towards building a strong coding culture in our campus.\n\nI have a deep interest in problem-solving and development, and I'm always curious about how tech can make life more efficient and exciting. Beyond the screen, you'll often find me jogging, playing table tennis, listening to music or chilling out with friends. There’s always something new to try, and I’m all in for the ride.",
-              skills: ["Machine Learning", "Artificial Intelligence", "Competitive Programming", "C++", "Python"],
-              social: {
-                  github: "https://github.com/MrigankGoel",
-                  linkedin: "https://www.linkedin.com/in/mrigank-goel-327427336?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
-                  insta: "https://www.instagram.com/mrigank_goel.964/?utm_source=ig_web_button_share_sheet"
-              },
-              imageUrl: "./Images/MRIGANK.jpeg",
-          }
-          ,
-          {
-              name: "Shivansh Niranjan",
-              role: "Convener",
-              icon: <MessageCircle className="w-12 h-12 text-cyan-400" />,
-              bio: "Hey folks, I’m Shivansh Niranjan, a sophomore at IIT Bombay pursuing Energy Science and Engineering. As the Convener of the Web and Coding Club, I actively contribute to various projects, organize sessions, and conduct courses, helping learners clear their doubts.\n\nI'm enthusiastic about exploring diverse technological domains and their integration with fields like entrepreneurship and sustainability. Beyond academics, I enjoy playing cricket, badminton, and sketching. I'm also deeply passionate about sustainability and actively contribute through efforts like tree planting.",
-              skills: ["HTML", "CSS", "JavaScript", "React", "Django", "C++", "Python"],
-              social: {
-                  github: "https://github.com/Raghav789-code",
-                  linkedIn: "https://www.linkedin.com/in/shivansh-niranjan-71766a1ba",
-                  insta: "https://www.instagram.com/shivansh.niranjan.58?igsh=MTcwa2FmOGFmcThyag=="
-              },
-              imageUrl: "./Images/shivansh.jpeg",
-          },
-          {
-              name: "Riddhi Yeola",
-              role: "Convener",
-              icon: <MessageCircle className="w-12 h-12 text-cyan-400" />,
-              bio: "Hello everyone! I'm Riddhi Yeola, a second-year B.Tech student in civil engineering at IIT Bombay. I'm currently a Convener at the Web and Coding Club, where I engage in a variety of technical initiatives, assistant coordinating workshops and events and actively support the development of a vibrant coding community on campus.\n\nI am deeply driven by curiosity of problem solving and development always exploring innovative ways technology can enhance everyday life outside the digital relief I play athletics, basketball and badminton. And I love long drives, trips and trekking.",
-              skills: ["Machine Learning (CV,NLP)", "DSA", "C++"],
-              social: {
-                  github: "https://github.com/Riddhiyeola",
-                  linkedi: "https://www.linkedin.com/in/riddhi-yeola-790b03242?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
-                  insta: "https://www.instagram.com/mrigank_goel.964/?utm_source=ig_web_button_share_sheet"
-              },
-              imageUrl: "./Images/RIDDHI.png",
-          },
-          {
-              name: "Utkarsh Tanwar",
-              role: "Convener",
-              icon: <MessageCircle className="w-12 h-12 text-cyan-400" />,
-              bio: "Hello everyone! I'm Utkarsh Tanwar,a second-year B.Tech student at IIT Bombayr of the Web and Coding Club, where I contribute to club initiatives, coordinate sessions, and work on exciting tech projects with fellow enthusiasts.\n\nOutside the world of coding, I love swimming, reading, playing badminton and tennis, and trekking through nature. I'm always eager to explore new places and experience the beauty the world has to offer.\n\nLooking forward to connecting and learning together.",
-              skills: [
-                  "Python",
-                  "C++",
-                  "JavaScript",
-                  "Web Development",
-                  "Machine Learning",
-                  "Django",
-                  "Node.js",
-                  "React.js"
-              ],
-              social: {
-                  github: "https://github.com/icodeforlife24",
-                  linkedin: "https://www.linkedin.com/in/utkarsh-tanwar-400b52256?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
-                  insta: "https://www.instagram.com/utkarsh_tanwar77?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
-              },
-              imageUrl: "./Images/UTKARSH.png",
-          },
-          {
-              name: "Avnish Vijay More",
-              role: "Convener",
-              icon: <MessageCircle className="w-12 h-12 text-cyan-400" />,
-              bio: "Hello everyone! I’m Avnish Vijay More, a Civil Engineering undergrad at IIT Bombay and currently serving as a Convener at the Web and Coding Club. I’m passionate about data science, machine learning, and finance, and I thrive on solving real-world challenges through technology and innovation. At the club, I focus on organizing exciting events, collaborating on impactful projects, and nurturing a strong and inclusive coding community on campus.\n\nBeyond the screen, you’ll find me on the football field, vibing to music, or diving into the world of gaming.",
-              skills: ["Machine Learning", "Deep Learning", "NLP", "Football"],
-              social: {
-                  github: "https://github.com/wejhdy",
-                  linkedin: "www.linkedin.com/in/avnish-more",
-                  insta: "https://www.instagram.com/avn1sh.__/"
-              },
-              imageUrl: "./Images/AVNISH.png",
-          },
-  
-  
-          {
-              name: "Mithra Bijumon",
-              role: "Convener",
-              icon: <MessageCircle className="w-12 h-12 text-cyan-400" />,
-              bio: "Hello everyone!\n\nI'm Mithra Bijumon, a second-year B.Tech student in Aerospace Engineering at IIT Bombay. I’m currently part of the Web and Coding Club, where I contribute to technical projects, event coordination, and help conduct workshops and design initiatives aimed at making the coding scene on campus more exciting and accessible.\n\nI'm passionate about problem-solving and full-stack development. I love exploring how design and technology intersect to create engaging user experiences, and I'm always up for a new challenge.\n\nOutside the world of code, I find joy in swimming, badminton, and exploring new places. I'm also someone who values independence and loves working hands-on—whether it’s through coding, brainstorming ideas, or just figuring things out solo or with help.",
-              skills: ["Machine Learning", "Web Development", "App Development", "Generative AI", "Python", "C++"],
-              social: {
-                  github: "https://github.com/MithraBijumon",
-                  linkedIn: "http://www.linkedin.com/in/mithra-bijumon-059104301",
-                  instagram: "https://www.instagram.com/mithra.bijumon/"
-              },
-              imageUrl: "./Images/MITHRA.png",
-          },
-          {
-              name: "Nishil Seth Gupta",
-              role: "Convener",
-              icon: <MessageCircle className="w-12 h-12 text-cyan-400" />,
-              bio: "Hello everyone! I'm Nishil, a second-year B.Tech student in the Civil Engineering department at IIT Bombay and currently a Convener at the Web and Coding Club. I’m involved in driving club initiatives, conducting sessions, and collaborating on projects to promote coding in our campus. My primary interest lies in problem-solving. I enjoy building things from scratch, understanding systems deeply, and sharing that process with others. Outside of tech, I’m a passionate singer, play the guitar, and often spend time painting. I'm always open to new ideas, new people, and new challenges—and I look forward to contributing to the community in meaningful ways.",
-              skills: ["C++", "Python", "DSA", "Design"],
-              social: {
-                  github: "https://github.com/Nishil-the-seth",
-                  linkedin: "https://www.linkedin.com/in/verynise/",
-                  email: "Nishil.wncc@gmail.com"
-              },
-              imageUrl: "./Images/NISHIL.png",
-          },
-          {
-              name: "Sarthak Somani",
-              role: "Convener",
-              icon: <MessageCircle className="w-12 h-12 text-cyan-400" />,
-              bio: "Hello, Sarthak Somani here! I'm from Bangalore and am currently pursuing my Undergrad in the Department of Economics, IIT Bombay.\n\nI consider myself a highly motivated and results driven individual, who thrives at the intersection of Technology and Finance.\n\nAs a Convener of the Web and Coding Club, I work towards the enrichment of the coding culture on campus by driving club initiatives, organising sessions and engaging in projects.\n\nLooking forward to connect and collaborate!",
-              skills: ["Machine Learning", "Data Analytics", "C++", "Python", "R", "SQL"],
-              social: {
-                  github: "https://github.com/sarthak-somani",
-                  linkedin: "https://www.linkedin.com/in/sarthak-somani/",
-                  insta: ""
-              },
-              imageUrl: "./Images/SHARTHAK.png",
-          }];
+    {
+      name: "Veeraditya Karan Parakh",
+      role: "Manager",
+      icon: <MessageCircle className="w-12 h-12 text-cyan-400" />,
+      bio: "Hello everyone! I'm Veeraditya, a third-year B.Tech student at IIT Bombay, majoring in Energy science and Engineering. I'm currently the Manager of the Web and Coding Club (WnCC), where I lead initiatives, organize coding sessions, and mentor juniors across various technical domains.\n\n I'm a passionate coder who has been exploring the AI/ML domain for quite some time, constantly learning and building along the way. Outside of tech, I enjoy playing chess, football, and table tennis, and love spending time with friends.",
+      skills: ["AI/ML", "Web-Dev", "Data Science", "Chess"],
+
+      social: {
+        github: "https://github.com/veeradi34",
+        twitter: "https://www.instagram.com/veer3_1/",
+        linkedin:"https://www.linkedin.com/in/veeraditya-karan-parakh-68a869282/",
+        instagram: "https://www.instagram.com/veer3_1?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+      },
+
+      imageUrl: "./Images/VEER.jpg",
+      chess: {
+        rating: 1850,
+        lichessUsername: "veer3106",
+      },
+    },
+    {
+      name: "Pratyaksh Bharadwaj",
+      role: "Manager",
+      icon: <MessageCircle className="w-12 h-12 text-cyan-400" />,
+      bio: "Hello everyone! I'm Pratyaksh Bhardwaj, a third-year B.Tech student at IIT Bombay, majoring in Metallurgy and Material Science with a minor in Data Science. I'm currently the Manager of the Web and Coding Club, where I lead projects, conduct sessions, and mentor my convenors across various domains.\n\nI'm an enthusiastic coder and was part of the Inter-IIT Tech Contingent in my second year. Outside of tech, I enjoy playing basketball, badminton, and spending time with friends.",
+      skills: [
+        "Machine Learning ",
+        "Web-Dev",
+        "C++",
+        "Django",
+        "React Js",
+        "NodeJs",
+      ],
+
+      social: {
+        github: "https://github.com/Pratyaksh2309",
+        twitter:
+          "https://www.instagram.com/pratyaksh._.23?igsh=MXF4emhsaGQ4cXplZw==",
+        linkedin:
+          "https://www.linkedin.com/in/pratyaksh-bhardwaj-b2309ar?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
+        instagram: "https://www.instagram.com/pratyaksh._.23/?utm_source=ig_web_button_share_sheet"
+
+      },
+
+      imageUrl: "./Images/Pratyaksh.jpg",
+    },
+    {
+      name: "Abhishek Upadhya",
+      role: "Convener",
+      icon: <MessageCircle className="w-12 h-12 text-cyan-400" />,
+      bio: "Hello everyone! I'm Abhishek, a second-year B.Tech student in the Electrical Engineering department at IIT Bombay. I currently serve as a Convener of the Web and Coding Club, where I actively contribute to projects and initiatives aimed at fostering a strong coding culture on campus.\n\nI'm passionate about solving real-world problems and understanding how things work at the most fundamental level. I’m also curious about the mechanics of financial markets and how they operate. Outside of tech, I enjoy going on long cycle rides and playing table tennis. I look forward to contributing to the community in meaningful and impactful ways.",
+      skills: ["C++", "Java", "Python", "Computer Vision", "Computer Architecture", "Equity Analysis"],
+      social: {
+        github: "https://github.com/AbhishekU05",
+        twitter: "",
+        linkedIn: "https://in.linkedin.com/in/abhishek-upadhya-647a58257",
+        instagram: "https://www.instagram.com/abhisheku05?igsh=MXgxdjcxZWF6cDBsYw=="
+      },
+      imageUrl: "./Images/ABHISHEK.png",
+    },
+    {
+      name: "Aashna Pulla",
+      role: "Convener",
+      icon: <MessageCircle className="w-12 h-12 text-cyan-400" />,
+      bio: "Hey everyone! I'm Aashna Pulla, a second-year Computer Science student at IIT Bombay. I'm also a Convener at the Web and Coding Club, where I help run workshops, plan events, and keep the coding culture on campus alive and buzzing.\n\n Outside the tech space, I’m into badminton and absolutely love escape rooms—I’ll take any chance I get to go for one! In my downtime, you’ll probably find me playing the guitar, watching anime, or catching up on sleep (the most underrated hobby ever, honestly).",
+      skills: ["Machine Learning", "Computer Vision", "DSA", "C++"],
+      social: {
+        github: "https://github.com/aashnapulla",
+        twitter: "",
+        linkedin: "https://www.linkedin.com/me?trk=p_mwlite_feed-secondary_nav",
+        instagram: "https://www.instagram.com/aashna.p0911/"
+      },
+      imageUrl: "./Images/AASHNA.png",
+    },
+
+    {
+      name: "Mrigank Goel",
+      role: "Convener",
+      icon: <MessageCircle className="w-12 h-12 text-cyan-400" />,
+      bio: "Hello everyone! I'm Mrigank Goel, a second-year B.Tech student in Computer Science and Engineering at IIT Bombay. I'm currently a Convener at the Web and Coding Club, where I collaborate on diverse technical projects, help organize sessions, and contribute towards building a strong coding culture in our campus.\n\nI have a deep interest in problem-solving and development, and I'm always curious about how tech can make life more efficient and exciting. Beyond the screen, you'll often find me jogging, playing table tennis, listening to music or chilling out with friends. There’s always something new to try, and I’m all in for the ride.",
+      skills: ["Machine Learning", "Artificial Intelligence", "Competitive Programming", "C++", "Python"],
+      social: {
+        github: "https://github.com/MrigankGoel",
+        twitter: "",
+        linkedin: "https://www.linkedin.com/in/mrigank-goel-327427336?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
+        instagram: "https://www.instagram.com/mrigank_goel.964/?utm_source=ig_web_button_share_sheet"
+      },
+      imageUrl: "./Images/MRIGANK.jpeg",
+    }
+    ,
+    {
+      name: "Shivansh Niranjan",
+      role: "Convener",
+      icon: <MessageCircle className="w-12 h-12 text-cyan-400" />,
+      bio: "Hey folks, I’m Shivansh Niranjan, a sophomore at IIT Bombay pursuing Energy Science and Engineering. As the Convener of the Web and Coding Club, I actively contribute to various projects, organize sessions, and conduct courses, helping learners clear their doubts.\n\nI'm enthusiastic about exploring diverse technological domains and their integration with fields like entrepreneurship and sustainability. Beyond academics, I enjoy playing cricket, badminton, and sketching. I'm also deeply passionate about sustainability and actively contribute through efforts like tree planting.",
+      skills: ["HTML", "CSS", "JavaScript", "React", "Django", "C++", "Python"],
+      social: {
+        github: "https://github.com/Raghav789-code",
+        twitter: "",
+        linkedIn: "https://www.linkedin.com/in/shivansh-niranjan-71766a1ba",
+        instagram: "https://www.instagram.com/shivansh.niranjan.58/?hl=en"
+      },
+      imageUrl: "./Images/shivansh.jpeg",
+    },
+    {
+      name: "Riddhi Yeola",
+      role: "Convener",
+      icon: <MessageCircle className="w-12 h-12 text-cyan-400" />,
+      bio: "Hello everyone! I'm Riddhi Yeola, a second-year B.Tech student in civil engineering at IIT Bombay. I'm currently a Convener at the Web and Coding Club, where I engage in a variety of technical initiatives, assistant coordinating workshops and events and actively support the development of a vibrant coding community on campus.\n\nI am deeply driven by curiosity of problem solving and development always exploring innovative ways technology can enhance everyday life outside the digital relief I play athletics, basketball and badminton. And I love long drives, trips and trekking.",
+      skills: ["Machine Learning (CV,NLP)", "DSA", "C++"],
+      social: {
+        github: "https://github.com/Riddhiyeola",
+        twitter: "",
+        linkedi: "https://www.linkedin.com/in/riddhi-yeola-790b03242?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
+        instagram: "https://www.instagram.com/mrigank_goel.964/?utm_source=ig_web_button_share_sheet"
+      },
+      imageUrl: "./Images/RIDDHI.png",
+    },
+    {
+      name: "Utkarsh Tanwar",
+      role: "Convener",
+      icon: <MessageCircle className="w-12 h-12 text-cyan-400" />,
+      bio: "Hello everyone! I'm Utkarsh Tanwar,a second-year B.Tech student at IIT Bombayr of the Web and Coding Club, where I contribute to club initiatives, coordinate sessions, and work on exciting tech projects with fellow enthusiasts.\n\nOutside the world of coding, I love swimming, reading, playing badminton and tennis, and trekking through nature. I'm always eager to explore new places and experience the beauty the world has to offer.\n\nLooking forward to connecting and learning together.",
+      skills: [
+        "Python",
+        "C++",
+        "JavaScript",
+        "Web Development",
+        "Machine Learning",
+        "Django",
+        "Node.js",
+        "React.js"
+      ],
+      social: {
+        github: "https://github.com/icodeforlife24",
+        twitter: "",
+        linkedin: "https://www.linkedin.com/in/utkarsh-tanwar-400b52256?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
+        instagram: "https://www.instagram.com/utkarsh_tanwar77?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+      },
+      imageUrl: "./Images/UTKARSH.png",
+    },
+    {
+      name: "Avnish Vijay More",
+      role: "Convener",
+      icon: <MessageCircle className="w-12 h-12 text-cyan-400" />,
+      bio: "Hello everyone! I’m Avnish Vijay More, a Civil Engineering undergrad at IIT Bombay and currently serving as a Convener at the Web and Coding Club. I’m passionate about data science, machine learning, and finance, and I thrive on solving real-world challenges through technology and innovation. At the club, I focus on organizing exciting events, collaborating on impactful projects, and nurturing a strong and inclusive coding community on campus.\n\nBeyond the screen, you’ll find me on the football field, vibing to music, or diving into the world of gaming.",
+      skills: ["Machine Learning", "Deep Learning", "NLP", "Football"],
+      social: {
+        github: "https://github.com/wejhdy",
+        twitter: "",
+        linkedin: "https://www.linkedin.com/in/avnish-more/",
+        instagram: "https://www.instagram.com/avn1sh.__/"
+      },
+      imageUrl: "./Images/AVNISH.png",
+    },
+
+
+    {
+      name: "Mithra Bijumon",
+      role: "Convener",
+      icon: <MessageCircle className="w-12 h-12 text-cyan-400" />,
+      bio: "Hello everyone!\n\nI'm Mithra Bijumon, a second-year B.Tech student in Aerospace Engineering at IIT Bombay. I’m currently part of the Web and Coding Club, where I contribute to technical projects, event coordination, and help conduct workshops and design initiatives aimed at making the coding scene on campus more exciting and accessible.\n\nI'm passionate about problem-solving and full-stack development. I love exploring how design and technology intersect to create engaging user experiences, and I'm always up for a new challenge.\n\nOutside the world of code, I find joy in swimming, badminton, and exploring new places. I'm also someone who values independence and loves working hands-on—whether it’s through coding, brainstorming ideas, or just figuring things out solo or with help.",
+      skills: ["Machine Learning", "Web Development", "App Development", "Generative AI", "Python", "C++"],
+      social: {
+        github: "https://github.com/MithraBijumon",
+        twitter: "",
+        linkedIn: "http://www.linkedin.com/in/mithra-bijumon-059104301",
+       instagram: "https://www.instagram.com/mithra.bijumon/"
+      },
+      imageUrl: "./Images/MITHRA.png",
+    },
+    {
+      name: "Nishil Seth Gupta",
+      role: "Convener",
+      icon: <MessageCircle className="w-12 h-12 text-cyan-400" />,
+      bio: "Hello everyone! I'm Nishil, a second-year B.Tech student in the Civil Engineering department at IIT Bombay and currently a Convener at the Web and Coding Club. I’m involved in driving club initiatives, conducting sessions, and collaborating on projects to promote coding in our campus. My primary interest lies in problem-solving. I enjoy building things from scratch, understanding systems deeply, and sharing that process with others. Outside of tech, I’m a passionate singer, play the guitar, and often spend time painting. I'm always open to new ideas, new people, and new challenges—and I look forward to contributing to the community in meaningful ways.",
+      skills: ["C++", "Python", "DSA", "Design"],
+      social: {
+        github: "https://github.com/Nishil-the-seth",
+        linkedin: "https://www.linkedin.com/in/verynise/",
+        instagram:"https://www.instagram.com/the.nishil.the.seth?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+      },
+      imageUrl: "./Images/NISHIL.png",
+    },
+    {
+      name: "Sarthak Somani",
+      role: "Convener",
+      icon: <MessageCircle className="w-12 h-12 text-cyan-400" />,
+      bio: "Hello, Sarthak Somani here! I'm from Bangalore and am currently pursuing my Undergrad in the Department of Economics, IIT Bombay.\n\nI consider myself a highly motivated and results driven individual, who thrives at the intersection of Technology and Finance.\n\nAs a Convener of the Web and Coding Club, I work towards the enrichment of the coding culture on campus by driving club initiatives, organising sessions and engaging in projects.\n\nLooking forward to connect and collaborate!",
+      skills: ["Machine Learning", "Data Analytics", "C++", "Python", "R", "SQL"],
+      social: {
+        github: "https://github.com/sarthak-somani",
+        twitter: "",
+        linkedin: "https://www.linkedin.com/in/sarthak-somani/",
+        instagram: " "
+      },
+      imageUrl: "./Images/SHARTHAK.png",
+    }];
 
   useEffect(() => {
     const handleMouseMove = (e) => {
@@ -1666,212 +1668,229 @@ const TeamPage = () => {
     </div>
   );
 
-  const MemberCard = ({ member, index }) => {
-    const isExpanded = expandedCards[index];
-    
-    return (
-      <Card className="relative overflow-hidden bg-gray-900/50 backdrop-blur-sm transition-all duration-300 hover:shadow-xl hover:shadow-cyan-500/20">
-        {/* Profile Section */}
-        <div className="p-6 space-y-6">
-          {/* Image and Basic Info */}
-          <div className="flex items-center gap-4">
-            <div className="relative w-16 h-16 rounded-full overflow-hidden ring-2 ring-cyan-500/50">
-              <img 
-                src={member.imageUrl} 
-                alt={member.name}
-                className="w-full h-full object-cover"
-              />
-            </div>
-            <div>
-              <h3 className="text-xl font-bold text-white">{member.name}</h3>
-              <p className="text-cyan-400">{member.role}</p>
-            </div>
-          </div>
+   const MemberCard = ({ member, index }) => {
+        const isExpanded = expandedCards[index];
 
-          {/* Bio */}
-          <p className="text-gray-300 text-sm">{member.bio}</p>
+        return (
+            <Card className="relative overflow-hidden bg-gray-900/50 backdrop-blur-sm transition-all duration-300 hover:shadow-xl hover:shadow-cyan-500/20">
+                {/* Profile Section */}
+                <div className="p-6 space-y-6">
+                    {/* Image and Basic Info */}
+                    <div className="flex items-center gap-4">
+                        <div className="relative w-16 h-16 rounded-full overflow-hidden ring-2 ring-cyan-500/50">
+                            <img
+                                src={member.imageUrl}
+                                alt={member.name}
+                                className="w-full h-full object-cover"
+                            />
+                        </div>
+                        <div>
+                            <h3 className="text-xl font-bold text-white">{member.name}</h3>
+                            <p className="text-cyan-400">{member.role}</p>
+                        </div>
+                    </div>
 
-          {/* Social Links */}
-          <div className="flex gap-4">
-            {member.social.github && (
-              <a 
-                href={member.social.github} 
-                className="text-gray-400 hover:text-cyan-400 transition-colors"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Github className="w-5 h-5" />
-              </a>
-            )}
-            {member.social.twitter && (
-              <a 
-                href={member.social.twitter} 
-                className="text-gray-400 hover:text-cyan-400 transition-colors"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Instagram className="w-5 h-5" />
-              </a>
-            )}
-            {member.social.linkedin && (
-              <a 
-                href={member.social.linkedin} 
-                className="text-gray-400 hover:text-cyan-400 transition-colors"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Linkedin className="w-5 h-5" />
-              </a>
-            )}
-          </div>
+                    {/* Bio */}
+                    {/* <p className="text-gray-300 text-sm">{member.bio}</p> */}
 
-          {!isExpanded && (
-            <button 
-              onClick={() => {
-                simulateTyping(index, member.name);
-              }}
-              className="w-full bg-gray-800 text-cyan-400 px-4 py-2 rounded-md font-mono text-sm hover:bg-gray-700 transition-colors"
-            >
-              $ ./view-profile {member.name.toLowerCase().replace(' ', '-')}
-            </button>
-          )}
-        </div>
+                    {/* Social Links */}
+                    <div className="flex gap-4">
+                        {member.social.github && (
+                            <a
+                                href={member.social.github}
+                                className="text-gray-400 hover:text-cyan-400 transition-colors"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                <Github className="w-5 h-5" />
+                            </a>
+                        )}
+                        {member.social.twitter && (
+                            <a
+                                href={member.social.twitter}
+                                className="text-gray-400 hover:text-cyan-400 transition-colors"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                <Instagram className="w-5 h-5" />
+                            </a>
+                        )}
+                        {member.social.linkedin && (
+                            <a
+                                href={member.social.linkedin}
+                                className="text-gray-400 hover:text-cyan-400 transition-colors"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                <Linkedin className="w-5 h-5" />
+                            </a>
+                        )}
+                        {member.social.linkedin && (
+                            <a
+                                href={member.social.linkedin}
+                                className="text-gray-400 hover:text-cyan-400 transition-colors"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                <Linkedin className="w-5 h-5" />
+                            </a>
+                        )}
+                    </div>
 
-        {/* Terminal Output */}
-        {typingText[index] && (
-          <div className="px-6 pb-4">
-            <pre className="font-mono text-xs text-cyan-400 whitespace-pre-wrap">
-              {typingText[index]}
-            </pre>
-          </div>
-        )}
-
-        {/* Details Section */}
-        <div className={`border-t border-cyan-500/20 transition-all duration-500 ${
-          isExpanded ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
-        } overflow-hidden`}>
-          <div className="p-6 space-y-6">
-            {/* Bio */}
-            <div>
-              <h4 className="text-sm font-semibold text-cyan-400 mb-3">About</h4>
-              <p className="text-gray-300 text-sm">{member.bio}</p>
-            </div>
-
-            {/* Skills */}
-            <div>
-              <h4 className="text-sm font-semibold text-cyan-400 mb-3">Skills</h4>
-              <div className="flex flex-wrap gap-2">
-                {member.skills.map((skill, index) => (
-                  <span 
-                    key={index}
-                    className="bg-cyan-500/10 text-cyan-400 px-2 py-1 rounded-md text-xs"
-                  >
-                    {skill}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            {/* View Profile Button */}
-            <button 
-              onClick={() => setSelectedMember(member)}
-              className="w-full bg-gradient-to-r from-cyan-500 to-blue-500 text-white px-4 py-2 rounded-md hover:opacity-90 transition-opacity"
-            >
-              View Full Profile
-            </button>
-          </div>
-        </div>
-      </Card>
-    );
-  };
-
-  return (
-    <div className="space-y-12 relative">
-      {/* Cursor gradient follow effect */}
-      <div 
-        className="fixed inset-0 pointer-events-none z-0"
-        style={{
-          background: `radial-gradient(600px at ${cursorPos.x}px ${cursorPos.y}px, rgba(103, 232, 249, 0.15), transparent 80%)`
-        }}
-      />
-      
-      <div className="text-center relative">
-        <h2 className="text-5xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 text-transparent bg-clip-text mb-6">
-          Meet Our Team
-        </h2>
-        <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-          The brilliant minds behind WnCC's success
-        </p>
-      </div>
-
-      <div className="grid md:grid-cols-3 gap-8">
-        {teamMembers.map((member, index) => (
-          <MemberCard key={index} member={member} index={index} />
-        ))}
-      </div>
-
-      {/* Selected member modal */}
-      {selectedMember && (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50">
-          <div className="bg-gray-900 p-8 rounded-2xl max-w-2xl w-full mx-4 relative">
-            <button 
-              onClick={() => setSelectedMember(null)}
-              className="absolute top-4 right-4 text-gray-400 hover:text-white"
-            >
-              <X className="w-6 h-6" />
-            </button>
-            
-            <div className="flex flex-col md:flex-row gap-8">
-              <div className="flex-shrink-0">
-                <div className="w-48 h-48 rounded-xl overflow-hidden">
-                  <img 
-                    src={selectedMember.imageUrl} 
-                    alt={selectedMember.name}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-              </div>
-              
-              <div className="flex-grow">
-                <div className="flex items-center gap-4 mb-4">
-                  {selectedMember.icon}
-                  <div>
-                    <h3 className="text-2xl font-bold text-white">{selectedMember.name}</h3>
-                    <p className="text-cyan-400">{selectedMember.role}</p>
-                  </div>
-                </div>
-                
-                <p className="text-gray-300 mb-6">{selectedMember.bio}</p>
-                
-                <div>
-                  <h4 className="text-lg font-semibold text-white mb-3">Skills</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {selectedMember.skills.map((skill, index) => (
-                      <span 
-                        key={index}
-                        className="bg-cyan-500/20 text-cyan-400 px-3 py-1 rounded-full text-sm"
-                      >
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
+                    {!isExpanded && (
+                        <button
+                            onClick={() => {
+                                simulateTyping(index, member.name);
+                            }}
+                            className="w-full bg-gray-800 text-cyan-400 px-4 py-2 rounded-md font-mono text-sm hover:bg-gray-700 transition-colors"
+                        >
+                            $ ./view-profile {member.name.toLowerCase().replace(" ", "-")}
+                        </button>
+                    )}
                 </div>
 
-                {selectedMember.chess && (
-                  <div className="mt-6">
-                    <ChessChallenge 
-                      username={selectedMember.chess.lichessUsername} 
-                      rating={selectedMember.chess.rating}
-                    />
-                  </div>
+                {/* Terminal Output */}
+                {typingText[index] && (
+                    <div className="px-6 pb-4">
+                        <pre className="font-mono text-xs text-cyan-400 whitespace-pre-wrap">
+                            {typingText[index]}
+                        </pre>
+                    </div>
                 )}
-              </div>
+
+                {/* Details Section */}
+                <div className="flex flex-col justify-between h-[420px] border-t border-cyan-500/20 p-6 rounded-md bg-[#111827]">
+
+                    <div className="space-y-6 overflow-hidden">
+                        {/* Bio */}
+                        <div>
+                            <h4 className="text-sm font-semibold text-cyan-400 mb-3">About</h4>
+                            <div className="max-h-32 overflow-y-auto custom-scroll pr-2">
+                                <p className="text-gray-300 text-sm">
+                                    {member.bio}
+                                </p>
+                            </div>
+                        </div>
+
+                        {/* Skills */}
+                        <div>
+                            <h4 className="text-sm font-semibold text-cyan-400 mb-3">Skills</h4>
+                            <div className="flex flex-wrap gap-2">
+                                {member.skills.map((skill, index) => (
+                                    <span
+                                        key={index}
+                                        className="bg-cyan-500/10 text-cyan-400 px-2 py-1 rounded-md text-xs"
+                                    >
+                                        {skill}
+                                    </span>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* View Profile Button */}
+                    <button
+                        onClick={() => setSelectedMember(member)}
+                        className="w-full bg-gradient-to-r from-cyan-500 to-blue-500 text-white px-4 py-2 rounded-md hover:opacity-90 transition-opacity"
+                    >
+                        View Full Profile
+                    </button>
+                </div>
+            </Card>
+        );
+    };
+
+    return (
+        <div className="space-y-12 relative">
+            {/* Cursor gradient follow effect */}
+            <div
+                className="fixed inset-0 pointer-events-none z-0"
+                style={{
+                    background: `radial-gradient(600px at ${cursorPos.x}px ${cursorPos.y}px, rgba(103, 232, 249, 0.15), transparent 80%)`,
+                }}
+            />
+
+            <div className="text-center relative">
+                <h2 className="text-5xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 text-transparent bg-clip-text mb-6">
+                    Meet Our Team
+                </h2>
+                <p className="text-xl text-gray-300 max-w-2xl mx-auto">
+                    The brilliant minds behind WnCC's success
+                </p>
             </div>
-          </div>
+
+            <div className="grid md:grid-cols-3 gap-8">
+                {teamMembers.map((member, index) => (
+                    <MemberCard key={index} member={member} index={index} />
+                ))}
+            </div>
+
+            {/* Selected member modal */}
+            {selectedMember && (
+                <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50">
+                    <div className="bg-gray-900 p-8 rounded-2xl max-w-2xl w-full mx-4 relative">
+                        <button
+                            onClick={() => setSelectedMember(null)}
+                            className="absolute top-4 right-4 text-gray-400 hover:text-white"
+                        >
+                            <X className="w-6 h-6" />
+                        </button>
+
+                        <div className="flex flex-col md:flex-row gap-8">
+                            <div className="flex-shrink-0">
+                                <div className="w-48 h-48 rounded-xl overflow-hidden">
+                                    <img
+                                        src={selectedMember.imageUrl}
+                                        alt={selectedMember.name}
+                                        className="w-full h-full object-cover"
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="flex-grow">
+                                <div className="flex items-center gap-4 mb-4">
+                                    {selectedMember.icon}
+                                    <div>
+                                        <h3 className="text-2xl font-bold text-white">
+                                            {selectedMember.name}
+                                        </h3>
+                                        <p className="text-cyan-400">{selectedMember.role}</p>
+                                    </div>
+                                </div>
+
+                                <p className="text-gray-300 mb-6">{selectedMember.bio}</p>
+
+                                <div>
+                                    <h4 className="text-lg font-semibold text-white mb-3">
+                                        Skills
+                                    </h4>
+                                    <div className="flex flex-wrap gap-2">
+                                        {selectedMember.skills.map((skill, index) => (
+                                            <span
+                                                key={index}
+                                                className="bg-cyan-500/20 text-cyan-400 px-3 py-1 rounded-full text-sm"
+                                            >
+                                                {skill}
+                                            </span>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                {selectedMember.chess && (
+                                    <div className="mt-6">
+                                        <ChessChallenge
+                                            username={selectedMember.chess.lichessUsername}
+                                            rating={selectedMember.chess.rating}
+                                        />
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
-      )}
-    </div>
-  );
+    );
 };
 const ContactPage = () => {
   const [formData, setFormData] = useState({
@@ -1900,7 +1919,7 @@ const ContactPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
+
     setTimeout(() => {
       setIsSubmitting(false);
       setFormData({ name: '', email: '', subject: '', message: '' });
@@ -1951,7 +1970,7 @@ const ContactPage = () => {
                   <input
                     type="text"
                     value={formData.name}
-                    onChange={(e) => setFormData({...formData, name: e.target.value})}
+                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     onFocus={() => setCurrentField('name')}
                     onBlur={() => setCurrentField(null)}
                     className="bg-transparent border-none outline-none text-green-400 ml-2 w-64"
@@ -1965,7 +1984,7 @@ const ContactPage = () => {
                   <input
                     type="email"
                     value={formData.email}
-                    onChange={(e) => setFormData({...formData, email: e.target.value})}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     onFocus={() => setCurrentField('email')}
                     onBlur={() => setCurrentField(null)}
                     className="bg-transparent border-none outline-none text-green-400 ml-2 w-64"
@@ -1979,7 +1998,7 @@ const ContactPage = () => {
                   <input
                     type="text"
                     value={formData.subject}
-                    onChange={(e) => setFormData({...formData, subject: e.target.value})}
+                    onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                     onFocus={() => setCurrentField('subject')}
                     onBlur={() => setCurrentField(null)}
                     className="bg-transparent border-none outline-none text-green-400 ml-2 w-64"
@@ -1992,7 +2011,7 @@ const ContactPage = () => {
                   <label className="text-blue-400">message:</label>
                   <textarea
                     value={formData.message}
-                    onChange={(e) => setFormData({...formData, message: e.target.value})}
+                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                     onFocus={() => setCurrentField('message')}
                     onBlur={() => setCurrentField(null)}
                     className="bg-transparent border-none outline-none text-green-400 ml-2 w-full h-24 resize-none"
@@ -2085,11 +2104,10 @@ const WebsitePreview = () => {
               <button
                 key={page}
                 onClick={() => setCurrentPage(page)}
-                className={`px-4 py-2 rounded-lg transition-colors duration-300 ${
-                  currentPage === page
-                    ? 'bg-cyan-500/20 text-cyan-400'
-                    : 'text-gray-300 hover:text-cyan-400'
-                }`}
+                className={`px-4 py-2 rounded-lg transition-colors duration-300 ${currentPage === page
+                  ? 'bg-cyan-500/20 text-cyan-400'
+                  : 'text-gray-300 hover:text-cyan-400'
+                  }`}
               >
                 {page}
               </button>
@@ -2101,18 +2119,18 @@ const WebsitePreview = () => {
       <main className="container mx-auto px-4 py-8">
         <PageComponent />
       </main>
-      
+
       <footer className="bg-gray-900/50 backdrop-blur-lg border-t border-cyan-500/20 p-8 mt-16">
         <div className="container mx-auto grid md:grid-cols-4 gap-8">
-         
-          
+
+
           {/* Quick Links Section */}
           <div>
             <h3 className="text-xl font-bold text-cyan-400 mb-4">Quick Links</h3>
             <ul className="space-y-2">
               {quickLinks.map((link, index) => (
                 <li key={index}>
-                  <a 
+                  <a
                     href={link.url}
                     className="text-gray-400 hover:text-cyan-400 transition-colors duration-300"
                   >
@@ -2122,7 +2140,7 @@ const WebsitePreview = () => {
               ))}
             </ul>
           </div>
-          
+
           {/* Contact Info */}
           <div>
             <h3 className="text-xl font-bold text-cyan-400 mb-4">Contact</h3>
@@ -2133,7 +2151,7 @@ const WebsitePreview = () => {
               <li>Mumbai - 400076</li>
             </ul>
           </div>
-          
+
           {/* Social Links */}
           <div>
             <h3 className="text-xl font-bold text-cyan-400 mb-4">Connect</h3>
@@ -2151,10 +2169,10 @@ const WebsitePreview = () => {
                 <Instagram className="w-6 h-6" />
               </a>
             </div>
-            
+
           </div>
         </div>
-        
+
         <div className="container mx-auto mt-8 pt-8 border-t border-cyan-500/20 text-center">
           <p className="text-gray-400">© 2024 Web and Coding Club, IIT Bombay. All rights reserved.</p>
         </div>
