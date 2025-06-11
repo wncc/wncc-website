@@ -910,11 +910,11 @@ const EventCard = ({ event }) => {
             <div className="flex items-center gap-4 mb-4">
                 <span className="text-gray-400 flex items-center gap-1">
                     <Users className="w-4 h-4" />
-                    {event.participants || " "} //registered
+                    {event.participants || " "}
                 </span>
                 <span className="text-gray-400 flex items-center gap-1">
                     <Trophy className="w-4 h-4" />
-                    {event.prize || "$1000"} in prizes
+                    {event.prize || "$1000"}
                 </span>
             </div>
 
@@ -938,38 +938,38 @@ const EventCard = ({ event }) => {
 
 // Timeline component for EventsPage
 const EventTimeline = () => {
-  const [selectedEvent, setSelectedEvent] = useState(null);
+    const [selectedEvent, setSelectedEvent] = useState(null);
 
- const timelineItems = [
-    {
-      title: "Season Kickoff",
-      date: "April 2025",
-      description: "The new season kicks off with lots of enthusiasm",
-      icon: <Star className="w-6 h-6" />,
-      color: "from-green-500 to-emerald-700"
-    },
-    {
-      title: "Seasons of Code",
-      date: "May end to July",
-      description: "Flagship Event,8 Week-long",
-      icon: <Cpu className="w-6 h-6" />,
-      color: "from-blue-500 to-indigo-700"
-    },
-    {
-      title: "DSA Bootcamp",
-      date: "1st June",
-      description: "8-week Journey to master DSA!",
-      icon: <Code className="w-6 h-6" />,
-      color: "from-purple-500 to-pink-700"
-    },
-    {
-      title: "Learners' Space",
-      date: "9th June",
-      description: "4-week long | Igniting passion, elevating skills,& unlocking the future of tech!",
-      icon: <Code className="w-6 h-6" />,
-      color: "from-cyan-500 to-indigo-700" 
-    }
-  ];
+    const timelineItems = [
+        {
+            title: "Season Kickoff",
+            date: "April 2025",
+            description: "The new season kicks off with lots of enthusiasm",
+            icon: <Star className="w-6 h-6" />,
+            color: "from-green-500 to-emerald-700"
+        },
+        {
+            title: "Seasons of Code",
+            date: "May end to July",
+            description: "Flagship Event,8 Week-long",
+            icon: <Cpu className="w-6 h-6" />,
+            color: "from-blue-500 to-indigo-700"
+        },
+        {
+            title: "DSA Bootcamp",
+            date: "1st June",
+            description: "8-week Journey to master DSA!",
+            icon: <Code className="w-6 h-6" />,
+            color: "from-purple-500 to-pink-700"
+        },
+        {
+            title: "Learners' Space",
+            date: "9th June",
+            description: "4-week long | Igniting passion, elevating skills,& unlocking the future of tech!",
+            icon: <Code className="w-6 h-6" />,
+            color: "from-cyan-500 to-indigo-700"
+        }
+    ];
 
     return (
         <div className="relative mt-20">
@@ -1008,7 +1008,7 @@ const EventTimeline = () => {
             ))}
         </div>
     );
-    };
+};
 
 const EventsPage = () => {
     const [selectedFilter, setSelectedFilter] = useState("all");
@@ -1044,7 +1044,7 @@ const EventsPage = () => {
             location: 'IIT Bombay Campus',
             icon: <Lightbulb className="w-16 h-16 text-cyan-400" />,
             category: 'Orientation',
-            participants: 'To be announced',
+            participants: '',
             prize: ' '
         }
     ];
@@ -1568,7 +1568,7 @@ const TeamPage = () => {
                     "https://www.instagram.com/pratyaksh._.23?igsh=MXF4emhsaGQ4cXplZw==",
                 linkedin:
                     "https://www.linkedin.com/in/pratyaksh-bhardwaj-b2309ar?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
-                instagram: "https://www.instagram.com/pratyaksh._.23?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+                instagram: "https://www.instagram.com/pratyaksh._.23?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==",
 
             },
 
@@ -1579,11 +1579,14 @@ const TeamPage = () => {
             role: "Convener",
             icon: <MessageCircle className="w-12 h-12 text-cyan-400" />,
             bio: "Hello everyone! I'm Abhishek, a second-year B.Tech student in the Electrical Engineering department at IIT Bombay. I currently serve as a Convener of the Web and Coding Club, where I actively contribute to projects and initiatives aimed at fostering a strong coding culture on campus.\n\nI'm passionate about solving real-world problems and understanding how things work at the most fundamental level. I’m also curious about the mechanics of financial markets and how they operate. Outside of tech, I enjoy going on long cycle rides and playing table tennis. I look forward to contributing to the community in meaningful and impactful ways.",
-            skills: ["C++", "Java", "Python", "Computer Vision", "Computer Architecture","Equity Analysis"],
+            skills: ["C++", "Java", "Python", "Computer Vision", "Computer Architecture", "Equity Analysis"],
             social: {
                 github: "https://github.com/AbhishekU05",
-                linkedIn: "https://in.linkedin.com/in/abhishek-upadhya-647a58257",
-                insta: "https://www.instagram.com/abhisheku05?igsh=MXgxdjcxZWF6cDBsYw=="
+                twitter: "",
+                linkedin:
+                    "https://in.linkedin.com/in/abhishek-upadhya-647a58257",
+                instagram:
+                    "https://www.instagram.com/abhisheku05?igsh=MXgxdjcxZWF6cDBsYw==",
             },
             imageUrl: "./Images/ABHISHEK.png",
         },
@@ -1595,8 +1598,9 @@ const TeamPage = () => {
             skills: ["Machine Learning", "Computer Vision", "DSA", "C++"],
             social: {
                 github: "https://github.com/aashnapulla",
-                linkedin: "https://www.linkedin.com/me?trk=p_mwlite_feed-secondary_nav",
-                insta: "https://www.instagram.com/aashna.p0911/"
+                twitter: "",
+                linkedin: "https://www.linkedin.com/in/aashna-pulla-26b8b7334/",
+                instagram: "https://www.instagram.com/aashna.p0911/"
             },
             imageUrl: "./Images/AASHNA.png",
         },
@@ -1609,10 +1613,11 @@ const TeamPage = () => {
             skills: ["Machine Learning", "Artificial Intelligence", "Competitive Programming", "C++", "Python"],
             social: {
                 github: "https://github.com/MrigankGoel",
+                twitter: "",
                 linkedin: "https://www.linkedin.com/in/mrigank-goel-327427336?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
-                insta: "https://www.instagram.com/mrigank_goel.964/?utm_source=ig_web_button_share_sheet"
+                instagram: "https://www.instagram.com/mrigank_goel.964/?utm_source=ig_web_button_share_sheet"
             },
-            imageUrl: "./Images/MRIGANK.jpeg",
+            imageUrl: "./Images/MRIGANK.png",
         }
         ,
         {
@@ -1623,8 +1628,9 @@ const TeamPage = () => {
             skills: ["HTML", "CSS", "JavaScript", "React", "Django", "C++", "Python"],
             social: {
                 github: "https://github.com/Raghav789-code",
-                linkedIn: "https://www.linkedin.com/in/shivansh-niranjan-71766a1ba",
-                insta: "https://www.instagram.com/shivansh.niranjan.58?igsh=MTcwa2FmOGFmcThyag=="
+                twitter: "",
+                linkedin: "https://www.linkedin.com/in/shivansh-niranjan-71766a1ba",
+                instagram: "https://www.instagram.com/shivansh.niranjan.58/?hl=en"
             },
             imageUrl: "./Images/shivansh.jpeg",
         },
@@ -1636,8 +1642,9 @@ const TeamPage = () => {
             skills: ["Machine Learning (CV,NLP)", "DSA", "C++"],
             social: {
                 github: "https://github.com/Riddhiyeola",
-                linkedi: "https://www.linkedin.com/in/riddhi-yeola-790b03242?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
-                insta: "https://www.instagram.com/mrigank_goel.964/?utm_source=ig_web_button_share_sheet"
+                twitter: "",
+                linkedin: "https://www.linkedin.com/in/riddhi-yeola-790b03242?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
+                instagram: "https://www.instagram.com/mrigank_goel.964/?utm_source=ig_web_button_share_sheet"
             },
             imageUrl: "./Images/RIDDHI.png",
         },
@@ -1658,8 +1665,9 @@ const TeamPage = () => {
             ],
             social: {
                 github: "https://github.com/icodeforlife24",
+                twitter: "",
                 linkedin: "https://www.linkedin.com/in/utkarsh-tanwar-400b52256?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
-                insta: "https://www.instagram.com/utkarsh_tanwar77?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+                instagram: "https://www.instagram.com/utkarsh_tanwar77?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
             },
             imageUrl: "./Images/UTKARSH.png",
         },
@@ -1671,8 +1679,9 @@ const TeamPage = () => {
             skills: ["Machine Learning", "Deep Learning", "NLP", "Football"],
             social: {
                 github: "https://github.com/wejhdy",
-                linkedin: "www.linkedin.com/in/avnish-more",
-                insta: "https://www.instagram.com/avn1sh.__/"
+                twitter: "",
+                linkedin: "https://www.linkedin.com/in/avnish-more/",
+                instagram: "https://www.instagram.com/avn1sh.__/"
             },
             imageUrl: "./Images/AVNISH.png",
         },
@@ -1686,7 +1695,8 @@ const TeamPage = () => {
             skills: ["Machine Learning", "Web Development", "App Development", "Generative AI", "Python", "C++"],
             social: {
                 github: "https://github.com/MithraBijumon",
-                linkedIn: "http://www.linkedin.com/in/mithra-bijumon-059104301",
+                twitter: "",
+                linkedin: "http://www.linkedin.com/in/mithra-bijumon-059104301",
                 instagram: "https://www.instagram.com/mithra.bijumon/"
             },
             imageUrl: "./Images/MITHRA.png",
@@ -1699,8 +1709,9 @@ const TeamPage = () => {
             skills: ["C++", "Python", "DSA", "Design"],
             social: {
                 github: "https://github.com/Nishil-the-seth",
+                twitter: "",
                 linkedin: "https://www.linkedin.com/in/verynise/",
-                email: "Nishil.wncc@gmail.com"
+                instagram: "https://www.instagram.com/the.nishil.the.seth?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
             },
             imageUrl: "./Images/NISHIL.png",
         },
@@ -1712,8 +1723,9 @@ const TeamPage = () => {
             skills: ["Machine Learning", "Data Analytics", "C++", "Python", "R", "SQL"],
             social: {
                 github: "https://github.com/sarthak-somani",
+                twitter: "",
                 linkedin: "https://www.linkedin.com/in/sarthak-somani/",
-                insta: ""
+                instagram: ""
             },
             imageUrl: "./Images/SHARTHAK.png",
         }];
@@ -1781,221 +1793,224 @@ const TeamPage = () => {
         </div>
     );
 
-    const MemberCard = ({ member, index }) => {
-        const isExpanded = expandedCards[index];
-
-        return (
-            <Card className="relative overflow-hidden bg-gray-900/50 backdrop-blur-sm transition-all duration-300 hover:shadow-xl hover:shadow-cyan-500/20">
-                {/* Profile Section */}
-                <div className="p-6 space-y-6">
-                    {/* Image and Basic Info */}
-                    <div className="flex items-center gap-4">
-                        <div className="relative w-16 h-16 rounded-full overflow-hidden ring-2 ring-cyan-500/50">
-                            <img
-                                src={member.imageUrl}
-                                alt={member.name}
-                                className="w-full h-full object-cover"
-                            />
-                        </div>
-                        <div>
-                            <h3 className="text-xl font-bold text-white">{member.name}</h3>
-                            <p className="text-cyan-400">{member.role}</p>
-                        </div>
-                    </div>
-
-                    {/* Bio */}
-                    <p className="text-gray-300 text-sm">{member.bio}</p>
-
-                    {/* Social Links */}
-                    <div className="flex gap-4">
-                        {member.social.github && (
-                            <a
-                                href={member.social.github}
-                                className="text-gray-400 hover:text-cyan-400 transition-colors"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                <Github className="w-5 h-5" />
-                            </a>
-                        )}
-                        {member.social.twitter && (
-                            <a
-                                href={member.social.twitter}
-                                className="text-gray-400 hover:text-cyan-400 transition-colors"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                <Instagram className="w-5 h-5" />
-                            </a>
-                        )}
-                        {member.social.linkedin && (
-                            <a
-                                href={member.social.linkedin}
-                                className="text-gray-400 hover:text-cyan-400 transition-colors"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                <Linkedin className="w-5 h-5" />
-                            </a>
-                        )}
-                    </div>
-
-                    {!isExpanded && (
-                        <button
-                            onClick={() => {
-                                simulateTyping(index, member.name);
-                            }}
-                            className="w-full bg-gray-800 text-cyan-400 px-4 py-2 rounded-md font-mono text-sm hover:bg-gray-700 transition-colors"
-                        >
-                            $ ./view-profile {member.name.toLowerCase().replace(" ", "-")}
-                        </button>
-                    )}
-                </div>
-
-                {/* Terminal Output */}
-                {typingText[index] && (
-                    <div className="px-6 pb-4">
-                        <pre className="font-mono text-xs text-cyan-400 whitespace-pre-wrap">
-                            {typingText[index]}
-                        </pre>
-                    </div>
-                )}
-
-                {/* Details Section */}
-                <div
-                    className={`border-t border-cyan-500/20 transition-all duration-500 ${isExpanded ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
-                        } overflow-hidden`}
-                >
-                    <div className="p-6 space-y-6">
-                        {/* Bio */}
-                        <div>
-                            <h4 className="text-sm font-semibold text-cyan-400 mb-3">
-                                About
-                            </h4>
-                            <p className="text-gray-300 text-sm">{member.bio}</p>
-                        </div>
-
-                        {/* Skills */}
-                        <div>
-                            <h4 className="text-sm font-semibold text-cyan-400 mb-3">
-                                Skills
-                            </h4>
-                            <div className="flex flex-wrap gap-2">
-                                {member.skills.map((skill, index) => (
-                                    <span
-                                        key={index}
-                                        className="bg-cyan-500/10 text-cyan-400 px-2 py-1 rounded-md text-xs"
-                                    >
-                                        {skill}
-                                    </span>
-                                ))}
-                            </div>
-                        </div>
-
-                        {/* View Profile Button */}
-                        <button
-                            onClick={() => setSelectedMember(member)}
-                            className="w-full bg-gradient-to-r from-cyan-500 to-blue-500 text-white px-4 py-2 rounded-md hover:opacity-90 transition-opacity"
-                        >
-                            View Full Profile
-                        </button>
-                    </div>
-                </div>
-            </Card>
-        );
-    };
+ const MemberCard = ({ member, index }) => {
+    const isExpanded = expandedCards[index];
 
     return (
-        <div className="space-y-12 relative">
-            {/* Cursor gradient follow effect */}
-            <div
-                className="fixed inset-0 pointer-events-none z-0"
-                style={{
-                    background: `radial-gradient(600px at ${cursorPos.x}px ${cursorPos.y}px, rgba(103, 232, 249, 0.15), transparent 80%)`,
-                }}
-            />
-
-            <div className="text-center relative">
-                <h2 className="text-5xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 text-transparent bg-clip-text mb-6">
-                    Meet Our Team
-                </h2>
-                <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-                    The brilliant minds behind WnCC's success
-                </p>
+      <Card className="relative overflow-hidden bg-gray-900/50 backdrop-blur-sm transition-all duration-300 hover:shadow-xl hover:shadow-cyan-500/20">
+        {/* Profile Section */}
+        <div className="p-6 space-y-6">
+          {/* Image and Basic Info */}
+          <div className="flex items-center gap-4">
+            <div className="relative w-16 h-16 rounded-full overflow-hidden ring-2 ring-cyan-500/50">
+              <img
+                src={member.imageUrl}
+                alt={member.name}
+                className="w-full h-full object-cover"
+              />
             </div>
-
-            <div className="grid md:grid-cols-3 gap-8">
-                {teamMembers.map((member, index) => (
-                    <MemberCard key={index} member={member} index={index} />
-                ))}
+            <div>
+              <h3 className="text-xl font-bold text-white">{member.name}</h3>
+              <p className="text-cyan-400">{member.role}</p>
             </div>
+          </div>
 
-            {/* Selected member modal */}
-            {selectedMember && (
-                <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50">
-                    <div className="bg-gray-900 p-8 rounded-2xl max-w-2xl w-full mx-4 relative">
-                        <button
-                            onClick={() => setSelectedMember(null)}
-                            className="absolute top-4 right-4 text-gray-400 hover:text-white"
-                        >
-                            <X className="w-6 h-6" />
-                        </button>
+          {/* Bio */}
+          {/* <p className="text-gray-300 text-sm">{member.bio}</p> */}
 
-                        <div className="flex flex-col md:flex-row gap-8">
-                            <div className="flex-shrink-0">
-                                <div className="w-48 h-48 rounded-xl overflow-hidden">
-                                    <img
-                                        src={selectedMember.imageUrl}
-                                        alt={selectedMember.name}
-                                        className="w-full h-full object-cover"
-                                    />
-                                </div>
-                            </div>
-
-                            <div className="flex-grow">
-                                <div className="flex items-center gap-4 mb-4">
-                                    {selectedMember.icon}
-                                    <div>
-                                        <h3 className="text-2xl font-bold text-white">
-                                            {selectedMember.name}
-                                        </h3>
-                                        <p className="text-cyan-400">{selectedMember.role}</p>
-                                    </div>
-                                </div>
-
-                                <p className="text-gray-300 mb-6">{selectedMember.bio}</p>
-
-                                <div>
-                                    <h4 className="text-lg font-semibold text-white mb-3">
-                                        Skills
-                                    </h4>
-                                    <div className="flex flex-wrap gap-2">
-                                        {selectedMember.skills.map((skill, index) => (
-                                            <span
-                                                key={index}
-                                                className="bg-cyan-500/20 text-cyan-400 px-3 py-1 rounded-full text-sm"
-                                            >
-                                                {skill}
-                                            </span>
-                                        ))}
-                                    </div>
-                                </div>
-
-                                {selectedMember.chess && (
-                                    <div className="mt-6">
-                                        <ChessChallenge
-                                            username={selectedMember.chess.lichessUsername}
-                                            rating={selectedMember.chess.rating}
-                                        />
-                                    </div>
-                                )}
-                            </div>
-                        </div>
-                    </div>
-                </div>
+          {/* Social Links */}
+          <div className="flex gap-4">
+            {member.social.github && (
+              <a
+                href={member.social.github}
+                className="text-gray-400 hover:text-cyan-400 transition-colors"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Github className="w-5 h-5" />
+              </a>
             )}
+            {member.social.instagram && (
+              <a
+                href={member.social.instagram}
+                className="text-gray-400 hover:text-cyan-400 transition-colors"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Instagram className="w-5 h-5" />
+              </a>
+            )}
+            {member.social.linkedin && (
+              <a
+                href={member.social.linkedin}
+                className="text-gray-400 hover:text-cyan-400 transition-colors"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Linkedin className="w-5 h-5" />
+              </a>
+            )}
+          </div>
+
+          {!isExpanded && (
+            <button
+              onClick={() => {
+                simulateTyping(index, member.name);
+              }}
+              className="w-full bg-gray-800 text-cyan-400 px-4 py-2 rounded-md font-mono text-sm hover:bg-gray-700 transition-colors"
+            >
+              $ ./view-profile {member.name.toLowerCase().replace(" ", "-")}
+            </button>
+          )}
         </div>
+
+        {/* Terminal Output */}
+        {typingText[index] && (
+          <div className="px-6 pb-4">
+            <pre className="font-mono text-xs text-cyan-400 whitespace-pre-wrap">
+              {typingText[index]}
+            </pre>
+          </div>
+        )}
+
+      {/* Details Section */}
+<div
+  className={`border-t border-cyan-500/20 transition-all duration-500 ${
+    isExpanded ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+  } overflow-hidden`}
+>
+  <div className="p-6 h-[384px] flex flex-col justify-between">
+    
+    {/* Top Section: About & Skills */}
+    <div className="space-y-6">
+      {/* Bio (with scroll) */}
+      <div className="max-h-40 overflow-y-auto pr-2 custom-scroll">
+        <h4 className="text-sm font-semibold text-cyan-400 mb-3">About</h4>
+        <p className="text-gray-300 text-sm">{member.bio}</p>
+      </div>
+
+      {/* Skills */}
+      <div>
+        <h4 className="text-sm font-semibold text-cyan-400 mb-3">Skills</h4>
+        <div className="flex flex-wrap gap-2">
+          {member.skills.map((skill, index) => (
+            <span
+              key={index}
+              className="bg-cyan-500/10 text-cyan-400 px-2 py-1 rounded-md text-xs"
+            >
+              {skill}
+            </span>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    {/* Bottom Section: View Profile Button */}
+    <button
+      onClick={() => setSelectedMember(member)}
+      className="w-full bg-gradient-to-r from-cyan-500 to-blue-500 text-white px-4 py-2 rounded-md hover:opacity-90 transition-opacity"
+    >
+      View Full Profile
+    </button>
+  </div>
+</div>
+
+
+      </Card>
     );
+  };
+
+  return (
+    <div className="space-y-12 relative">
+      {/* Cursor gradient follow effect */}
+      <div
+        className="fixed inset-0 pointer-events-none z-0"
+        style={{
+          background: `radial-gradient(600px at ${cursorPos.x}px ${cursorPos.y}px, rgba(103, 232, 249, 0.15), transparent 80%)`,
+        }}
+      />
+
+      <div className="text-center relative">
+        <h2 className="text-5xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 text-transparent bg-clip-text mb-6">
+          Meet Our Team
+        </h2>
+        <p className="text-xl text-gray-300 max-w-2xl mx-auto">
+          The brilliant minds behind WnCC's success
+        </p>
+      </div>
+
+      <div className="grid md:grid-cols-3 gap-8">
+        {teamMembers.map((member, index) => (
+          <MemberCard key={index} member={member} index={index} />
+        ))}
+      </div>
+
+      {/* Selected member modal */}
+      {selectedMember && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50">
+          <div className="bg-gray-900 p-8 rounded-2xl max-w-2xl w-full mx-4 relative">
+            <button
+              onClick={() => setSelectedMember(null)}
+              className="absolute top-4 right-4 text-gray-400 hover:text-white"
+            >
+              <X className="w-6 h-6" />
+            </button>
+
+            <div className="flex flex-col md:flex-row gap-8">
+              <div className="flex-shrink-0">
+                <div className="w-48 h-48 rounded-xl overflow-hidden">
+                  <img
+                    src={selectedMember.imageUrl}
+                    alt={selectedMember.name}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              </div>
+
+              <div className="flex-grow">
+                <div className="flex items-center gap-4 mb-4">
+                  {selectedMember.icon}
+                  <div>
+                    <h3 className="text-2xl font-bold text-white">
+                      {selectedMember.name}
+                    </h3>
+                    <p className="text-cyan-400">{selectedMember.role}</p>
+                  </div>
+                </div>
+
+                <p className="text-gray-300 mb-6">{selectedMember.bio}</p>
+
+                <div>
+                  <h4 className="text-lg font-semibold text-white mb-3">
+                    Skills
+                  </h4>
+                  <div className="flex flex-wrap gap-2">
+                    {selectedMember.skills.map((skill, index) => (
+                      <span
+                        key={index}
+                        className="bg-cyan-500/20 text-cyan-400 px-3 py-1 rounded-full text-sm"
+                      >
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                {selectedMember.chess && (
+                  <div className="mt-6">
+                    <ChessChallenge
+                      username={selectedMember.chess.lichessUsername}
+                      rating={selectedMember.chess.rating}
+                    />
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
 };
 const ContactPage = () => {
     const [formData, setFormData] = useState({
