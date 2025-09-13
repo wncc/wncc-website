@@ -1,11 +1,15 @@
 import os
 from pathlib import Path
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'your-secret-key-here'
-DEBUG = True
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '0.0.0.0']
+SECRET_KEY = os.getenv('SECRET_KEY', 'your-secret-key-here')
+DEBUG = os.getenv('DEBUG', 'False').lower() == 'true'
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost,127.0.0.1,wnccb.tech-iitb.org').split(',')
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -79,17 +83,11 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # CORS settings
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
-    "http://127.0.0.1:3000",
-]
+CORS_ALLOWED_ORIGINS = os.getenv('CORS_ALLOWED_ORIGINS', 'http://localhost:3000,https://wncc.tech-iitb.org').split(',')
 CORS_ALLOW_CREDENTIALS = True
 
 # CSRF settings
-CSRF_TRUSTED_ORIGINS = [
-    "http://localhost:3000",
-    "http://127.0.0.1:3000",
-]
+CSRF_TRUSTED_ORIGINS = os.getenv('CSRF_TRUSTED_ORIGINS', 'http://localhost:3000,https://wncc.tech-iitb.org').split(',')
 
 # Custom SSO settings
 AUTHENTICATION_BACKENDS = (
@@ -97,9 +95,9 @@ AUTHENTICATION_BACKENDS = (
 )
 
 # ITC SSO Configuration
-ITC_SSO_PROJECT_ID = '38dd0ef6-28a1-4a14-980e-b294bd987636'
-ITC_SSO_BASE_URL = 'https://sso.tech-iitb.org'
-ITC_SSO_REDIRECT_URL = 'https://wncc-soc.tech-iitb.org/loading'
+ITC_SSO_PROJECT_ID = os.getenv('ITC_SSO_PROJECT_ID', 'f2ec2cd4-1a8e-465c-aacd-5285979ca72a')
+ITC_SSO_BASE_URL = os.getenv('ITC_SSO_BASE_URL', 'https://sso.tech-iitb.org')
+ITC_SSO_REDIRECT_URL = os.getenv('ITC_SSO_REDIRECT_URL', 'https://wncc.tech-iitb.org/loading')
 
 # Session settings
 SESSION_COOKIE_AGE = 86400  # 24 hours

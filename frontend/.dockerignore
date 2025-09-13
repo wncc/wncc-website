@@ -8,3 +8,13 @@ README.md
 .nyc_output
 coverage
 .DS_Store
+yarn-debug.log
+yarn-error.log
+pnpm-debug.log
+dist
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.idea
+.vscode

@@ -19,7 +19,7 @@ const Quiz = () => {
 
     const checkAuthStatus = async () => {
         try {
-            const response = await fetch('http://localhost:8000/api/auth/status/', {
+            const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/api/auth/status/`, {
                 credentials: 'include'
             });
             const data = await response.json();
@@ -34,7 +34,7 @@ const Quiz = () => {
 
     const checkQuizStatus = useCallback(async () => {
         try {
-            const response = await fetch('http://localhost:8000/api/quiz/status/', {
+            const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/api/quiz/status/`, {
                 credentials: 'include'
             });
             const data = await response.json();
@@ -46,7 +46,7 @@ const Quiz = () => {
             } else if (data.completed) {
                 // Fetch collected roll numbers for completed quiz
                 try {
-                    const rollsResponse = await fetch('http://localhost:8000/api/quiz/collected-rolls/', {
+                    const rollsResponse = await fetch(`${process.env.REACT_APP_API_BASE_URL}/api/quiz/collected-rolls/`, {
                         credentials: 'include'
                     });
                     const rollsData = await rollsResponse.json();
@@ -66,7 +66,7 @@ const Quiz = () => {
         setLoading(true);
         try {
             const csrfToken = getCSRFToken() || await fetchCSRFToken();
-            const response = await fetch('http://localhost:8000/api/quiz/start/', {
+            const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/api/quiz/start/`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -91,7 +91,7 @@ const Quiz = () => {
 
     const loadCurrentQuestion = async () => {
         try {
-            const response = await fetch('http://localhost:8000/api/quiz/question/', {
+            const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/api/quiz/question/`, {
                 credentials: 'include'
             });
             const data = await response.json();
@@ -141,7 +141,7 @@ const Quiz = () => {
         setLoading(true);
         try {
             const csrfToken = getCSRFToken() || await fetchCSRFToken();
-            const response = await fetch('http://localhost:8000/api/quiz/submit/', {
+            const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/api/quiz/submit/`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -164,7 +164,7 @@ const Quiz = () => {
                         setTimeout(async () => {
                             // Fetch all collected roll numbers
                             try {
-                                const rollsResponse = await fetch('http://localhost:8000/api/quiz/collected-rolls/', {
+                                const rollsResponse = await fetch(`${process.env.REACT_APP_API_BASE_URL}/api/quiz/collected-rolls/`, {
                                     credentials: 'include'
                                 });
                                 const rollsData = await rollsResponse.json();

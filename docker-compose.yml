@@ -9,11 +9,10 @@ services:
       - ./backend/media:/app/media
       - ./backend/db.sqlite3:/app/db.sqlite3
       - ./backend/staticfiles:/app/staticfiles
+    env_file:
+      - ./backend/.env
     environment:
-      - DEBUG=False
-      - ALLOWED_HOSTS=localhost,127.0.0.1
       - DJANGO_SETTINGS_MODULE=wncc_backend.settings
-      - SECRET_KEY=${SECRET_KEY:-your-secret-key-here}
     depends_on:
       - db
     restart: unless-stopped
@@ -31,9 +30,8 @@ services:
         - NODE_ENV=production
     ports:
       - "3000:80"
-    environment:
-      - REACT_APP_API_URL=http://localhost:8000
-      - NODE_ENV=production
+    env_file:
+      - ./frontend/.env
     depends_on:
       - backend
     restart: unless-stopped

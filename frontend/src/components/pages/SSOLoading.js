@@ -29,7 +29,7 @@ const SSOLoading = () => {
             try {
                 const csrfToken = getCSRFToken() || await fetchCSRFToken();
                 
-                const response = await fetch('http://localhost:8000/api/auth/get-sso-user/', {
+                const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/api/auth/get-sso-user/`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
