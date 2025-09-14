@@ -2,17 +2,11 @@
 FROM node:20-alpine AS builder
 WORKDIR /app
 
-# Install pnpm
-RUN npm install -g pnpm
+# Copy package files (npm project)
+COPY package.json package-lock.json ./
 
-# Copy package files
-COPY package*.json ./
-COPY package-lock.json ./
-COPY pnpm-lock.yaml ./
-
-# Install dependencies
+# Install dependencies using lockfile
 RUN npm ci --legacy-peer-deps
-RUN pnpm install
 
 # Copy source code
 COPY . .
@@ -20,7 +14,6 @@ COPY . .
 # Build application
 ENV NODE_ENV=production
 RUN npm run build
-RUN pnpm run build
 
 # Production stage
 FROM nginx:alpine
