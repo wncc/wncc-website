@@ -127,11 +127,6 @@ coverage/
 .env.test.local
 .env.production.local
 
-# Package managers
-package-lock.json
-yarn.lock
-pnpm-lock.yaml
-
 # Optional npm cache directory
 .npm
 
