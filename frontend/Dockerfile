@@ -2,24 +2,25 @@
 FROM node:20-alpine AS builder
 WORKDIR /app
 
-# Install pnpm (optional, in case you want to use it)
+# Install pnpm
 RUN npm install -g pnpm
 
 # Copy package files
 COPY package*.json ./
-# Copy pnpm lockfile only if it exists (won't fail if missing)
-COPY pnpm-lock.yaml* ./
+COPY package-lock.json ./
+COPY pnpm-lock.yaml ./
 
 # Install dependencies
-# If pnpm-lock.yaml exists → use pnpm, else fallback to npm
-RUN if [ -f pnpm-lock.yaml ]; then pnpm install --frozen-lockfile; else npm ci --legacy-peer-deps; fi
+RUN npm ci --legacy-peer-deps
+RUN pnpm install
 
 # Copy source code
 COPY . .
 
 # Build application
 ENV NODE_ENV=production
-RUN if [ -f pnpm-lock.yaml ]; then pnpm run build; else npm run build; fi
+RUN npm run build
+RUN pnpm run build
 
 # Production stage
 FROM nginx:alpine
