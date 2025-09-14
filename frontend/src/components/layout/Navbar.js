@@ -15,7 +15,7 @@ const Navbar = ({ currentPage, setCurrentPage }) => {
 
     const checkAuthStatus = async () => {
         try {
-            const response = await fetch('http://localhost:8000/api/auth/status/', {
+            const response = await fetch('https://wnccb.tech-iitb.org/api/auth/status/', {
                 credentials: 'include'
             });
             const data = await response.json();
@@ -30,7 +30,7 @@ const Navbar = ({ currentPage, setCurrentPage }) => {
     const handleLogout = async () => {
         try {
             const csrfToken = getCSRFToken() || await fetchCSRFToken();
-            await fetch('http://localhost:8000/api/auth/logout/', {
+            await fetch('https://wnccb.tech-iitb.org/api/auth/logout/', {
                 method: 'POST',
                 headers: {
                     'X-CSRFToken': csrfToken,
