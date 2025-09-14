@@ -25,9 +25,6 @@ COPY --from=builder /app/build .
 # Copy nginx configuration
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Add security headers and other configurations
-RUN echo "server_tokens off;" >> /etc/nginx/nginx.conf
-
 # Expose port
 EXPOSE 80
 
