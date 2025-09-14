@@ -18,7 +18,7 @@ export const getCSRFToken = () => {
 // Fetch CSRF token from Django
 export const fetchCSRFToken = async () => {
     try {
-        const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/api/csrf/`, {
+        const response = await fetch(`https://wnccb.tech-iitb.org/api/csrf/`, {
             credentials: 'include'
         });
         const data = await response.json();
