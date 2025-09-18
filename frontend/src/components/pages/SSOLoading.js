@@ -28,8 +28,8 @@ const SSOLoading = () => {
 
             try {
                 const csrfToken = getCSRFToken() || await fetchCSRFToken();
-                
-                const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/api/auth/get-sso-user/`, {
+
+                const response = await fetch(`https://wnccb.tech-iitb.org/api/auth/get-sso-user/`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
