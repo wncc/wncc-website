@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { Clock, CheckCircle, AlertCircle } from 'lucide-react';
+import { getCSRFToken, fetchCSRFToken } from '../../utils/csrf';
 // --- Colab-style input block component ---
 const colabBlockStyle = {
     background: '#1a1a1a',
@@ -51,8 +53,7 @@ const ColabInputBlock = ({ label, value, setValue, executed, onRun, placeholder 
         )}
     </div>
 );
-import { Clock, CheckCircle, AlertCircle } from 'lucide-react';
-import { getCSRFToken, fetchCSRFToken } from '../../utils/csrf';
+
 
 const Quiz = () => {
         const [user, setUser] = useState(null);
