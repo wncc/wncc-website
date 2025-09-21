@@ -1,9 +1,72 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
+// --- Colab-style input block component ---
+const colabBlockStyle = {
+    background: '#1a1a1a',
+    borderRadius: '8px',
+    padding: '20px',
+    marginBottom: '20px',
+    boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
+    color: '#fff',
+    fontFamily: 'Fira Mono, monospace',
+    borderLeft: '6px solid #4285F4',
+    position: 'relative',
+};
+const runBtnStyle = {
+    background: '#4285F4',
+    color: '#fff',
+    border: 'none',
+    borderRadius: '4px',
+    padding: '6px 16px',
+    fontWeight: 'bold',
+    cursor: 'pointer',
+    marginLeft: '10px',
+};
+const ColabInputBlock = ({ label, value, setValue, executed, onRun, placeholder }) => (
+    <div style={colabBlockStyle}>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+            <span style={{ color: '#43A047', marginRight: 8 }}>In&nbsp;[&nbsp;]:</span>
+            <input
+                type="text"
+                value={value}
+                onChange={e => setValue(e.target.value)}
+                placeholder={placeholder}
+                style={{
+                    background: 'transparent',
+                    border: 'none',
+                    borderBottom: '1px solid #fff',
+                    color: '#fff',
+                    fontSize: '1rem',
+                    outline: 'none',
+                    flex: 1,
+                }}
+            />
+            <button style={runBtnStyle} onClick={onRun} disabled={executed}>
+                {executed ? 'Executed!' : 'Run'}
+            </button>
+        </div>
+        {executed && (
+            <div style={{ color: '#FFD600', marginTop: 8, fontSize: '0.95em' }}>
+                <span style={{ color: '#43A047' }}>Out&nbsp;[&nbsp;]:</span> <em>Input received</em>
+            </div>
+        )}
+    </div>
+);
 import { Clock, CheckCircle, AlertCircle } from 'lucide-react';
 import { getCSRFToken, fetchCSRFToken } from '../../utils/csrf';
 
 const Quiz = () => {
-    const [user, setUser] = useState(null);
+        const [user, setUser] = useState(null);
+        // --- Colab-style input block states ---
+        const [fakeRoll, setFakeRoll] = useState("");
+        const [fakeName, setFakeName] = useState("");
+        const [fakeBranch, setFakeBranch] = useState("");
+        const [executed, setExecuted] = useState({ roll: false, name: false, branch: false });
+        const handleRun = (field) => {
+            setExecuted(prev => ({ ...prev, [field]: true }));
+            setTimeout(() => {
+                setExecuted(prev => ({ ...prev, [field]: false }));
+            }, 1200);
+        };
     const [quizStatus, setQuizStatus] = useState(null);
     const [currentQuestion, setCurrentQuestion] = useState(null);
     const [answer, setAnswer] = useState('');
@@ -258,86 +321,110 @@ const Quiz = () => {
         );
     }
 
-    return (
-        <div className="min-h-screen bg-gray-950 p-4">
-            <div className="max-w-2xl mx-auto">
-                <div className="bg-gray-900 rounded-xl border border-cyan-500/20 p-6">
-                    <div className="text-center mb-6">
-                        <h1 className="text-3xl font-bold text-cyan-400 mb-2">WnCC Quiz</h1>
-                        <p className="text-gray-300">Welcome, {user.first_name || user.username}!</p>
+        return (
+            <div className="min-h-screen bg-gray-950 p-4">
+                <div className="max-w-2xl mx-auto">
+                    {/* --- Colab-style fake input blocks --- */}
+                    <div className="mb-8">
+                        <ColabInputBlock
+                            label="Roll Number"
+                            value={fakeRoll}
+                            setValue={setFakeRoll}
+                            executed={executed.roll}
+                            onRun={() => handleRun('roll')}
+                            placeholder="Enter your roll number"
+                        />
+                        <ColabInputBlock
+                            label="Name"
+                            value={fakeName}
+                            setValue={setFakeName}
+                            executed={executed.name}
+                            onRun={() => handleRun('name')}
+                            placeholder="Enter your name"
+                        />
+                        <ColabInputBlock
+                            label="Branch"
+                            value={fakeBranch}
+                            setValue={setFakeBranch}
+                            executed={executed.branch}
+                            onRun={() => handleRun('branch')}
+                            placeholder="Enter your branch"
+                        />
                     </div>
-
-                    {message && (
-                        <div className="mb-4 p-4 rounded-lg bg-red-500/10 border border-red-500/20">
-                            <div className="flex items-center gap-2 text-red-400">
-                                <AlertCircle className="w-5 h-5" />
-                                <span>{message}</span>
-                            </div>
+                    {/* --- Main quiz UI below --- */}
+                    <div className="bg-gray-900 rounded-xl border border-cyan-500/20 p-6">
+                        <div className="text-center mb-6">
+                            <h1 className="text-3xl font-bold text-cyan-400 mb-2">WnCC Quiz</h1>
+                            <p className="text-gray-300">Welcome, {user.first_name || user.username}!</p>
                         </div>
-                    )}
-
-                    {!quizStarted ? (
-                        <div className="space-y-4">
-                            <div>
-                                <label className="block text-gray-300 mb-2">Your Roll Number:</label>
-                                <input
-                                    type="text"
-                                    value={rollNumber}
-                                    readOnly
-                                    className="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 text-gray-300 cursor-not-allowed"
-                                    placeholder="Loading..."
-                                />
-                                <p className="text-sm text-gray-400 mt-1">Roll number is automatically set from your SSO login</p>
-                            </div>
-                            <button
-                                onClick={startQuiz}
-                                disabled={loading || !rollNumber}
-                                className="w-full bg-gradient-to-r from-cyan-500 to-blue-500 text-white py-3 rounded-lg hover:opacity-90 transition-opacity disabled:opacity-50"
-                            >
-                                {loading ? 'Starting Quiz...' : 'Start Quiz'}
-                            </button>
-                        </div>
-                    ) : currentQuestion ? (
-                        <div className="space-y-6">
-                            <div className="bg-gray-800 p-4 rounded-lg">
-                                <div className="flex justify-between items-center mb-4">
-                                    <span className="text-cyan-400 font-semibold">
-                                        Question {currentQuestion.question_number} of {currentQuestion.total_questions}
-                                    </span>
+                        {message && (
+                            <div className="mb-4 p-4 rounded-lg bg-red-500/10 border border-red-500/20">
+                                <div className="flex items-center gap-2 text-red-400">
+                                    <AlertCircle className="w-5 h-5" />
+                                    <span>{message}</span>
                                 </div>
-                                <p className="text-white text-lg">{currentQuestion.question}</p>
                             </div>
-
-                            <div>
-                                <label className="block text-gray-300 mb-2">Your Answer:</label>
-                                <input
-                                    type="text"
-                                    value={answer}
-                                    onChange={(e) => setAnswer(e.target.value)}
-                                    onKeyPress={(e) => e.key === 'Enter' && submitAnswer()}
-                                    className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-cyan-500"
-                                    placeholder="Type your answer here..."
-                                />
+                        )}
+                        {!quizStarted ? (
+                            <div className="space-y-4">
+                                <div>
+                                    <label className="block text-gray-300 mb-2">Your Roll Number:</label>
+                                    <input
+                                        type="text"
+                                        value={rollNumber}
+                                        readOnly
+                                        className="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 text-gray-300 cursor-not-allowed"
+                                        placeholder="Loading..."
+                                    />
+                                    <p className="text-sm text-gray-400 mt-1">Roll number is automatically set from your SSO login</p>
+                                </div>
+                                <button
+                                    onClick={startQuiz}
+                                    disabled={loading || !rollNumber}
+                                    className="w-full bg-gradient-to-r from-cyan-500 to-blue-500 text-white py-3 rounded-lg hover:opacity-90 transition-opacity disabled:opacity-50"
+                                >
+                                    {loading ? 'Starting Quiz...' : 'Start Quiz'}
+                                </button>
                             </div>
-
-                            <button
-                                onClick={submitAnswer}
-                                disabled={loading}
-                                className="w-full bg-gradient-to-r from-green-500 to-emerald-500 text-white py-3 rounded-lg hover:opacity-90 transition-opacity disabled:opacity-50"
-                            >
-                                {loading ? 'Submitting...' : 'Submit Answer'}
-                            </button>
-                        </div>
-                    ) : (
-                        <div className="text-center py-8">
-                            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-cyan-400 mx-auto"></div>
-                            <p className="text-gray-300 mt-4">Loading question...</p>
-                        </div>
-                    )}
+                        ) : currentQuestion ? (
+                            <div className="space-y-6">
+                                <div className="bg-gray-800 p-4 rounded-lg">
+                                    <div className="flex justify-between items-center mb-4">
+                                        <span className="text-cyan-400 font-semibold">
+                                            Question {currentQuestion.question_number} of {currentQuestion.total_questions}
+                                        </span>
+                                    </div>
+                                    <p className="text-white text-lg">{currentQuestion.question}</p>
+                                </div>
+                                <div>
+                                    <label className="block text-gray-300 mb-2">Your Answer:</label>
+                                    <input
+                                        type="text"
+                                        value={answer}
+                                        onChange={(e) => setAnswer(e.target.value)}
+                                        onKeyPress={(e) => e.key === 'Enter' && submitAnswer()}
+                                        className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-cyan-500"
+                                        placeholder="Type your answer here..."
+                                    />
+                                </div>
+                                <button
+                                    onClick={submitAnswer}
+                                    disabled={loading}
+                                    className="w-full bg-gradient-to-r from-green-500 to-emerald-500 text-white py-3 rounded-lg hover:opacity-90 transition-opacity disabled:opacity-50"
+                                >
+                                    {loading ? 'Submitting...' : 'Submit Answer'}
+                                </button>
+                            </div>
+                        ) : (
+                            <div className="text-center py-8">
+                                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-cyan-400 mx-auto"></div>
+                                <p className="text-gray-300 mt-4">Loading question...</p>
+                            </div>
+                        )}
+                    </div>
                 </div>
             </div>
-        </div>
-    );
+        );
 };
 
 export default Quiz;
