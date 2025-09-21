@@ -263,7 +263,7 @@ const Quiz = () => {
             <div className="max-w-2xl mx-auto">
                 <div className="bg-gray-900 rounded-xl border border-cyan-500/20 p-6">
                     <div className="text-center mb-6">
-                        <h1 className="text-3xl font-bold text-cyan-400 mb-2">WnCC Quiz</h1>
+                        <h1 className="text-3xl font-bold text-cyan-400 mb-2">WnCC Freshers Challenge</h1>
                         <p className="text-gray-300">Welcome, {user.first_name || user.username}!</p>
                     </div>
 
