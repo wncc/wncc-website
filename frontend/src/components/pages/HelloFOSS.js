@@ -382,13 +382,13 @@ const HelloFOSS = () => {
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <button className="bg-cyan-500 hover:bg-cyan-600 text-white px-6 py-3 rounded-lg flex items-center gap-2 transition-all">
-              <Github className="w-5 h-5" /> Register Now
+              <Github className="w-5 h-5" /> <a href="https://forms.gle/4Xw9t9EtfxUrVFWA6" target="_blank"> Register Now</a>
             </button>
             <button className="bg-gray-700 hover:bg-gray-600 text-white px-6 py-3 rounded-lg flex items-center gap-2 transition-all">
               <BookOpen className="w-5 h-5" /> Event Guidelines
             </button>
-            <button className="bg-gray-700 hover:bg-gray-600 text-white px-6 py-3 rounded-lg flex items-center gap-2 transition-all">
-              <Users className="w-5 h-5" /> Join Discord Community
+            <button className="bg-cyan-500 hover:bg-cyan-600 text-white px-6 py-3 rounded-lg flex items-center gap-2 transition-all">
+              <Users className="w-5 h-5" /> <a href="https://chat.whatsapp.com/IfAF1Aq5jIdDtccsY2PLU6" target="_blank"> Join Whatsapp Group </a>
             </button>
           </div>
         </section>
