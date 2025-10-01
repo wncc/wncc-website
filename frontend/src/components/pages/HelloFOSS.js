@@ -303,9 +303,9 @@ const HelloFOSS = () => {
               <div className="w-1/2 pr-12 text-right">
                 <div className="bg-gray-900/50 p-4 rounded-xl border border-cyan-500/20">
                   <h3 className="text-xl font-bold text-cyan-400">
-                    September 21, 2025
+                    September 26, 2025
                   </h3>
-                  <p className="text-gray-300">Registration Begins</p>
+                  <p className="text-gray-300">Git101: An Introduction to GitHub</p>
                 </div>
               </div>
               <div className="absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-cyan-500 rounded-full"></div>
@@ -318,20 +318,33 @@ const HelloFOSS = () => {
               <div className="w-1/2 pl-12">
                 <div className="bg-gray-900/50 p-4 rounded-xl border border-cyan-500/20">
                   <h3 className="text-xl font-bold text-cyan-400">
-                    September 26, 2025
+                    October 1, 2025
                   </h3>
                   <p className="text-gray-300">
-                    Git101: An Introduction to GitHub
+                    Registration Begins
                   </p>
                 </div>
               </div>
             </div>
 
+             {/* <div className="relative flex items-center mb-12">
+              <div className="w-1/2 pr-12 text-right">
+                <div className="bg-gray-900/50 p-4 rounded-xl border border-cyan-500/20">
+                  <h3 className="text-xl font-bold text-cyan-400">
+                    October 1, 2025
+                  </h3>
+                  <p className="text-gray-300">Registration Begins</p>
+                </div>
+              </div>
+              <div className="absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-cyan-500 rounded-full"></div>
+              <div className="w-1/2 pl-12"></div>
+            </div> */}
+
             <div className="relative flex items-center mb-12">
               <div className="w-1/2 pr-12 text-right">
                 <div className="bg-gray-900/50 p-4 rounded-xl border border-cyan-500/20">
                   <h3 className="text-xl font-bold text-cyan-400">
-                    September 27, 2025
+                    October 4, 2025
                   </h3>
                   <p className="text-gray-300">
                     Orientation and Track Selection
