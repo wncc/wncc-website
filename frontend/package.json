@@ -10,6 +10,8 @@
     "codemirror": "^6.0.1",
     "cra-template": "1.2.0",
     "framer-motion": "^11.15.0",
+    "jspdf": "^3.0.4",
+    "jspdf-autotable": "^5.0.2",
     "lucide-react": "^0.468.0",
     "monaco-editor": "^0.52.2",
     "nodemailer": "^6.9.16",

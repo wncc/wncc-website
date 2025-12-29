@@ -17,9 +17,12 @@ import {
   Activity,
   Search,
   ArrowDown,
+  Download,
 } from "lucide-react";
 import Card from "../common/Card";
 import * as XLSX from 'xlsx';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
 
 const CodingCircuit = () => {
   const [selectedContest, setSelectedContest] = useState("overall");
@@ -211,6 +214,52 @@ const CodingCircuit = () => {
       yearRankings = overallRankings.filter((r) => String(r.year).toLowerCase() === targetYear.toLowerCase());
     }
     return yearRankings.map((r, index) => ({ ...r, rank: index + 1 }));
+  };
+
+  const downloadPDF = (data, title) => {
+    const doc = new jsPDF();
+    
+    // Add title
+    doc.setFontSize(18);
+    doc.setTextColor(6, 182, 212); // Cyan color
+    doc.text(title, 14, 20);
+    
+    // Add date
+    doc.setFontSize(10);
+    doc.setTextColor(100);
+    doc.text(`Generated on: ${new Date().toLocaleDateString()}`, 14, 28);
+    
+    // Prepare table data
+    const tableData = data.map(row => [
+      row.rank,
+      row.name || 'N/A',
+      row.rollNo || 'N/A',
+      row.ccid || 'N/A',
+      row.hackerrank_id || 'N/A'
+    ]);
+    
+    // Add table using autoTable
+    autoTable(doc, {
+      startY: 35,
+      head: [['Rank', 'Name', 'Roll No', 'CC ID', 'HackerRank ID']],
+      body: tableData,
+      theme: 'grid',
+      headStyles: {
+        fillColor: [6, 182, 212],
+        textColor: [255, 255, 255],
+        fontStyle: 'bold'
+      },
+      styles: {
+        fontSize: 9,
+        cellPadding: 3
+      },
+      alternateRowStyles: {
+        fillColor: [245, 245, 245]
+      }
+    });
+    
+    // Save the PDF
+    doc.save(`${title.replace(/\s+/g, '_')}.pdf`);
   };
 
   const renderRankingsTable = (results, showPagination = true) => {
@@ -723,11 +772,22 @@ const CodingCircuit = () => {
                 Cumulative rankings across all contests
               </p>
             </div>
-            <div className="bg-cyan-500/10 border border-cyan-500/30 rounded-lg px-4 py-2">
-              <span className="text-cyan-400 font-bold text-lg">
-                {filterResults(overallRankings).length}
-              </span>
-              <span className="text-gray-400 text-sm ml-1">Participants</span>
+            <div className="flex items-center gap-3">
+              {!searchQuery && (
+                <button
+                  onClick={() => downloadPDF(filterResults(overallRankings), 'Coding_Circuit_Overall_Leaderboard')}
+                  className="flex items-center gap-2 bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/30 hover:border-cyan-500/50 text-cyan-400 px-4 py-2 rounded-lg transition-all"
+                >
+                  <Download className="w-4 h-4" />
+                  Download PDF
+                </button>
+              )}
+              <div className="bg-cyan-500/10 border border-cyan-500/30 rounded-lg px-4 py-2">
+                <span className="text-cyan-400 font-bold text-lg">
+                  {filterResults(overallRankings).length}
+                </span>
+                <span className="text-gray-400 text-sm ml-1">Participants</span>
+              </div>
             </div>
           </div>
           {renderRankingsTable(overallRankings)}
@@ -770,6 +830,15 @@ const CodingCircuit = () => {
                   </span>
                 </div>
               </div>
+              {!searchQuery && (
+                <button
+                  onClick={() => downloadPDF(filterResults(contest1Results), 'Coding_Circuit_Contest_1_Results')}
+                  className="flex items-center gap-2 bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/30 hover:border-cyan-500/50 text-cyan-400 px-4 py-2 rounded-lg transition-all"
+                >
+                  <Download className="w-4 h-4" />
+                  Download PDF
+                </button>
+              )}
             </div>
             {renderRankingsTable(contest1Results)}
           </div>
@@ -800,11 +869,25 @@ const CodingCircuit = () => {
                     : `Leaderboard for ${selectedYear === "1" ? "1st" : selectedYear === "2" ? "2nd" : selectedYear === "3" ? "3rd" : "4th"} year students`}
                 </p>
               </div>
-              <div className="bg-cyan-500/10 border border-cyan-500/30 rounded-lg px-4 py-2">
-                <span className="text-cyan-400 font-bold text-lg">
-                  {filterResults(getYearWiseRankings(selectedYear)).length}
-                </span>
-                <span className="text-gray-400 text-sm ml-1">Participants</span>
+              <div className="flex items-center gap-3">
+                {!searchQuery && (
+                  <button
+                    onClick={() => {
+                      const yearLabel = selectedYear === "1" ? "1st" : selectedYear === "2" ? "2nd" : selectedYear === "3" ? "3rd" : selectedYear === "4" ? "4th" : "Other";
+                      downloadPDF(filterResults(getYearWiseRankings(selectedYear)), `Coding_Circuit_${yearLabel}_Year_Rankings`);
+                    }}
+                    className="flex items-center gap-2 bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/30 hover:border-cyan-500/50 text-cyan-400 px-4 py-2 rounded-lg transition-all"
+                  >
+                    <Download className="w-4 h-4" />
+                    Download PDF
+                  </button>
+                )}
+                <div className="bg-cyan-500/10 border border-cyan-500/30 rounded-lg px-4 py-2">
+                  <span className="text-cyan-400 font-bold text-lg">
+                    {filterResults(getYearWiseRankings(selectedYear)).length}
+                  </span>
+                  <span className="text-gray-400 text-sm ml-1">Participants</span>
+                </div>
               </div>
             </div>
             {renderRankingsTable(getYearWiseRankings(selectedYear))}
