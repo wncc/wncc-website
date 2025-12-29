@@ -55,7 +55,7 @@ const Navbar = ({ currentPage, setCurrentPage }) => {
 
     // Add "Hello FOSS" to the navItems array
     // const navItems = ["Home", "About", "Events", "Resources", "Blogs", "Team", "Contact", "Hello FOSS"];
-    const baseNavItems = ["Home", "Events", "Resources", "Team", "Contact", "Hello FOSS"];
+    const baseNavItems = ["Home", "Events", "Resources", "Team", "Contact","Coding Circuit"];
     const navItems = user ? [...baseNavItems, "Quiz"] : baseNavItems;
 
     const handleNavClick = (page) => {

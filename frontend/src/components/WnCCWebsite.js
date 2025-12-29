@@ -3,6 +3,7 @@ import ParticleEffect from "./common/ParticleEffect";
 import Navbar from "./layout/Navbar";
 import Footer from "./layout/Footer";
 import HelloFOSS from "./pages/HelloFOSS";
+import CodingCircuit from "./pages/CodingCircuit";
 import Quiz from "./pages/Quiz";
 import SSOLoading from "./pages/SSOLoading";
 import Card from "./common/Card";
@@ -39,10 +40,9 @@ import {
     X
 } from "lucide-react";
 
-// Import original components for other pages
-import { 
-    WebsitePreviewComponents 
-} from './WnCCWebsiteOriginal';
+// import { 
+//     WebsitePreviewComponents 
+// } from './WnCCWebsiteOriginal';
 
 // Helper function
 import { generateCalendarUrl } from '../utils/helpers';
@@ -262,6 +262,7 @@ const LiveCodeEditor = () => {
 // Activity Feed component for HomePage
 const ActivityFeed = () => {
     const activities = [
+        { text: "Hello FOSS Begins", time: " 4th Oct" },
         { text: "Seasons of Code Begins", time: " 21st May" },
         { text: "Launch of DSA Bootcamp", time: "1st June" },
         { text: "Kickoff of the Learners’ Space", time: "9th June" }
@@ -568,7 +569,7 @@ const HomePage = () => {
             <div className="grid md:grid-cols-4 gap-6">
                 <StatsCounter label="SOC 2025 Participation" endValue={1700} />
                 <StatsCounter label="Wiki Articles" endValue={110} />
-                <StatsCounter label="Github Repos" endValue={80} />
+                <StatsCounter label="Github Repos" endValue={90} />
                 <StatsCounter label="Years since fomation" endValue={18} />
             </div>
 
@@ -1980,6 +1981,7 @@ const WebsitePreview = () => {
             '/team': 'Team', 
             '/contact': 'Contact',
             '/hello-foss': 'Hello FOSS',
+            '/cc': 'Coding Circuit',
             '/quiz': 'Quiz',
             '/loading': 'loading'
         };
@@ -1997,6 +1999,7 @@ const WebsitePreview = () => {
                 'Team': '/team',
                 'Contact': '/contact',
                 'Hello FOSS': '/hello-foss',
+                'Coding Circuit': '/cc',
                 'Quiz': '/quiz'
             };
             if (pageMap[currentPage] && window.location.pathname !== pageMap[currentPage]) {
@@ -2009,7 +2012,7 @@ const WebsitePreview = () => {
     const getPageComponent = () => {
         switch(currentPage) {
             case "Home":
-                return WebsitePreviewComponents["Home"] || <HomePage />;
+                return <HomePage />;
             case "Events":
                 return <EventsPage />;
             case "Resources":
@@ -2024,8 +2027,10 @@ const WebsitePreview = () => {
                 return <Quiz />;
             case "loading":
                 return <SSOLoading />;
+            case "Coding Circuit":
+                return <CodingCircuit />;
             default:
-                return WebsitePreviewComponents["Home"] || <HomePage />;
+                return <HomePage />;
         }
     };
 

@@ -9,13 +9,12 @@ import {
 
 const Footer = () => {
     const quickLinks = [
-        { title: "About Us", url: "#" },
-        { title: "Events", url: "#" },
-        { title: "Resources", url: "#" },
-        { title: "Blogs", url: "#" },
-        { title: "Team", url: "#" },
-        { title: "Contact", url: "#" },
-        { title: "Hello FOSS", url: "#" }
+        { title: "About Us", url: "/" },
+        { title: "Events", url: "/events"},
+        { title: "Resources", url: "/resources" },
+        { title: "Team", url: "/team" },
+        { title: "Coding Circuit", url: "/cc" },
+        { title: "Contact", url: "/contact" },
     ];
 
     return (
@@ -95,7 +94,7 @@ const Footer = () => {
 
             <div className="container mx-auto mt-8 pt-8 border-t border-cyan-500/20 text-center">
                 <p className="text-gray-400">
-                    © 2024 Web and Coding Club, IIT Bombay. All rights reserved.
+                    © 2025 Web and Coding Club, IIT Bombay. All rights reserved.
                 </p>
             </div>
         </footer>
